@@ -1,0 +1,14 @@
+{
+  "name": "Wookmarks",
+  "description": "Chrome extension to manage bookmarks",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "action": {},
+  "permissions": [
+     "activeTab",
+     "scripting"
+  ],
+  "background": {
+     "service_worker": "background.js"
+  }
+}
