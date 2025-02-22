@@ -12,7 +12,7 @@ Chrome extension to manage bookmarks
 
 2. Install generated content in *dist/* folder through *chrome://extensions*
 
-Development with hot reloading :
+### Development with hot reloading
 
 ```bash
 yarn dev
