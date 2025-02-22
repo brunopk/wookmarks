@@ -12,6 +12,13 @@ Chrome extension to manage bookmarks
 
 2. Install generated content in *dist/* folder through *chrome://extensions*
 
+Development with hot reloading :
+
+```bash
+yarn dev
+```
+
 ## Links
 
-- [Creating Chrome Extensions With TypeScript](https://medium.com/better-programming/creating-chrome-extensions-with-typescript-914873467b65)
+- [Creating a Chrome Extension with React and Vite (Boilerplate provided)](https://medium.com/@5tigerjelly/creating-a-chrome-extension-with-react-and-vite-boilerplate-provided-db3d14473bf6).
+- [React + TypeScript + Vite](./doc/vite_readme.md)
