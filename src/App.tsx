@@ -10,6 +10,11 @@ function openNewTab(setIsNewTab: React.Dispatch<React.SetStateAction<boolean>>) 
   })
 }
 
+async function scanBookmarkTree() {
+  const tree = await chrome.bookmarks.getTree()
+  console.log(tree)
+}
+
 function App() {
   const [count, setCount] = useState(0)
   const [isNewTab, setIsNewTab] = useState(false)
@@ -34,6 +39,9 @@ function App() {
           Open new tab
         </button>
         ): (<></>)}
+        <button onClick={() => scanBookmarkTree()}>
+          Scan bookmarks
+        </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
