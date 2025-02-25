@@ -3,8 +3,9 @@
    "name": "Wookmarks",
    "version": "0.0.0",
    "description": "Chrome extension to manage bookmarks",
-   "action": {
-     "default_popup": "index.html"
+   "action": {},
+   "background": {
+      "service_worker": "service-worker.js"
    },
    "permissions": [
     "bookmarks"
