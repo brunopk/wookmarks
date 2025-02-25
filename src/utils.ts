@@ -5,8 +5,8 @@
  * @param n Number of nodes to retrieve in result, which means that `nodes` array in `BookmarksTreeScanResult` will 
  *  contain between 0 and`maxNodes` entries.
  */
-async function scanBookmarkTree(maxNodes: number): Promise<BookmarksTreeScanResult> {
+/*async function scanBookmarkTree(maxNodes: number): Promise<BookmarksTreeScanResult> {
   const tree = await chrome.bookmarks.getTree()
   console.log(tree)
   // TODO: continue here
-}
+}*/

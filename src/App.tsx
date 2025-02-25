@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState } from 'react'
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -24,19 +23,6 @@ import Folder from './components/Folder'
 import SubFolder from './components/SubFolder'
 import Link from './components/Link'
 import './App.css'
-
-
-function openNewTab(setIsNewTab: React.Dispatch<React.SetStateAction<boolean>>) {
-  setIsNewTab(true)
-  chrome.tabs.create({
-    url: chrome.runtime.getURL('index.html')
-  })
-}
-
-async function scanBookmarkTree() {
-  const tree = await chrome.bookmarks.getTree()
-  console.log(tree)
-}
 
 const drawerWidth = 240
 
@@ -100,7 +86,7 @@ interface AppBarProps extends MuiAppBarProps {
 }
 
 function App() {
-  const [open, setOpen] = React.useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(false)
 
   const theme = createTheme({
     palette: {
