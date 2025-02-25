@@ -29,7 +29,7 @@ import './App.css'
 function openNewTab(setIsNewTab: React.Dispatch<React.SetStateAction<boolean>>) {
   setIsNewTab(true)
   chrome.tabs.create({
-    url: chrome.runtime.getURL("index.html")
+    url: chrome.runtime.getURL('index.html')
   })
 }
 
@@ -41,11 +41,11 @@ async function scanBookmarkTree() {
 const drawerWidth = 240
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== 'open'
 })<AppBarProps>(({ theme }) => ({
   transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
+    duration: theme.transitions.duration.leavingScreen
   }),
   variants: [
     {
@@ -55,11 +55,11 @@ const AppBar = styled(MuiAppBar, {
         marginLeft: `${drawerWidth}px`,
         transition: theme.transitions.create(['margin', 'width'], {
           easing: theme.transitions.easing.easeOut,
-          duration: theme.transitions.duration.enteringScreen,
-        }),
-      },
-    },
-  ],
+          duration: theme.transitions.duration.enteringScreen
+        })
+      }
+    }
+  ]
 }))
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -68,17 +68,17 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
+  justifyContent: 'flex-end'
 }))
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
-  open?: boolean;
+  open?: boolean
 }>(({ theme }) => ({
   flexGrow: 1,
   padding: '1rem',
   transition: theme.transitions.create('margin', {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
+    duration: theme.transitions.duration.leavingScreen
   }),
   marginLeft: `-${drawerWidth}px`,
   variants: [
@@ -87,139 +87,135 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
       style: {
         transition: theme.transitions.create('margin', {
           easing: theme.transitions.easing.easeOut,
-          duration: theme.transitions.duration.enteringScreen,
+          duration: theme.transitions.duration.enteringScreen
         }),
-        marginLeft: 0,
-      },
-    },
-  ],
+        marginLeft: 0
+      }
+    }
+  ]
 }))
 
 interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
+  open?: boolean
 }
 
 function App() {
-  const [open, setOpen] = React.useState<boolean>(false);
+  const [open, setOpen] = React.useState<boolean>(false)
 
   const theme = createTheme({
     palette: {
-      mode: 'light',
+      mode: 'light'
     },
     components: {
       MuiIconButton: {
         styleOverrides: {
           root: {
-            "&:focus-visible": {
-              outline: "none"
+            '&:focus-visible': {
+              outline: 'none'
             },
-            "&:focus": {
-              outline: "none"
+            '&:focus': {
+              outline: 'none'
             }
           }
         }
       }
     }
-  });
-  
-  const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false);
-    }
-  
+  })
+
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setOpen(true)
   }
 
   const handleDrawerClose = () => {
-    setOpen(false);
-  };
-  
+    setOpen(false)
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-        <Box sx={{ display: 'flex' }}>
-          <AppBar position="fixed" open={open}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerOpen}
-                edge="start"
-                sx={[
-                  {
-                    mr: 2,
-                  },
-                  open && { display: 'none' },
-                ]}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" noWrap component="div" sx={{ display: "flex", alignItems: "flex-end", flexGrow: 1 }}>
-                Bookmarks
-              </Typography>
-              <IconButton color="inherit">
-                <RefreshIcon />
-              </IconButton>
-            </Toolbar>
-          </AppBar>
-          <Drawer
-            sx={{
+      <Box sx={{ display: 'flex' }}>
+        <AppBar position="fixed" open={open}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={[
+                {
+                  mr: 2
+                },
+                open && { display: 'none' }
+              ]}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: 'flex', alignItems: 'flex-end', flexGrow: 1 }}
+            >
+              Bookmarks
+            </Typography>
+            <IconButton color="inherit">
+              <RefreshIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
               width: drawerWidth,
-              flexShrink: 0,
-              '& .MuiDrawer-paper': {
-                width: drawerWidth,
-                boxSizing: 'border-box',
-              },
-            }}
-            variant="persistent"
-            anchor="left"
-            open={open}
-          >
-            <DrawerHeader>
-              <IconButton onClick={handleDrawerClose}>
-                {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-              </IconButton>
-            </DrawerHeader>
-            <Divider />
-            <List>
-              {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                <ListItem key={text} disablePadding>
-                  <ListItemButton>
-                    <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-            </List>
-            <Divider />
-            <List>
-              {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                <ListItem key={text} disablePadding>
-                  <ListItemButton>
-                    <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-            </List>
-          </Drawer>
-          <Main open={open}>
-            <DrawerHeader />
-              <Folder folderName="Folder 1" index={0}>
-                <SubFolder text="Folder A"/>
-                <Link isLinkOff={false} text="Link A"/>
-              </Folder>
-              <Folder folderName="Folder 2" index={1}>
-                <Link isLinkOff={false} text="Link C"/>
-                <Link isLinkOff={true} text="Link D"/>
-              </Folder>
-          </Main>
-        </Box>
+              boxSizing: 'border-box'
+            }
+          }}
+          variant="persistent"
+          anchor="left"
+          open={open}
+        >
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <List>
+            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+              <ListItem key={text} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            {['All mail', 'Trash', 'Spam'].map((text, index) => (
+              <ListItem key={text} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+        <Main open={open}>
+          <DrawerHeader />
+          <Folder folderName="Folder 1" index={0}>
+            <SubFolder text="Folder A" />
+            <Link isLinkOff={false} text="Link A" />
+          </Folder>
+          <Folder folderName="Folder 2" index={1}>
+            <Link isLinkOff={false} text="Link C" />
+            <Link isLinkOff={true} text="Link D" />
+          </Folder>
+        </Main>
+      </Box>
     </ThemeProvider>
   )
 }
