@@ -3,6 +3,12 @@
    "name": "Wookmarks",
    "version": "0.0.0",
    "description": "Chrome extension to manage bookmarks",
+   "icons": {
+      "16": "bookmark-circle-svgrepo-com-16.png",
+      "32": "bookmark-circle-svgrepo-com-32.png",
+      "48": "bookmark-circle-svgrepo-com-48.png",
+      "128": "bookmark-circle-svgrepo-com-128.png"
+   },
    "action": {},
    "background": {
       "service_worker": "service-worker.js"
