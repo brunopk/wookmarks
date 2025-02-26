@@ -1,26 +1,17 @@
-import { useState, ReactNode } from 'react'
-import { styled, createTheme } from '@mui/material/styles'
-import MenuIcon from '@mui/icons-material/Menu'
-import Box from '@mui/material/Box'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import MenuIcon from '@mui/icons-material/Menu'
+import RefreshIcon from '@mui/icons-material/Refresh'
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
 import IconButton from '@mui/material/IconButton'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon  from '@mui/material/ListItemIcon'
-import ListItemText  from '@mui/material/ListItemText'
-import MailIcon from '@mui/icons-material/Mail'
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
-import RefreshIcon from '@mui/icons-material/Refresh'
+import { createTheme, styled } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import Folder from '../Folder'
-import SubFolder from '../SubFolder'
-import Link from '../Link'
+import { ReactNode, useState } from 'react'
+import DashboardMenu from './DashboardMenu'
 
 const drawerWidth = 240
 
@@ -83,11 +74,11 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean
 }
 
-type DashboardProps = {
+interface DashboardProps {
   children: ReactNode
 }
 
-function Dashboard() {
+function Dashboard({ children }: DashboardProps) {
   const [open, setOpen] = useState<boolean>(false)
 
   const theme = createTheme({
@@ -119,89 +110,62 @@ function Dashboard() {
   }
 
   return (
-      <Box sx={{ display: 'flex' }}>
-        <AppBar position="fixed" open={open}>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              sx={[
-                {
-                  mr: 2
-                },
-                open && { display: 'none' }
-              ]}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: 'flex', alignItems: 'flex-end', flexGrow: 1 }}
-            >
-              Bookmarks
-            </Typography>
-            <IconButton color="inherit">
-              <RefreshIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          sx={{
+    <Box sx={{ display: 'flex' }}>
+      <AppBar position="fixed" open={open}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={[
+              {
+                mr: 2
+              },
+              open && { display: 'none' }
+            ]}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: 'flex', alignItems: 'flex-end', flexGrow: 1 }}
+          >
+            Bookmarks
+          </Typography>
+          <IconButton color="inherit">
+            <RefreshIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
             width: drawerWidth,
-            flexShrink: 0,
-            '& .MuiDrawer-paper': {
-              width: drawerWidth,
-              boxSizing: 'border-box'
-            }
-          }}
-          variant="persistent"
-          anchor="left"
-          open={open}
-        >
-          <DrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
-          <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
-        <Main open={open}>
-          <DrawerHeader />
-          <Folder folderName="Folder 1" index={0}>
-            <SubFolder text="Folder A" />
-            <Link isLinkOff={false} text="Link A" />
-          </Folder>
-          <Folder folderName="Folder 2" index={1}>
-            <Link isLinkOff={false} text="Link C" />
-            <Link isLinkOff={true} text="Link D" />
-          </Folder>
-        </Main>
-      </Box>
+            boxSizing: 'border-box'
+          }
+        }}
+        variant="persistent"
+        anchor="left"
+        open={open}
+      >
+        <DrawerHeader>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </DrawerHeader>
+        <Divider />
+        <DashboardMenu />
+      </Drawer>
+      <Main open={open}>
+        <DrawerHeader />
+        {children}
+      </Main>
+    </Box>
   )
 }
 

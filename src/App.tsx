@@ -1,8 +1,7 @@
-import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 import './App.css'
-import Dashboard from './components/dashboard/Dashboard'
-
+import BookmarksDashboard from './components/bookmarks-dashboard/Dashboard'
 
 function App() {
   const theme = createTheme({
@@ -28,7 +27,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Dashboard />
+      <BookmarksDashboard />
     </ThemeProvider>
   )
 }
