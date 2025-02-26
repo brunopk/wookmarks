@@ -1,4 +1,5 @@
-import { Link, LinkOff } from '@mui/icons-material'
+import { Link } from '@mui/icons-material'
+import Typography from '@mui/material/Typography'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon  from '@mui/material/ListItemIcon'
 import ListItemText  from '@mui/material/ListItemText'
@@ -12,10 +13,21 @@ function SubFolder({ text, isLinkOff }: LinkProps) {
   return (
     <ListItemButton>
       <ListItemIcon>
-        {isLinkOff ? <Link /> : <LinkOff />}
+        <Link color={isLinkOff ? 'error' : 'action'} />
       </ListItemIcon>
-      <ListItemText primary={text} />
-    </ListItemButton> 
+      <ListItemText
+        primary={
+          <Typography
+            color={isLinkOff ? 'error' : 'action'}
+            sx={{ fontWeight: isLinkOff ? 'bold' : 'inherit' }}
+          >
+            {text}
+          </Typography>
+        }
+        sx={{ display: 'flex', alignItems: 'flex-end', flexGrow: 1 }}
+        color={isLinkOff ? 'error' : 'action'}
+      />
+    </ListItemButton>
   )
 }
 
