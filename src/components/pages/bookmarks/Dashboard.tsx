@@ -1,9 +1,9 @@
-import MainDashboard from '../dashboard/Dashboard'
+import MainDashboard from '../../layout/Dashboard'
 import Folder from './Folder'
 import Link from './Link'
 import SubFolder from './SubFolder'
 
-function Dashboardd() {
+function Dashboard() {
   return (
     <MainDashboard>
       <Folder folderName="Folder 1" index={0}>
@@ -18,4 +18,4 @@ function Dashboardd() {
   )
 }
 
-export default Dashboardd
+export default Dashboard

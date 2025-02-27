@@ -11,7 +11,8 @@ import { createTheme, styled } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import { ReactNode, useState } from 'react'
-import DashboardMenu from './DashboardMenu'
+import { useLocation } from 'react-router-dom'
+import Menu from './Menu'
 
 const drawerWidth = 240
 
@@ -79,7 +80,12 @@ interface DashboardProps {
 }
 
 function Dashboard({ children }: DashboardProps) {
-  const [open, setOpen] = useState<boolean>(false)
+  const location = useLocation()
+  const {
+    page: { title: dashboardTitle, isMenuOpen }
+  } = location.state || { page: { title: '' } }
+
+  const [open, setOpen] = useState<boolean>(isMenuOpen)
 
   const theme = createTheme({
     palette: {
@@ -133,7 +139,7 @@ function Dashboard({ children }: DashboardProps) {
             component="div"
             sx={{ display: 'flex', alignItems: 'flex-end', flexGrow: 1 }}
           >
-            Bookmarks
+            {dashboardTitle}
           </Typography>
           <IconButton color="inherit">
             <RefreshIcon />
@@ -159,7 +165,7 @@ function Dashboard({ children }: DashboardProps) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <DashboardMenu />
+        <Menu />
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
