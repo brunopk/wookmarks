@@ -12,6 +12,18 @@ function App() {
       mode: 'light'
     },
     components: {
+      "MuiPaginationItem": {
+        styleOverrides: {
+          root: {
+            '&:focus-visible': {
+              outline: 'none'
+            },
+            '&:focus': {
+              outline: 'none'
+            }
+          }
+        }
+      },
       MuiIconButton: {
         styleOverrides: {
           root: {

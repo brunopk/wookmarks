@@ -7,14 +7,18 @@ import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import List from '@mui/material/List'
 import Typography from '@mui/material/Typography'
+import Pagination from '@mui/material/Pagination'
+import Box from '@mui/material/Box'
 
 type BookmarkFolderProps = {
   folderName: string,
   index: number,
-  children: ReactNode
+  pageSize: number
+  children: ReactNode[]
 }
 
-function BookmarkFolder({ folderName, index, children }: BookmarkFolderProps) {
+function BookmarkFolder({ folderName, index, pageSize, children }: BookmarkFolderProps) {
+  
   const [expanded, setExpanded] = useState<string | false>(false);
 
   const handleChange =
@@ -22,6 +26,17 @@ function BookmarkFolder({ folderName, index, children }: BookmarkFolderProps) {
       setExpanded(isExpanded ? panel : false);
     }
   
+  const maxPages = Math.ceil(children.length/ pageSize)
+  const defaultPage = 1 as number
+  const [currentPage, setCurrentPage] = useState<number>(defaultPage)
+  const handlePaginationChange = (_: React.ChangeEvent<unknown>, value: number) => {
+    setCurrentPage(value);
+  }
+  const currentPageItems = children.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize + (pageSize - 1)
+  )
+
   return (
     <Accordion expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
       <AccordionSummary
@@ -48,7 +63,15 @@ function BookmarkFolder({ folderName, index, children }: BookmarkFolderProps) {
       </AccordionSummary>
       <AccordionDetails>
         <List component="nav" aria-labelledby="nested-list-subheader">
-          {children}
+          {currentPageItems}
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Pagination
+              count={maxPages}
+              page={currentPage}
+              defaultPage={defaultPage}
+              onChange={handlePaginationChange}
+            />
+          </Box>
         </List>
       </AccordionDetails>
     </Accordion>
