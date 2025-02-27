@@ -9,6 +9,8 @@ import List from '@mui/material/List'
 import Typography from '@mui/material/Typography'
 import Pagination from '@mui/material/Pagination'
 import Box from '@mui/material/Box'
+import { useTheme } from '@mui/material/styles';
+
 
 type BookmarkFolderProps = {
   folderName: string,
@@ -18,7 +20,8 @@ type BookmarkFolderProps = {
 }
 
 function BookmarkFolder({ folderName, index, pageSize, children }: BookmarkFolderProps) {
-  
+  const theme = useTheme()
+
   const [expanded, setExpanded] = useState<string | false>(false);
 
   const handleChange =
@@ -45,7 +48,7 @@ function BookmarkFolder({ folderName, index, pageSize, children }: BookmarkFolde
           alignItems: 'center',
           justifyContent: 'space-between',
           '&:hover': {
-            backgroundColor: 'rgba(255, 255, 255, 0.08)'
+            backgroundColor: theme.palette.mode == 'dark'? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.04)'
           },
           transition: 'background-color 0.3s'
         }}

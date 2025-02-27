@@ -1,17 +1,26 @@
-import { Link } from '@mui/icons-material'
-import Typography from '@mui/material/Typography'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon  from '@mui/material/ListItemIcon'
-import ListItemText  from '@mui/material/ListItemText'
+import FolderItem from './FolderItem'
 
 type LinkProps = {
   text: string,
   isLinkOff: boolean
 }
 
-function SubFolder({ text, isLinkOff }: LinkProps) {
+function FolderItemLink({ text, isLinkOff }: LinkProps) {
   return (
-    <ListItemButton>
+    <FolderItem
+      icon='link'
+      text={text}
+      color={isLinkOff ? 'error' : 'action'}
+      typographySx={{ fontWeight: isLinkOff ? 'bold' : 'inherit' }}
+    />
+  )
+}
+
+export default FolderItemLink
+
+
+/**
+ * <ListItemButton>
       <ListItemIcon>
         <Link color={isLinkOff ? 'error' : 'action'} />
       </ListItemIcon>
@@ -28,7 +37,4 @@ function SubFolder({ text, isLinkOff }: LinkProps) {
         color={isLinkOff ? 'error' : 'action'}
       />
     </ListItemButton>
-  )
-}
-
-export default SubFolder
+ */

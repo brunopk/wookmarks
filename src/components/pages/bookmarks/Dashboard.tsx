@@ -1,7 +1,7 @@
 import MainDashboard from '../../layout/Dashboard'
 import Folder from './Folder'
-import Link from './Link'
-import SubFolder from './SubFolder'
+import Link from './FolderItemLink'
+import SubFolder from './FolderItemSubFolder'
 
 function Dashboard() {
   const folderPageSize = 8
