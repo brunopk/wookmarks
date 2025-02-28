@@ -4,6 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import RefreshIcon from '@mui/icons-material/Refresh'
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
+import Chip from '@mui/material/Chip'
 import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
 import IconButton from '@mui/material/IconButton'
@@ -141,6 +142,21 @@ function Dashboard({ children }: DashboardProps) {
           >
             {dashboardTitle}
           </Typography>
+          <Chip
+            label="🔴 45"
+            sx={{ marginRight: '1rem', fontWeight: 'bold', color: 'white' }}
+            variant="outlined"
+          />
+          <Chip
+            label="🟡 70"
+            sx={{ marginRight: '1rem', fontWeight: 'bold', color: 'white'}}
+            variant="outlined"
+          />
+          <Chip
+            label="🟢 80"
+            sx={{ marginRight: '1rem', fontWeight: 'bold', color: 'white'}}
+            variant="outlined"
+          />
           <IconButton color="inherit">
             <RefreshIcon />
           </IconButton>
