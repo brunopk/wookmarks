@@ -11,7 +11,7 @@ import { ReactNode } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 type BaseMenuProps = {
-  children: ReactNode
+  children?: ReactNode
 }
 
 function BaseMenu({children}: BaseMenuProps) {
@@ -32,8 +32,7 @@ function BaseMenu({children}: BaseMenuProps) {
 
   return (
     <>
-      <List>{children}</List>
-      <Divider />
+      {typeof children !== 'undefined' ? <><List>{children}</List><Divider/></> : <></>}
       <List>
         <ListItem key={0} onClick={() => handleBookmarksItemClick()} disablePadding>
           <ListItemButton selected={location.pathname.startsWith(bookmarksPath)}>
