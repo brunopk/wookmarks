@@ -1,12 +1,13 @@
-import MainDashboard from '../../layout/Dashboard'
+import Layout from '../../Layout'
 import Folder from './Folder'
 import Link from './FolderItemLink'
 import SubFolder from './FolderItemSubFolder'
+import Menu from './Menu'
 
-function Dashboard() {
+function Main() {
   const folderPageSize = 8
   return (
-    <MainDashboard>
+    <Layout Menu={Menu}>
       <Folder folderName="Folder 1" pageSize={folderPageSize} index={0}>
         <SubFolder text="Folder A" />
         <Link isLinkOff={false} text="Link A" />
@@ -15,8 +16,8 @@ function Dashboard() {
         <Link isLinkOff={false} text="Link C" />
         <Link isLinkOff={true} text="Link D" />
       </Folder>
-    </MainDashboard>
+    </Layout>
   )
 }
 
-export default Dashboard
+export default Main

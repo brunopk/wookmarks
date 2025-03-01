@@ -11,9 +11,8 @@ import IconButton from '@mui/material/IconButton'
 import { createTheme, styled } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import { ReactNode, useState } from 'react'
+import { ComponentType, ReactNode, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import Menu from './Menu'
 
 const drawerWidth = 240
 
@@ -76,11 +75,12 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean
 }
 
-interface DashboardProps {
+interface LayoutProps {
+  Menu?: ComponentType
   children: ReactNode
 }
 
-function Dashboard({ children }: DashboardProps) {
+function Layout({ Menu, children }: LayoutProps) {
   const location = useLocation()
   const {
     page: { title: dashboardTitle, isMenuOpen }
@@ -181,7 +181,7 @@ function Dashboard({ children }: DashboardProps) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <Menu />
+        {typeof Menu !== 'undefined'? <Menu /> : <></>}
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
@@ -191,4 +191,4 @@ function Dashboard({ children }: DashboardProps) {
   )
 }
 
-export default Dashboard
+export default Layout

@@ -1,11 +1,11 @@
 import Typography from '@mui/material/Typography'
-import MainDashboard from './layout/Dashboard'
+import Layout from './Layout'
 
 function WorkInProgress() {
   return (
-    <MainDashboard>
+    <Layout>
       <Typography variant="h6">🏗️ Work in progress</Typography>
-    </MainDashboard>
+    </Layout>
   )
 }
 

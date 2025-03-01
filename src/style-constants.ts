@@ -1,0 +1,1 @@
+export const FOLDER_OPEN_ICON_MARGIN_RIGHT_IN_REM = 1

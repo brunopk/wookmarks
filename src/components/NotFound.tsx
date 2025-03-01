@@ -1,11 +1,11 @@
 import Typography from '@mui/material/Typography'
-import MainDashboard from './layout/Dashboard'
+import Layout from './Layout'
 
 function NotFound() {
   return (
-    <MainDashboard>
+    <Layout>
       <Typography variant="h6">⚠️ Not found</Typography>
-    </MainDashboard>
+    </Layout>
   )
 }
 

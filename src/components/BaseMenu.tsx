@@ -7,9 +7,39 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
+import { ReactNode } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
-function Menu() {
+type BaseMenuProps = {
+  children: ReactNode
+}
+
+function BaseMenu({children}: BaseMenuProps) {
+  const navigate = useNavigate()
+  const handleBackClick = () => navigate(-1)
+
+  return (
+    <>
+      <List>
+        {children}
+      </List>
+      <Divider />
+      <ListItem key={2} onClick={() => handleBackClick()} disablePadding>
+        <ListItemButton>
+          <ListItemIcon>
+            <ArrowBackIcon />
+          </ListItemIcon>
+          <ListItemText primary="Back" />
+        </ListItemButton>
+      </ListItem>
+    </>
+  )
+}
+
+export default BaseMenu
+
+/*
+function BaseMenu({children}: BaseMenuProps) {
   const location = useLocation()
   const navigate = useNavigate()
   const bookmarksTitle = 'Bookmarks'
@@ -55,5 +85,4 @@ function Menu() {
     </>
   )
 }
-
-export default Menu
+*/

@@ -2,14 +2,14 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
-import BookmarksDashboard from './components/pages/bookmarks/Dashboard'
+import Bookmarks from './components/pages/bookmarks/Main'
 import NotFound from './components/NotFound'
 import WorkInProgress from './components/WorkInProgress'
 
 function App() {
   const theme = createTheme({
     palette: {
-      mode: 'light'
+      mode: 'dark'
     },
     components: {
       "MuiPaginationItem": {
@@ -46,7 +46,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/bookmarks" replace />} />
           <Route path="/stats" element={<WorkInProgress/>} />
-          <Route path="/bookmarks" element={<BookmarksDashboard/>} />
+          <Route path="/bookmarks" element={<Bookmarks/>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
