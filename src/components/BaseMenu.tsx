@@ -18,43 +18,22 @@ function BaseMenu({children}: BaseMenuProps) {
   const navigate = useNavigate()
   const handleBackClick = () => navigate(-1)
 
-  return (
-    <>
-      <List>
-        {children}
-      </List>
-      <Divider />
-      <ListItem key={2} onClick={() => handleBackClick()} disablePadding>
-        <ListItemButton>
-          <ListItemIcon>
-            <ArrowBackIcon />
-          </ListItemIcon>
-          <ListItemText primary="Back" />
-        </ListItemButton>
-      </ListItem>
-    </>
-  )
-}
-
-export default BaseMenu
-
-/*
-function BaseMenu({children}: BaseMenuProps) {
   const location = useLocation()
-  const navigate = useNavigate()
+
   const bookmarksTitle = 'Bookmarks'
   const bookmarksPath = '/bookmarks'
   const statsTitle = 'Stats'
   const statsPath = '/stats'
-  const handleBackClick = () => navigate(-1)
+
   const handleStatsItemClick = () =>
     navigate(statsPath, { state: { page: { title: statsTitle, isMenuOpen: true } } })
   const handleBookmarksItemClick = () =>
     navigate(bookmarksPath, { state: { page: { title: bookmarksTitle, isMenuOpen: true } } })
-  
 
   return (
     <>
+      <List>{children}</List>
+      <Divider />
       <List>
         <ListItem key={0} onClick={() => handleBookmarksItemClick()} disablePadding>
           <ListItemButton selected={location.pathname.startsWith(bookmarksPath)}>
@@ -65,24 +44,24 @@ function BaseMenu({children}: BaseMenuProps) {
           </ListItemButton>
         </ListItem>
         <ListItem key={1} onClick={() => handleStatsItemClick()} disablePadding>
-          <ListItemButton selected={location.pathname.startsWith(statsPath)} >
+          <ListItemButton selected={location.pathname.startsWith(statsPath)}>
             <ListItemIcon>
               <SummarizeIcon />
             </ListItemIcon>
             <ListItemText primary={statsTitle} />
           </ListItemButton>
         </ListItem>
+        <ListItem key={2} onClick={() => handleBackClick()} disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <ArrowBackIcon />
+            </ListItemIcon>
+            <ListItemText primary="Back" />
+          </ListItemButton>
+        </ListItem>
       </List>
-      <Divider />
-      <ListItem key={2} onClick={() => handleBackClick()} disablePadding>
-        <ListItemButton>
-          <ListItemIcon>
-            <ArrowBackIcon />
-          </ListItemIcon>
-          <ListItemText primary="Back" />
-        </ListItemButton>
-      </ListItem>
     </>
   )
 }
-*/
+
+export default BaseMenu
