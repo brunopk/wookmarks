@@ -4,10 +4,14 @@ import Link from './FolderItemLink'
 import SubFolder from './FolderItemSubFolder'
 import Menu from './Menu'
 
+function MenuWrapper() {
+  return <Menu folderTree={["Folder 1", "Folder 2"]}/>
+}
+
 function Main() {
   const folderPageSize = 8
   return (
-    <Layout Menu={Menu}>
+    <Layout Menu={MenuWrapper}>
       <Folder folderName="Folder 1" pageSize={folderPageSize} index={0}>
         <SubFolder text="Folder A" />
         <Link isLinkOff={false} text="Link A" />

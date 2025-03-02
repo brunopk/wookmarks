@@ -5,7 +5,6 @@ import RefreshIcon from '@mui/icons-material/Refresh'
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Chip from '@mui/material/Chip'
-import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
 import IconButton from '@mui/material/IconButton'
 import { createTheme, styled } from '@mui/material/styles'
@@ -76,7 +75,7 @@ interface AppBarProps extends MuiAppBarProps {
 }
 
 interface LayoutProps {
-  Menu?: ComponentType
+  Menu: ComponentType
   children: ReactNode
 }
 
@@ -180,8 +179,7 @@ function Layout({ Menu, children }: LayoutProps) {
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
-        <Divider />
-        {typeof Menu !== 'undefined'? <Menu /> : <></>}
+        <Menu />
       </Drawer>
       <Main open={open}>
         <DrawerHeader />

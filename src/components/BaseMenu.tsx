@@ -8,13 +8,13 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import { ReactNode } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 type BaseMenuProps = {
   children?: ReactNode
 }
 
-function BaseMenu({children}: BaseMenuProps) {
+function BaseMenu({ children }: BaseMenuProps) {
   const navigate = useNavigate()
   const handleBackClick = () => navigate(-1)
 
@@ -32,8 +32,16 @@ function BaseMenu({children}: BaseMenuProps) {
 
   return (
     <>
-      {typeof children !== 'undefined' ? <><List>{children}</List><Divider/></> : <></>}
-      <List>
+      {typeof children !== 'undefined' ? (
+        <>
+          <Divider sx={{width: '30rem'}}/>
+          <List>{children}</List>
+          <Divider sx={{ width: '30rem' }} />
+        </>
+      ) : (
+        <></>
+      )}
+      <List sx={{width: '30rem'}}>
         <ListItem key={0} onClick={() => handleBookmarksItemClick()} disablePadding>
           <ListItemButton selected={location.pathname.startsWith(bookmarksPath)}>
             <ListItemIcon>
