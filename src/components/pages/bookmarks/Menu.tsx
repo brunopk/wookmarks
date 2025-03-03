@@ -5,7 +5,7 @@ import { Box } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import ListItem from '@mui/material/ListItem'
 import Typography from '@mui/material/Typography'
-import { FOLDER_OPEN_ICON_MARGIN_RIGHT_IN_REM } from '../../../style-constants'
+import { MENU_FOLDER_TREE_INDENT_IN_REM, ICON_MARGIN_RIGHT_IN_REM } from '../../../style-constants'
 import BaseMenu from '../../BaseMenu'
 
 type TreeNode = {
@@ -17,46 +17,42 @@ type TreeNode = {
 type FolderTreeProps = {
   node: TreeNode
   level: number
-  indentationInRem: number
+  widthInRem: number 
 }
 
 type MenuProps = FolderTreeProps
 
-function FolderTree({ level, node, indentationInRem }: FolderTreeProps) {
-  const visibility = `${node.isOpen ? 'visible' : 'hidden'}`
-  const totalIndentationInRem = level * indentationInRem
-  const listItemWidthInRem = indentationInRem + node.name.length
+function FolderTree({ level, node, widthInRem }: FolderTreeProps) {
+  const display = `${node.isOpen ? 'flex' : 'flex'}`
+  const totalIndentationInRem = level * MENU_FOLDER_TREE_INDENT_IN_REM
 
   return (
     <>
       <ListItem
         disablePadding
-        sx={{ width: `${listItemWidthInRem}rem`, visibility: `${visibility}` }}
+        sx={{ width: `${widthInRem}rem`, display: `${display}` }}
       >
         <Box sx={{ width: `${totalIndentationInRem}rem` }} />
         {node.isOpen && node.children.length > 0 ? (
           <IconButton>
             <ArrowDropDown />
           </IconButton>
-        ) : !node.isOpen ? (
+        ) : !node.isOpen || node.children.length == 0 ? (
           <IconButton>
-            <ArrowRightIcon />
+            <ArrowRightIcon sx={{fill: `${node.children.length === 0 ? 'none' : 'inherit'}`}}/>
           </IconButton>
         ) : (
           <></>
         )}
-        <FolderOpen sx={{ marginRight: `${FOLDER_OPEN_ICON_MARGIN_RIGHT_IN_REM}rem` }} />
+        <FolderOpen sx={{ marginRight: `${ICON_MARGIN_RIGHT_IN_REM}rem` }} />
         <Typography>{node.name}</Typography>
       </ListItem>
-      {node.children.forEach((childNode) => (
-        <FolderTree indentationInRem={indentationInRem} level={level + 1} node={childNode} />
+      {node.children.map((childNode) => (
+        <FolderTree level={level + 1} node={childNode} widthInRem={widthInRem}/>
       ))}
     </>
   )
 }
-
-// TODO: import this in Main an test the component 
-// TODO: generate the structure (MenuProps) and calculate the longest text (in the deepest level)+ the deepest level, to set the width for the menu items in BaseMenu
 
 function Menu(menuProps: MenuProps) {
   return (

@@ -9,7 +9,7 @@ import Pagination from '@mui/material/Pagination'
 import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import { ReactNode, useState } from 'react'
-import { FOLDER_OPEN_ICON_MARGIN_RIGHT_IN_REM } from '../../../style-constants'
+import { ICON_MARGIN_RIGHT_IN_REM } from '../../../style-constants'
 
 type BookmarkFolderProps = {
   folderName: string
@@ -56,7 +56,7 @@ function BookmarkFolder({ folderName, index, pageSize, children }: BookmarkFolde
         onMouseDown={(event) => event.preventDefault()} // Prevents focus
       >
         <FolderOpen
-          sx={{ marginRight: `${FOLDER_OPEN_ICON_MARGIN_RIGHT_IN_REM}rem`, height: 'auto' }}
+          sx={{ marginRight: `${ICON_MARGIN_RIGHT_IN_REM}rem`, height: 'auto' }}
         />
         <Typography component="span" sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
           {folderName}
