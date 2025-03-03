@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react'
 import { ICON_MARGIN_RIGHT_IN_REM, MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style-constants'
 import BaseMenu from '../../BaseMenu'
 
+
 type TreeNode = {
   name: string
   children: TreeNode[]
@@ -54,7 +55,7 @@ function FolderTree({ level, node, widthInRem, isVisible}: FolderTreeProps) {
             <ArrowDropDown />
           </IconButton>
         ) : !isOpen || node.children.length == 0 ? (
-          <IconButton onClick={handleIconButtonClick}>
+          <IconButton onClick={handleIconButtonClick} sx={{'&:hover': {backgroundColor: 'inherit'}}}>
             <ArrowRightIcon sx={{ fill: `${node.children.length === 0 ? 'none' : 'white'}` }} />
           </IconButton>
         ) : (
