@@ -5,41 +5,57 @@ import { Box } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import ListItem from '@mui/material/ListItem'
 import Typography from '@mui/material/Typography'
-import { MENU_FOLDER_TREE_INDENT_IN_REM, ICON_MARGIN_RIGHT_IN_REM } from '../../../style-constants'
+import { useState, useEffect } from 'react'
+import { ICON_MARGIN_RIGHT_IN_REM, MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style-constants'
 import BaseMenu from '../../BaseMenu'
 
 type TreeNode = {
   name: string
-  isOpen: boolean
   children: TreeNode[]
 }
 
 type FolderTreeProps = {
   node: TreeNode
   level: number
-  widthInRem: number 
+  widthInRem: number
+  isVisible: boolean
 }
 
-type MenuProps = FolderTreeProps
+type MenuProps = {
+  node: TreeNode
+  level: number
+  widthInRem: number
+}
 
-function FolderTree({ level, node, widthInRem }: FolderTreeProps) {
-  const display = `${node.isOpen ? 'flex' : 'flex'}`
+function FolderTree({ level, node, widthInRem, isVisible}: FolderTreeProps) {
+  const [isOpen, setIsOpen] = useState(isVisible)
   const totalIndentationInRem = level * MENU_FOLDER_TREE_INDENT_IN_REM
+
+  const handleIconButtonClick = () => {
+    setIsOpen(!isOpen)
+  }
+
+  useEffect(() => {
+    if (!isVisible)
+      setIsOpen(false)
+  }, [isVisible])
+
+  console.log(isOpen)
 
   return (
     <>
       <ListItem
         disablePadding
-        sx={{ width: `${widthInRem}rem`, display: `${display}` }}
+        sx={{ width: `${widthInRem}rem`, display: `${isVisible ? 'flex' : 'none'}` }}
       >
         <Box sx={{ width: `${totalIndentationInRem}rem` }} />
-        {node.isOpen && node.children.length > 0 ? (
-          <IconButton>
+        {isOpen && node.children.length > 0 ? (
+          <IconButton onClick={handleIconButtonClick}>
             <ArrowDropDown />
           </IconButton>
-        ) : !node.isOpen || node.children.length == 0 ? (
-          <IconButton>
-            <ArrowRightIcon sx={{fill: `${node.children.length === 0 ? 'none' : 'inherit'}`}}/>
+        ) : !isOpen || node.children.length == 0 ? (
+          <IconButton onClick={handleIconButtonClick}>
+            <ArrowRightIcon sx={{ fill: `${node.children.length === 0 ? 'none' : 'white'}` }} />
           </IconButton>
         ) : (
           <></>
@@ -48,7 +64,7 @@ function FolderTree({ level, node, widthInRem }: FolderTreeProps) {
         <Typography>{node.name}</Typography>
       </ListItem>
       {node.children.map((childNode) => (
-        <FolderTree level={level + 1} node={childNode} widthInRem={widthInRem}/>
+        <FolderTree level={level + 1} node={childNode} widthInRem={widthInRem} isVisible={isOpen}/>
       ))}
     </>
   )
@@ -57,7 +73,7 @@ function FolderTree({ level, node, widthInRem }: FolderTreeProps) {
 function Menu(menuProps: MenuProps) {
   return (
     <BaseMenu>
-      <FolderTree {...menuProps} />
+      <FolderTree {...menuProps} isVisible/>
     </BaseMenu>
   )
 }

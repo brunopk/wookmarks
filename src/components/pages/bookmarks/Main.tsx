@@ -25,33 +25,28 @@ function MenuWrapper() {
       widthInRem={widthInRem}
       level={0}
       node={{
-        isOpen: true,
         name: 'Folder 1',
         children: [
           {
             name: 'Folder 1 A',
-            isOpen: true,
             children: [
               {
                 name: 'Folder 1 A I',
-                isOpen: true,
-                children: [{ name: 'Folder 1 A I 1', isOpen: false, children: [] }]
+                children: [{ name: 'Folder 1 A I 1', children: [] }]
               },
-              { name: 'Folder 1 A II', isOpen: true, children: [] },
-              { name: 'Folder 1 A III', isOpen: true, children: [] }
+              { name: 'Folder 1 A II', children: [] },
+              { name: 'Folder 1 A III', children: [] }
             ]
           },
           {
             name: 'Folder 1 B',
-            isOpen: true,
             children: [
               {
                 name: 'Folder 1 B I',
-                isOpen: true,
-                children: [{ name: 'Folder 1 B I 1', isOpen: false, children: [] }]
+                children: [{ name: 'Folder 1 B I 1', children: [] }]
               },
-              { name: 'Folder 1 B II', isOpen: true, children: [] },
-              { name: 'Folder 1 B III', isOpen: true, children: [] }
+              { name: 'Folder 1 B II', children: [] },
+              { name: 'Folder 1 B III', children: [] }
             ]
           }
         ]
