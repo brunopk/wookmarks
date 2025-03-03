@@ -1,14 +1,26 @@
 import { FolderOpen } from '@mui/icons-material'
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
-import { Box } from '@mui/material'
-import IconButton from '@mui/material/IconButton'
+import { Box, IconButton, IconButtonProps, styled } from '@mui/material'
 import ListItem from '@mui/material/ListItem'
 import Typography from '@mui/material/Typography'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { ICON_MARGIN_RIGHT_IN_REM, MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style-constants'
 import BaseMenu from '../../BaseMenu'
 
+const IconButtonWithoutHover = styled(
+  IconButton,
+  {}
+)<IconButtonProps>(() => ({
+  '&:hover': { backgroundColor: 'inherit' }
+}))
+
+const NoIcon = styled(
+  ArrowDropDown,
+  {}
+)<IconButtonProps>(() => ({
+  fill: 'none'
+}))
 
 type TreeNode = {
   name: string
@@ -28,17 +40,16 @@ type MenuProps = {
   widthInRem: number
 }
 
-function FolderTree({ level, node, widthInRem, isVisible}: FolderTreeProps) {
+function FolderTree({ level, node, widthInRem, isVisible }: FolderTreeProps) {
   const [isOpen, setIsOpen] = useState(isVisible)
   const totalIndentationInRem = level * MENU_FOLDER_TREE_INDENT_IN_REM
 
   const handleIconButtonClick = () => {
-    setIsOpen(!isOpen)
+    if (node.children.length > 0) setIsOpen(!isOpen)
   }
 
   useEffect(() => {
-    if (!isVisible)
-      setIsOpen(false)
+    if (!isVisible) setIsOpen(false)
   }, [isVisible])
 
   console.log(isOpen)
@@ -54,10 +65,14 @@ function FolderTree({ level, node, widthInRem, isVisible}: FolderTreeProps) {
           <IconButton onClick={handleIconButtonClick}>
             <ArrowDropDown />
           </IconButton>
-        ) : !isOpen || node.children.length == 0 ? (
-          <IconButton onClick={handleIconButtonClick} sx={{'&:hover': {backgroundColor: 'inherit'}}}>
-            <ArrowRightIcon sx={{ fill: `${node.children.length === 0 ? 'none' : 'white'}` }} />
-          </IconButton>
+        ) : !isOpen && node.children.length != 0? (
+          <IconButtonWithoutHover onClick={handleIconButtonClick}>
+            <ArrowRightIcon />
+          </IconButtonWithoutHover>
+        ) : node.children.length == 0 ? (
+          <IconButtonWithoutHover onClick={handleIconButtonClick}>
+            <NoIcon />
+          </IconButtonWithoutHover>
         ) : (
           <></>
         )}
@@ -65,7 +80,7 @@ function FolderTree({ level, node, widthInRem, isVisible}: FolderTreeProps) {
         <Typography>{node.name}</Typography>
       </ListItem>
       {node.children.map((childNode) => (
-        <FolderTree level={level + 1} node={childNode} widthInRem={widthInRem} isVisible={isOpen}/>
+        <FolderTree level={level + 1} node={childNode} widthInRem={widthInRem} isVisible={isOpen} />
       ))}
     </>
   )
@@ -74,7 +89,7 @@ function FolderTree({ level, node, widthInRem, isVisible}: FolderTreeProps) {
 function Menu(menuProps: MenuProps) {
   return (
     <BaseMenu>
-      <FolderTree {...menuProps} isVisible/>
+      <FolderTree {...menuProps} isVisible />
     </BaseMenu>
   )
 }
