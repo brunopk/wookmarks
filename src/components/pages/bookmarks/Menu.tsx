@@ -63,7 +63,12 @@ function FolderTree({ level, node, widthInRem, isVisible }: FolderTreeProps) {
           width: `${widthInRem}rem`,
           display: `${isVisible ? 'flex' : 'none'}`,
           padding: '0.25rem',
-          ...hoverEffect(theme)
+          backgroundColor: theme.palette.action.selected,
+          '&:hover': {
+            backgroundColor: theme.palette.action.hover
+          },
+          transition: theme.transitions.create('background-color'),
+           cursor: 'pointer'
         }}
       >
         <Box sx={{ width: `${totalIndentationInRem}rem` }} />

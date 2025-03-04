@@ -45,15 +45,17 @@ function BookmarkFolder({ folderName, index, pageSize, children }: BookmarkFolde
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          ...hoverEffect(theme)
+          '&:hover': {
+            backgroundColor: theme.palette.action.hover
+          },
+          transition: theme.transitions.create('background-color'),
+          cursor: 'pointer'
         }}
         aria-controls={`panel${index}bh-content`}
         id={`panel${index}bh-header`}
         onMouseDown={(event) => event.preventDefault()} // Prevents focus
       >
-        <FolderOpen
-          sx={{ marginRight: `${ICON_MARGIN_RIGHT_IN_REM}rem`, height: 'auto' }}
-        />
+        <FolderOpen sx={{ marginRight: `${ICON_MARGIN_RIGHT_IN_REM}rem`, height: 'auto' }} />
         <Typography component="span" sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
           {folderName}
         </Typography>
