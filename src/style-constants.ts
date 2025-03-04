@@ -1,3 +1,0 @@
-export const ICON_MARGIN_RIGHT_IN_REM = 1
-export const DEFAULT_MENU_ITEM_WIDTH_IN_REM = 1
-export const MENU_FOLDER_TREE_INDENT_IN_REM = 1

@@ -9,7 +9,7 @@ import Pagination from '@mui/material/Pagination'
 import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import { ReactNode, useState } from 'react'
-import { ICON_MARGIN_RIGHT_IN_REM } from '../../../style-constants'
+import { ICON_MARGIN_RIGHT_IN_REM, hoverEffect } from '../../../style'
 
 type BookmarkFolderProps = {
   folderName: string
@@ -45,11 +45,7 @@ function BookmarkFolder({ folderName, index, pageSize, children }: BookmarkFolde
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          '&:hover': {
-            backgroundColor:
-              theme.palette.mode == 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.04)'
-          },
-          transition: 'background-color 0.3s'
+          ...hoverEffect(theme)
         }}
         aria-controls={`panel${index}bh-content`}
         id={`panel${index}bh-header`}

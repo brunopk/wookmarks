@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react'
-import { MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style-constants'
+import { MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style'
 import { BaseMenuContext } from '../../BaseMenuContext'
 import Page from '../../Page'
 import Folder from './Folder'

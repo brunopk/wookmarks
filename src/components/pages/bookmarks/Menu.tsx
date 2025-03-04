@@ -5,7 +5,8 @@ import { Box, IconButton, IconButtonProps, styled } from '@mui/material'
 import ListItem from '@mui/material/ListItem'
 import Typography from '@mui/material/Typography'
 import { useEffect, useState } from 'react'
-import { ICON_MARGIN_RIGHT_IN_REM, MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style-constants'
+import { ICON_MARGIN_RIGHT_IN_REM, MENU_FOLDER_TREE_INDENT_IN_REM, hoverEffect } from '../../../style'
+import { useTheme } from '@mui/material/styles'
 import BaseMenu from '../../BaseMenu'
 
 const IconButtonWithoutHover = styled(
@@ -41,6 +42,7 @@ type MenuProps = {
 }
 
 function FolderTree({ level, node, widthInRem, isVisible }: FolderTreeProps) {
+  const theme = useTheme()
   const [isOpen, setIsOpen] = useState(isVisible)
   const totalIndentationInRem = level * MENU_FOLDER_TREE_INDENT_IN_REM
 
@@ -57,15 +59,19 @@ function FolderTree({ level, node, widthInRem, isVisible }: FolderTreeProps) {
   return (
     <>
       <ListItem
-        disablePadding
-        sx={{ width: `${widthInRem}rem`, display: `${isVisible ? 'flex' : 'none'}` }}
+        sx={{
+          width: `${widthInRem}rem`,
+          display: `${isVisible ? 'flex' : 'none'}`,
+          padding: '0.25rem',
+          ...hoverEffect(theme)
+        }}
       >
         <Box sx={{ width: `${totalIndentationInRem}rem` }} />
         {isOpen && node.children.length > 0 ? (
           <IconButton onClick={handleIconButtonClick}>
             <ArrowDropDown />
           </IconButton>
-        ) : !isOpen && node.children.length != 0? (
+        ) : !isOpen && node.children.length != 0 ? (
           <IconButtonWithoutHover onClick={handleIconButtonClick}>
             <ArrowRightIcon />
           </IconButtonWithoutHover>

@@ -1,5 +1,5 @@
 import { Dispatch, ReactNode, createContext, useState } from 'react'
-import {DEFAULT_MENU_ITEM_WIDTH_IN_REM} from '../style-constants'
+import {DEFAULT_MENU_ITEM_WIDTH_IN_REM} from '../style'
 
 type BaseMenuContextProviderProps = {
   children: ReactNode
