@@ -115,6 +115,7 @@ function FolderTree({ level, node, widthInRem, isVisible, selectedId, setSelecte
           isVisible={isOpen}
           selectedId={selectedId}
           setSelectedId={setSelectedId}
+          key={childNode.id}
         />
       ))}
     </>
@@ -133,6 +134,7 @@ function Menu(menuProps: MenuProps) {
           level={0}
           selectedId={selectedId}
           setSelectedId={setSelectedId}
+          key={node.id}
           isVisible
         />
       ))}
