@@ -7,10 +7,12 @@ import {
   IconButtonProps,
   ListItemProps,
   ListItem as MuiListItem,
-  styled
+  styled,
+  SxProps,
+  useTheme
 } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { ICON_MARGIN_RIGHT_IN_REM, MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style'
 import BaseMenu from '../../BaseMenu'
 
@@ -27,10 +29,7 @@ const ListItem = styled(
 )<ListItemProps>(({ theme }) => ({
   padding: '0.25rem',
   transition: theme.transitions.create('background-color'),
-  cursor: 'pointer',
-  '&:hover': {
-    backgroundColor: theme.palette.action.hover
-  }
+  cursor: 'pointer'
 }))
 
 const NoIcon = styled(
@@ -42,6 +41,7 @@ const NoIcon = styled(
 
 type TreeNode = {
   name: string
+  id: number
   children: TreeNode[]
 }
 
@@ -49,7 +49,9 @@ type FolderTreeProps = {
   node: TreeNode
   level: number
   widthInRem: number
-  isVisible: boolean
+  isVisible: boolean,
+  selectedId: number,
+  setSelectedId: Dispatch<SetStateAction<number>>
 }
 
 type MenuProps = {
@@ -58,12 +60,26 @@ type MenuProps = {
   widthInRem: number
 }
 
-function FolderTree({ level, node, widthInRem, isVisible }: FolderTreeProps) {
+function FolderTree({ level, node, widthInRem, isVisible, selectedId, setSelectedId }: FolderTreeProps) {
+  const theme = useTheme()
   const [isOpen, setIsOpen] = useState(isVisible)
   const totalIndentationInRem = level * MENU_FOLDER_TREE_INDENT_IN_REM
 
   const handleIconButtonClick = () => {
     if (node.children.length > 0) setIsOpen(!isOpen)
+  }
+
+  const handleListItemClick = () => {
+    setSelectedId(node.id)
+  }
+
+  const listItemSx: SxProps = {
+    width: `${widthInRem}rem`,
+    display: `${isVisible ? 'flex' : 'none'}`,
+    backgroundColor: `${node.id === selectedId ? theme.palette.action.selected : 'inherit'}`,
+    '&:hover': {
+      backgroundColor: `${node.id !== selectedId ? theme.palette.action.hover : theme.palette.action.selected}`
+    }
   }
 
   useEffect(() => {
@@ -72,12 +88,7 @@ function FolderTree({ level, node, widthInRem, isVisible }: FolderTreeProps) {
 
   return (
     <>
-      <ListItem
-        sx={{
-          width: `${widthInRem}rem`,
-          display: `${isVisible ? 'flex' : 'none'}`
-        }}
-      >
+      <ListItem onClick={handleListItemClick} sx={listItemSx}>
         <Box sx={{ width: `${totalIndentationInRem}rem` }} />
         {isOpen && node.children.length > 0 ? (
           <IconButton onClick={handleIconButtonClick}>
@@ -98,16 +109,25 @@ function FolderTree({ level, node, widthInRem, isVisible }: FolderTreeProps) {
         <Typography>{node.name}</Typography>
       </ListItem>
       {node.children.map((childNode) => (
-        <FolderTree level={level + 1} node={childNode} widthInRem={widthInRem} isVisible={isOpen} />
+        <FolderTree
+          level={level + 1}
+          node={childNode}
+          widthInRem={widthInRem}
+          isVisible={isOpen}
+          selectedId={selectedId}
+          setSelectedId={setSelectedId}
+        />
       ))}
     </>
   )
 }
 
 function Menu(menuProps: MenuProps) {
+  const [selectedId, setSelectedId] = useState<number>(menuProps.node.id)
+
   return (
     <BaseMenu>
-      <FolderTree {...menuProps} isVisible />
+      <FolderTree {...menuProps} isVisible selectedId={selectedId} setSelectedId={setSelectedId}/>
     </BaseMenu>
   )
 }

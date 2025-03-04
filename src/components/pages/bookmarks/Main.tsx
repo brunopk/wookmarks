@@ -12,7 +12,7 @@ function MenuWrapper() {
 
   const maxLevel = 2
   const lastLevelMaxLengthItem = 14
-  const widthInRem = (maxLevel * MENU_FOLDER_TREE_INDENT_IN_REM) + lastLevelMaxLengthItem
+  const widthInRem = maxLevel * MENU_FOLDER_TREE_INDENT_IN_REM + lastLevelMaxLengthItem
 
   useEffect(() => {
     setWidthInRem(widthInRem)
@@ -24,27 +24,32 @@ function MenuWrapper() {
       level={0}
       node={{
         name: 'Folder 1',
+        id: 11,
         children: [
           {
             name: 'Folder 1 A',
+            id: 5,
             children: [
               {
                 name: 'Folder 1 A I',
-                children: [{ name: 'Folder 1 A I 1', children: [] }]
+                id: 2,
+                children: [{ name: 'Folder 1 A I 1', id: 1, children: [] }]
               },
-              { name: 'Folder 1 A II', children: [] },
-              { name: 'Folder 1 A III', children: [] }
+              { name: 'Folder 1 A II', id: 3, children: [] },
+              { name: 'Folder 1 A III', id: 4, children: [] }
             ]
           },
           {
             name: 'Folder 1 B',
+            id: 10,
             children: [
               {
                 name: 'Folder 1 B I',
-                children: [{ name: 'Folder 1 B I 1', children: [] }]
+                id: 9,
+                children: [{ name: 'Folder 1 B I 1', id: 6, children: [] }]
               },
-              { name: 'Folder 1 B II', children: [] },
-              { name: 'Folder 1 B III', children: [] }
+              { name: 'Folder 1 B II', id: 7, children: [] },
+              { name: 'Folder 1 B III', id: 8, children: [] }
             ]
           }
         ]
