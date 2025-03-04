@@ -10,7 +10,7 @@ import Menu from './Menu'
 function MenuWrapper() {
   const { setWidthInRem } = useContext(BaseMenuContext)
 
-  const maxLevel = 2
+  const maxLevel = 3
   const lastLevelMaxLengthItem = 14
   const widthInRem = maxLevel * MENU_FOLDER_TREE_INDENT_IN_REM + lastLevelMaxLengthItem
 
