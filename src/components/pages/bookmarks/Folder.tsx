@@ -1,15 +1,32 @@
 import { FolderOpen } from '@mui/icons-material'
+import {
+  AccordionSummaryProps,
+  AccordionSummary as MuiAccordionSummary,
+  styled
+} from '@mui/material'
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
-import AccordionSummary from '@mui/material/AccordionSummary'
 import Box from '@mui/material/Box'
 import Chip from '@mui/material/Chip'
 import List from '@mui/material/List'
 import Pagination from '@mui/material/Pagination'
-import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import { ReactNode, useState } from 'react'
-import { ICON_MARGIN_RIGHT_IN_REM, hoverEffect } from '../../../style'
+import { ICON_MARGIN_RIGHT_IN_REM } from '../../../style'
+
+const AccordionSummary = styled(
+  MuiAccordionSummary,
+  {}
+)<AccordionSummaryProps>(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  transition: theme.transitions.create('background-color'),
+  cursor: 'pointer',
+  '&:hover': {
+    backgroundColor: theme.palette.action.hover
+  }
+}))
 
 type BookmarkFolderProps = {
   folderName: string
@@ -19,8 +36,6 @@ type BookmarkFolderProps = {
 }
 
 function BookmarkFolder({ folderName, index, pageSize, children }: BookmarkFolderProps) {
-  const theme = useTheme()
-
   const [expanded, setExpanded] = useState<string | false>(false)
 
   const handleChange = (panel: string) => (_: React.SyntheticEvent, isExpanded: boolean) => {
@@ -41,16 +56,6 @@ function BookmarkFolder({ folderName, index, pageSize, children }: BookmarkFolde
   return (
     <Accordion expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
       <AccordionSummary
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          '&:hover': {
-            backgroundColor: theme.palette.action.hover
-          },
-          transition: theme.transitions.create('background-color'),
-          cursor: 'pointer'
-        }}
         aria-controls={`panel${index}bh-content`}
         id={`panel${index}bh-header`}
         onMouseDown={(event) => event.preventDefault()} // Prevents focus

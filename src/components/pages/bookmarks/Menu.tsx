@@ -1,12 +1,17 @@
 import { FolderOpen } from '@mui/icons-material'
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
-import { Box, IconButton, IconButtonProps, styled } from '@mui/material'
-import ListItem from '@mui/material/ListItem'
+import {
+  Box,
+  IconButton,
+  IconButtonProps,
+  ListItemProps,
+  ListItem as MuiListItem,
+  styled
+} from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { useEffect, useState } from 'react'
-import { ICON_MARGIN_RIGHT_IN_REM, MENU_FOLDER_TREE_INDENT_IN_REM, hoverEffect } from '../../../style'
-import { useTheme } from '@mui/material/styles'
+import { ICON_MARGIN_RIGHT_IN_REM, MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style'
 import BaseMenu from '../../BaseMenu'
 
 const IconButtonWithoutHover = styled(
@@ -14,6 +19,18 @@ const IconButtonWithoutHover = styled(
   {}
 )<IconButtonProps>(() => ({
   '&:hover': { backgroundColor: 'inherit' }
+}))
+
+const ListItem = styled(
+  MuiListItem,
+  {}
+)<ListItemProps>(({ theme }) => ({
+  padding: '0.25rem',
+  transition: theme.transitions.create('background-color'),
+  cursor: 'pointer',
+  '&:hover': {
+    backgroundColor: theme.palette.action.hover
+  }
 }))
 
 const NoIcon = styled(
@@ -42,7 +59,6 @@ type MenuProps = {
 }
 
 function FolderTree({ level, node, widthInRem, isVisible }: FolderTreeProps) {
-  const theme = useTheme()
   const [isOpen, setIsOpen] = useState(isVisible)
   const totalIndentationInRem = level * MENU_FOLDER_TREE_INDENT_IN_REM
 
@@ -61,14 +77,7 @@ function FolderTree({ level, node, widthInRem, isVisible }: FolderTreeProps) {
       <ListItem
         sx={{
           width: `${widthInRem}rem`,
-          display: `${isVisible ? 'flex' : 'none'}`,
-          padding: '0.25rem',
-          backgroundColor: theme.palette.action.selected,
-          '&:hover': {
-            backgroundColor: theme.palette.action.hover
-          },
-          transition: theme.transitions.create('background-color'),
-           cursor: 'pointer'
+          display: `${isVisible ? 'flex' : 'none'}`
         }}
       >
         <Box sx={{ width: `${totalIndentationInRem}rem` }} />
