@@ -37,11 +37,24 @@ function FolderItem({ icon, color = 'action', typographySx = {}, text }: FolderI
 
   const handleClick = () => {}
 
+  const boxSx: SxProps = {
+    display: 'flex', 
+    padding: '0.25rem 1em',
+    transition: theme.transitions.create('background-color'), 
+    '&:hover': {
+      backgroundColor: theme.palette.action.hover
+    },
+  }
+
+  const listItemTextSx: SxProps = {
+    display: 'flex',
+    alignItems: 'center',
+    flexGrow: 1,
+    transition: 'none'
+  }
+
   return (
-    <Box onClick={handleClick} sx={{display: 'flex', '&:hover': {
-            backgroundColor: theme.palette.mode == 'dark'? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.04)'
-          },
-          transition: 'background-color 0.3s', padding: '0.25rem 1em'}}>
+    <Box onClick={handleClick} sx={boxSx}>
       <ListItemIcon sx={{alignItems: 'center' }}>
         {(() => {
           switch (icon) {
@@ -60,7 +73,7 @@ function FolderItem({ icon, color = 'action', typographySx = {}, text }: FolderI
             {text}
           </Typography>
         }
-        sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, transition: 'none'}}
+        sx={listItemTextSx}
         color={color}
       />
       <IconButton
