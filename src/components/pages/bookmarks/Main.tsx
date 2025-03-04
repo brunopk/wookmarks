@@ -14,8 +14,6 @@ function MenuWrapper() {
   const lastLevelMaxLengthItem = 14
   const widthInRem = (maxLevel * MENU_FOLDER_TREE_INDENT_IN_REM) + lastLevelMaxLengthItem
 
-  console.log(widthInRem)
-
   useEffect(() => {
     setWidthInRem(widthInRem)
   }, [setWidthInRem, widthInRem])
