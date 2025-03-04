@@ -70,8 +70,6 @@ function FolderTree({ level, node, widthInRem, isVisible }: FolderTreeProps) {
     if (!isVisible) setIsOpen(false)
   }, [isVisible])
 
-  console.log(isOpen)
-
   return (
     <>
       <ListItem

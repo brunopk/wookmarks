@@ -41,9 +41,7 @@ function FolderItem({ icon, color = 'action', typographySx = {}, text }: FolderI
     setAnchorEl(null)
   }
 
-  const handleClick = () => {
-    console.log('Handle click')
-  }
+  const handleClick = () => {}
 
   return (
     <Box onClick={handleClick} sx={{display: 'flex', '&:hover': {
