@@ -55,8 +55,7 @@ type FolderTreeProps = {
 }
 
 type MenuProps = {
-  node: TreeNode
-  level: number
+  node: TreeNode[]
   widthInRem: number
 }
 
@@ -123,11 +122,20 @@ function FolderTree({ level, node, widthInRem, isVisible, selectedId, setSelecte
 }
 
 function Menu(menuProps: MenuProps) {
-  const [selectedId, setSelectedId] = useState<number>(menuProps.node.id)
+  const [selectedId, setSelectedId] = useState<number>(menuProps.node[0].id)
 
   return (
     <BaseMenu>
-      <FolderTree {...menuProps} isVisible selectedId={selectedId} setSelectedId={setSelectedId}/>
+      {menuProps.node.map((node) => (
+        <FolderTree
+          node={node}
+          widthInRem={menuProps.widthInRem}
+          level={0}
+          selectedId={selectedId}
+          setSelectedId={setSelectedId}
+          isVisible
+        />
+      ))}
     </BaseMenu>
   )
 }

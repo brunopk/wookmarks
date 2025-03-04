@@ -21,8 +21,7 @@ function MenuWrapper() {
   return (
     <Menu
       widthInRem={widthInRem}
-      level={0}
-      node={{
+      node={[{
         name: 'Folder 1',
         id: 11,
         children: [
@@ -53,7 +52,11 @@ function MenuWrapper() {
             ]
           }
         ]
-      }}
+      }, {
+        name: 'Folder 2',
+        id: 12,
+        children: []
+      }]}
     />
   )
 }
