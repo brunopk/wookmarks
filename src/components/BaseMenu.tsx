@@ -37,14 +37,14 @@ function BaseMenu({ children  }: BaseMenuProps) {
     <>
       {typeof children !== 'undefined' ? (
         <>
-          <Divider sx={{ width: `${widthInRem}rem` }} />
+          <Divider sx={{ width: `${widthInRem == null ? 'auto' : widthInRem}rem` }} />
           <List>{children}</List>
-          <Divider sx={{ width: `${widthInRem}rem` }} />
+          <Divider sx={{ width: `${widthInRem == null ? 'auto' : widthInRem}rem` }} />
         </>
       ) : (
         <></>
       )}
-      <List sx={{ width: `${widthInRem}rem` }}>
+      <List sx={{ width: `${widthInRem == null ? 'auto' : widthInRem}rem` }}>
         <ListItem key={0} onClick={() => handleBookmarksItemClick()} disablePadding>
           <ListItemButton selected={location.pathname.startsWith(bookmarksPath)}>
             <ListItemIcon>

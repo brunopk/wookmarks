@@ -1,22 +1,21 @@
 import { Dispatch, ReactNode, createContext, useState } from 'react'
-import {DEFAULT_MENU_ITEM_WIDTH_IN_REM} from '../style'
 
 type BaseMenuContextProviderProps = {
   children: ReactNode
 }
 
 type BaseMenuContextProps = {
-  widthInRem: number
+  widthInRem: number | null
   setWidthInRem: Dispatch<number>
 }
 
 const BaseMenuContext = createContext<BaseMenuContextProps>({
-  widthInRem: DEFAULT_MENU_ITEM_WIDTH_IN_REM,
+  widthInRem: null,
   setWidthInRem: () => null
 })
 
 function BaseMenuContextProvider({children}: BaseMenuContextProviderProps) {
-  const [widthInRem, setWidthInRem] = useState<number>(DEFAULT_MENU_ITEM_WIDTH_IN_REM)
+  const [widthInRem, setWidthInRem] = useState<number | null>(null)
   
   return (
     <BaseMenuContext.Provider value={{widthInRem, setWidthInRem}}>
