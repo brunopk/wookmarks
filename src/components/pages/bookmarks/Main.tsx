@@ -2,9 +2,9 @@ import { useContext, useEffect } from 'react'
 import { MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style'
 import { BaseMenuContext } from '../../BaseMenuContext'
 import Page from '../../Page'
-import Folder from './Folder'
-import Link from './FolderItemLink'
-import SubFolder from './FolderItemSubFolder'
+import Folder from './folder-tree/Folder'
+import Link from './folder-tree/FolderItemLink'
+import SubFolder from './folder-tree/FolderItemSubFolder'
 import Menu from './Menu'
 
 function MenuWrapper() {

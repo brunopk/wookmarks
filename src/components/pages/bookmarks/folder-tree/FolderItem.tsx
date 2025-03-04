@@ -12,17 +12,11 @@ import Box from '@mui/material/Box'
 import { useTheme } from '@mui/material/styles';
 
 
-
-type FolderItemMenuEntry = {
-  text: string
-}
-
 type FolderItemProps = {
   text: string
   icon: 'link' | 'folder'
   typographySx?: SxProps<Theme>
   color?: 'error' | 'action'
-  menu: FolderItemMenuEntry[]
 }
 
 

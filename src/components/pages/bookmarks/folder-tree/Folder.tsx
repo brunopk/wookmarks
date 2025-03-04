@@ -12,7 +12,7 @@ import List from '@mui/material/List'
 import Pagination from '@mui/material/Pagination'
 import Typography from '@mui/material/Typography'
 import { ReactNode, useState } from 'react'
-import { ICON_MARGIN_RIGHT_IN_REM } from '../../../style'
+import { ICON_MARGIN_RIGHT_IN_REM } from '../../../../style'
 
 const AccordionSummary = styled(
   MuiAccordionSummary,
