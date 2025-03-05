@@ -35,9 +35,9 @@ function BaseMenu({ children  }: BaseMenuProps) {
 
   return (
     <>
+      <Divider sx={{ width: `${widthInRem == null ? 'auto' : widthInRem}rem` }} />
       {typeof children !== 'undefined' ? (
         <>
-          <Divider sx={{ width: `${widthInRem == null ? 'auto' : widthInRem}rem` }} />
           <List>{children}</List>
           <Divider sx={{ width: `${widthInRem == null ? 'auto' : widthInRem}rem` }} />
         </>
