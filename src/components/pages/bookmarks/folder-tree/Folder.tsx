@@ -67,19 +67,16 @@ function BookmarkFolder({ folderName, index, pageSize, children }: BookmarkFolde
         <Chip
           label="🔴 45"
           sx={{ marginRight: '1rem', fontWeight: 'bold' }}
-          color="error"
           variant="outlined"
         />
         <Chip
           label="🟡 70"
           sx={{ marginRight: '1rem', fontWeight: 'bold' }}
-          color="warning"
           variant="outlined"
         />
         <Chip
           label="🟢 80"
           sx={{ marginRight: '1rem', fontWeight: 'bold' }}
-          color="success"
           variant="outlined"
         />
       </AccordionSummary>
