@@ -16,7 +16,7 @@ const TextField = Mui.styled(Mui.TextField)<Mui.TextFieldProps>(() => ({
   flex: 1,
 }))
 
-const HorizontalFormLabel = Mui.styled(Mui.FormLabel)<Mui.FormLabelProps>(() => ({
+const RadioButtonFormLabel = Mui.styled(Mui.FormLabel)<Mui.FormLabelProps>(() => ({
   margin: 'auto 1rem auto 0'
 }))
 
@@ -46,9 +46,9 @@ function Main() {
             />
           </Box>
           <Box>
-            <HorizontalFormLabel id="theme-radio-buttons-group-label">
+            <RadioButtonFormLabel id="theme-radio-buttons-group-label">
               Theme
-            </HorizontalFormLabel>
+            </RadioButtonFormLabel>
             <Mui.RadioGroup
               row
               aria-labelledby="theme-radio-buttons-group-label"
