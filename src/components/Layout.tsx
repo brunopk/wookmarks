@@ -13,6 +13,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import { ComponentType, Fragment, ReactNode, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import BaseMenu from './BaseMenu'
 
 const DRAWER_WIDTH = 240
 
@@ -80,8 +81,17 @@ interface AppBarProps extends MuiAppBarProps {
 }
 
 interface LayoutProps {
-  Menu: ComponentType
+  Menu?: ComponentType
   children: ReactNode
+}
+
+interface MenuWrapperProps {
+  Menu?: ComponentType
+}
+
+
+function MenuWrapper({Menu}: MenuWrapperProps) {
+  return typeof Menu === 'undefined' ? <BaseMenu /> : <Menu />
 }
 
 function Layout({ Menu, children }: LayoutProps) {
@@ -190,7 +200,7 @@ function Layout({ Menu, children }: LayoutProps) {
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
-        <Menu />
+        <MenuWrapper Menu={Menu} />
       </Drawer>
       <Main open={open}>
         <DrawerHeader />

@@ -12,7 +12,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { BaseMenuContext} from './BaseMenuContext'
 
 type BaseMenuProps = {
-  children: ReactNode
+  children?: ReactNode
 }
 
 function BaseMenu({ children  }: BaseMenuProps) {
