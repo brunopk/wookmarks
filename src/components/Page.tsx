@@ -3,7 +3,7 @@ import { BaseMenuContextProvider } from '../components/BaseMenuContext'
 import Layout from './Layout'
 
 interface PageProps {
-  Menu: ComponentType
+  Menu?: ComponentType
   children: ReactNode
 }
 function Page({ children, Menu }: PageProps) {
