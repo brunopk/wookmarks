@@ -30,7 +30,6 @@ function Main() {
               id="timeout-textfield"
               label="Scan time out"
               defaultValue="5000"
-              helperText="Defined in seconds"
               variant="filled"
               type="number"
             />
@@ -40,7 +39,6 @@ function Main() {
               id="page-size-textfield"
               label="Page size"
               defaultValue="10"
-              helperText="Links displayed per folder"
               variant="filled"
               type="number"
             />
