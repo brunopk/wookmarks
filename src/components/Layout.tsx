@@ -55,22 +55,26 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   open?: boolean
 }>(({ theme }) => ({
+  position: 'fixed', 
+  top: 0,
+  left: 0,
+  width: '100%',
   flexGrow: 1,
-  padding: '1rem',
+  padding: '2rem 1rem 1rem 1rem',
   transition: theme.transitions.create('margin', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen
   }),
-  marginLeft: `-${DRAWER_WIDTH}px`,
   variants: [
     {
       props: ({ open }) => open,
       style: {
+        left: `${DRAWER_WIDTH}px`,
+        width: `calc(100% - ${DRAWER_WIDTH}px)`,
         transition: theme.transitions.create('margin', {
           easing: theme.transitions.easing.easeOut,
           duration: theme.transitions.duration.enteringScreen
         }),
-        marginLeft: 0
       }
     }
   ]
@@ -200,7 +204,7 @@ function Layout({ Menu, children }: LayoutProps) {
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
-        <MenuWrapper Menu={Menu} />
+        <MenuWrapper />
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
