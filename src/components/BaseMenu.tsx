@@ -36,7 +36,7 @@ function BaseMenu({ children  }: BaseMenuProps) {
   const settingsTitle = 'Settings'
   const handleSettingsClick = () =>
     navigate(SETTINGS_PATH, { state: { page: { title: settingsTitle, isMenuOpen: true } } })
-
+  
   return (
     <>
       <Divider sx={{ width: `${widthInRem == null ? 'auto' : widthInRem}rem` }} />
@@ -65,7 +65,7 @@ function BaseMenu({ children  }: BaseMenuProps) {
             <ListItemText primary={statsTitle} />
           </ListItemButton>
         </ListItem>
-        <ListItem key={1} onClick={() => handleSettingsClick()} disablePadding>
+        <ListItem key={2} onClick={() => handleSettingsClick()} disablePadding>
           <ListItemButton selected={location.pathname.startsWith(SETTINGS_PATH)}>
             <ListItemIcon>
               <SettingsIcon />
@@ -73,7 +73,7 @@ function BaseMenu({ children  }: BaseMenuProps) {
             <ListItemText primary={settingsTitle} />
           </ListItemButton>
         </ListItem>
-        <ListItem key={2} onClick={() => handleBackClick()} disablePadding>
+        <ListItem key={3} onClick={() => handleBackClick()} disablePadding>
           <ListItemButton>
             <ListItemIcon>
               <ArrowBackIcon />
