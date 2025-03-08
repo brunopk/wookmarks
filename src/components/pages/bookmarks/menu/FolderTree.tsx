@@ -1,65 +1,53 @@
 import { FolderOpen } from '@mui/icons-material'
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
-import {
-  Box,
-  IconButton,
-  IconButtonProps,
-  ListItemProps,
-  ListItem as MuiListItem,
-  styled,
-  SxProps,
-  useTheme
-} from '@mui/material'
+import * as Mui from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { ICON_MARGIN_RIGHT_IN_REM, MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style'
+import { ICON_MARGIN_RIGHT_IN_REM, MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../../style'
 
-const IconButtonWithoutHover = styled(
-  IconButton,
+const IconButtonWithoutHover = Mui.styled(
+  Mui.IconButton,
   {}
-)<IconButtonProps>(() => ({
+)<Mui.IconButtonProps>(() => ({
   '&:hover': { backgroundColor: 'inherit' }
 }))
 
-const ListItem = styled(
-  MuiListItem,
+const ListItem = Mui.styled(
+  Mui.ListItem,
   {}
-)<ListItemProps>(({ theme }) => ({
+)<Mui.ListItemProps>(({ theme }) => ({
   padding: '0.25rem',
   transition: theme.transitions.create('background-color'),
   cursor: 'pointer'
 }))
 
-const NoIcon = styled(
+const NoIcon = Mui.styled(
   ArrowDropDown,
   {}
-)<IconButtonProps>(() => ({
+)<Mui.IconButtonProps>(() => ({
   fill: 'none'
 }))
 
-type TreeNode = {
-  name: string
-  id: number
-  children: TreeNode[]
-}
 
 type FolderTreeProps = {
   node: TreeNode
   level: number
   widthInRem: number
-  isVisible: boolean,
-  selectedId: number,
+  isVisible: boolean
+  selectedId: number
   setSelectedId: Dispatch<SetStateAction<number>>
 }
 
-type MenuProps = {
-  nodes: TreeNode[]
-  widthInRem: number
-}
-
-function FolderTree({ level, node, widthInRem, isVisible, selectedId, setSelectedId }: FolderTreeProps) {
-  const theme = useTheme()
+function FolderTree({
+  level,
+  node,
+  widthInRem,
+  isVisible,
+  selectedId,
+  setSelectedId
+}: FolderTreeProps) {
+  const theme = Mui.useTheme()
   const [isOpen, setIsOpen] = useState(isVisible)
   const totalIndentationInRem = level * MENU_FOLDER_TREE_INDENT_IN_REM
 
@@ -71,7 +59,7 @@ function FolderTree({ level, node, widthInRem, isVisible, selectedId, setSelecte
     setSelectedId(node.id)
   }
 
-  const listItemSx: SxProps = {
+  const listItemSx: Mui.SxProps = {
     width: `${widthInRem}rem`,
     display: `${isVisible ? 'flex' : 'none'}`,
     backgroundColor: `${node.id === selectedId ? theme.palette.action.selected : 'inherit'}`,
@@ -87,11 +75,11 @@ function FolderTree({ level, node, widthInRem, isVisible, selectedId, setSelecte
   return (
     <>
       <ListItem onClick={handleListItemClick} sx={listItemSx}>
-        <Box sx={{ width: `${totalIndentationInRem}rem` }} />
+        <Mui.Box sx={{ width: `${totalIndentationInRem}rem` }} />
         {isOpen && node.children.length > 0 ? (
-          <IconButton onClick={handleIconButtonClick}>
+          <Mui.IconButton onClick={handleIconButtonClick}>
             <ArrowDropDown />
-          </IconButton>
+          </Mui.IconButton>
         ) : !isOpen && node.children.length != 0 ? (
           <IconButtonWithoutHover onClick={handleIconButtonClick}>
             <ArrowRightIcon />
@@ -121,24 +109,4 @@ function FolderTree({ level, node, widthInRem, isVisible, selectedId, setSelecte
   )
 }
 
-function Menu({nodes, widthInRem}: MenuProps) {
-  const [selectedId, setSelectedId] = useState<number>(nodes[0].id)
-  
-  return (
-    <>
-      {nodes.map((node) => (
-        <FolderTree
-          node={node}
-          widthInRem={widthInRem}
-          level={0}
-          selectedId={selectedId}
-          setSelectedId={setSelectedId}
-          key={node.id}
-          isVisible
-        />
-      ))}
-    </>
-  )
-}
-
-export default Menu
+export default FolderTree

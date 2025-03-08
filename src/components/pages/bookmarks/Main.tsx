@@ -1,9 +1,9 @@
 import { MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style'
 import Page from '../../Page'
-import Folder from './folder-tree/Folder'
-import Link from './folder-tree/FolderItemLink'
-import SubFolder from './folder-tree/FolderItemSubFolder'
-import Menu from './Menu'
+import Folder from './main/Folder'
+import Link from './main/FolderItemLink'
+import SubFolder from './main/FolderItemSubFolder'
+import Menu from './menu/Menu'
 
 
 function Main() {
