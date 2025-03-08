@@ -1,5 +1,5 @@
 import * as Mui from '@mui/material'
-import Page from '../../Page'
+import Layout from '../../Page'
 
 const Box = Mui.styled(Mui.Box)<Mui.BoxProps>(() => ({
   display: 'flex',
@@ -22,7 +22,7 @@ const RadioButtonFormLabel = Mui.styled(Mui.FormLabel)<Mui.FormLabelProps>(() =>
 
 function Main() {
   return (
-    <Page>
+    <Layout>
       <FormControl>
         <Mui.Box component="form">
           <Box>
@@ -61,7 +61,7 @@ function Main() {
           </Box>
         </Mui.Box>
       </FormControl>
-    </Page>
+    </Layout>
   )
 }
 

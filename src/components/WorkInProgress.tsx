@@ -1,5 +1,5 @@
 import Typography from '@mui/material/Typography'
-import Layout from './Layout'
+import Layout from './Page'
 import BaseMenu from './BaseMenu'
 
 function WorkInProgress() {

@@ -1,6 +1,6 @@
 import { Box, BoxProps, styled, Typography, TypographyProps } from '@mui/material'
 import { ICON_MARGIN_RIGHT_IN_REM } from '../../../style.ts'
-import Page from '../../Page'
+import Layout from '../../Page.tsx'
 
 const PADDING_IN_REM = 0.75
 
@@ -26,7 +26,7 @@ const Row = styled(Box)<BoxProps>(() => ({
 
 function Main() {
   return (
-    <Page>
+    <Layout>
       <Box>
         <Row>
           <Emoji>🔖</Emoji>
@@ -59,7 +59,7 @@ function Main() {
           <Counter>06/03/2024 14:00</Counter>
         </Row>
       </Box>
-    </Page>
+    </Layout>
   )
 }
 

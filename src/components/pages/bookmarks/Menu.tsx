@@ -14,7 +14,6 @@ import {
 import Typography from '@mui/material/Typography'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { ICON_MARGIN_RIGHT_IN_REM, MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style'
-import BaseMenu from '../../BaseMenu'
 
 const IconButtonWithoutHover = styled(
   IconButton,
@@ -55,7 +54,7 @@ type FolderTreeProps = {
 }
 
 type MenuProps = {
-  node: TreeNode[]
+  nodes: TreeNode[]
   widthInRem: number
 }
 
@@ -122,15 +121,15 @@ function FolderTree({ level, node, widthInRem, isVisible, selectedId, setSelecte
   )
 }
 
-function Menu(menuProps: MenuProps) {
-  const [selectedId, setSelectedId] = useState<number>(menuProps.node[0].id)
-
+function Menu({nodes, widthInRem}: MenuProps) {
+  const [selectedId, setSelectedId] = useState<number>(nodes[0].id)
+  
   return (
-    <BaseMenu>
-      {menuProps.node.map((node) => (
+    <>
+      {nodes.map((node) => (
         <FolderTree
           node={node}
-          widthInRem={menuProps.widthInRem}
+          widthInRem={widthInRem}
           level={0}
           selectedId={selectedId}
           setSelectedId={setSelectedId}
@@ -138,7 +137,7 @@ function Menu(menuProps: MenuProps) {
           isVisible
         />
       ))}
-    </BaseMenu>
+    </>
   )
 }
 
