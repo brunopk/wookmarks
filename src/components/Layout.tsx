@@ -204,7 +204,7 @@ function Layout({ Menu, children }: LayoutProps) {
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
-        <MenuWrapper />
+        <MenuWrapper Menu={Menu}/>
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
