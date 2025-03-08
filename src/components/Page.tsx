@@ -3,7 +3,6 @@ import RefreshIcon from '@mui/icons-material/Refresh'
 import * as MuiMaterial from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
-import Chip from '@mui/material/Chip'
 import IconButton from '@mui/material/IconButton'
 import { styled } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
@@ -77,21 +76,6 @@ function Page({ children, menuWidthInRem, Menu }: PageProps) {
           >
             {dashboardTitle}
           </Typography>
-          <Chip
-            label="🔴 45"
-            sx={{ marginRight: '1rem', fontWeight: 'bold', color: 'white' }}
-            variant="outlined"
-          />
-          <Chip
-            label="🟡 70"
-            sx={{ marginRight: '1rem', fontWeight: 'bold', color: 'white' }}
-            variant="outlined"
-          />
-          <Chip
-            label="🟢 80"
-            sx={{ marginRight: '1rem', fontWeight: 'bold', color: 'white' }}
-            variant="outlined"
-          />
           <IconButton color="inherit" onClick={handleRefreshButtonClick}>
             <RefreshIcon />
           </IconButton>
