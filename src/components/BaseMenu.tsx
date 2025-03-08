@@ -18,14 +18,18 @@ import { useNavigate } from 'react-router-dom'
 import { BOOKMARKS_PATH, SETTINGS_PATH, STATS_PATH } from '../config'
 import DrawerHeader from './DrawerHeader'
 
+const DEFAULT_MENU_WIDTH_IN_REM = 15
+
 type BaseMenuProps = {
   Menu?: ReactNode
   open: boolean
-  widthInRem: number
+  widthInRem?: number
   setOpen: Dispatch<boolean>
 }
 
 function BaseMenu({ Menu, open, widthInRem, setOpen }: BaseMenuProps) {
+  widthInRem = typeof widthInRem === 'undefined' ? DEFAULT_MENU_WIDTH_IN_REM : widthInRem
+
   const theme = useTheme()
 
   const handleDrawerClose = () => setOpen(false)

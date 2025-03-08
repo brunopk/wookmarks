@@ -1,22 +1,18 @@
-import MenuIcon from '@mui/icons-material/Menu'
 import RefreshIcon from '@mui/icons-material/Refresh'
-import * as MuiMaterial from '@mui/material'
+import * as Mui from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
 import { styled } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
 import { Fragment, ReactNode, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import BaseMenu from './BaseMenu'
+import DrawerButton from './DrawerButton'
 import DrawerHeader from './DrawerHeader'
 
 const MODAL_ROW_PADDING_IN_REM = 0.25
 
 const MODAL_WIDTH = 500
-
-const DEFAULT_MENU_WIDTH_IN_REM = 15
 
 const Main = styled('main')(() => ({
   position: 'fixed',
@@ -27,7 +23,19 @@ const Main = styled('main')(() => ({
   padding: '2rem 1rem 1rem 1rem'
 }))
 
-interface PageProps {
+const Typography = styled(Mui.Typography)<Mui.TypographyProps>(() => ({
+  display: 'flex',
+  alignItems: 'flex-end',
+  flexGrow: 1
+}))
+
+const DashboardTitle = styled(Mui.Typography)<Mui.TypographyProps>(() => ({
+  paddingLeft: '2rem',
+  display: 'flex',
+  flexGrow: 1
+}))
+
+type PageProps = {
   Menu?: ReactNode
   children: ReactNode
   menuWidthInRem?: number
@@ -54,57 +62,32 @@ function Page({ children, menuWidthInRem, Menu }: PageProps) {
     <Box sx={{ display: 'flex' }}>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={[
-              {
-                mr: 2
-              },
-              drawerOpen && { display: 'none' }
-            ]}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: 'flex', alignItems: 'flex-end', flexGrow: 1 }}
-          >
+          <DrawerButton handleDrawerOpen={handleDrawerOpen} />
+          <DashboardTitle variant="h6" noWrap component="div">
             {dashboardTitle}
-          </Typography>
-          <IconButton color="inherit" onClick={handleRefreshButtonClick}>
+          </DashboardTitle>
+          <Mui.IconButton color="inherit" onClick={handleRefreshButtonClick}>
             <RefreshIcon />
-          </IconButton>
+          </Mui.IconButton>
         </Toolbar>
       </AppBar>
-      <BaseMenu
-        widthInRem={
-          typeof menuWidthInRem === 'undefined' ? DEFAULT_MENU_WIDTH_IN_REM : menuWidthInRem
-        }
-        Menu={Menu}
-        open={drawerOpen}
-        setOpen={setDrawerOpen}
-      />
+      <BaseMenu widthInRem={menuWidthInRem} Menu={Menu} open={drawerOpen} setOpen={setDrawerOpen} />
       <Main>
         <DrawerHeader />
         {children}
       </Main>
       <Fragment>
-        <MuiMaterial.Dialog
+        <Mui.Dialog
           open={modalOpen}
           onClose={handleModalClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
           <Box sx={{ width: `${MODAL_WIDTH}px` }}>
-            <MuiMaterial.DialogTitle id="alert-dialog-title" variant="h5">
+            <Mui.DialogTitle id="alert-dialog-title" variant="h5">
               Bookmark scanning
-            </MuiMaterial.DialogTitle>
-            <MuiMaterial.DialogContent>
+            </Mui.DialogTitle>
+            <Mui.DialogContent>
               <Box sx={{ padding: `${MODAL_ROW_PADDING_IN_REM}rem`, display: 'flex' }}>
                 <Typography sx={{ flex: 0 }}>🔖</Typography>
                 <Typography sx={{ paddingLeft: `${MODAL_ROW_PADDING_IN_REM * 5}rem`, flex: 1 }}>
@@ -152,17 +135,17 @@ function Page({ children, menuWidthInRem, Menu }: PageProps) {
                   padding: `${MODAL_ROW_PADDING_IN_REM * 10}rem 0 ${MODAL_ROW_PADDING_IN_REM}rem ${MODAL_ROW_PADDING_IN_REM}rem`
                 }}
               >
-                <MuiMaterial.LinearProgress />
+                <Mui.LinearProgress />
               </Box>
-            </MuiMaterial.DialogContent>
-            <MuiMaterial.DialogActions>
-              <MuiMaterial.Button onClick={handleModalClose}>Stop</MuiMaterial.Button>
-              <MuiMaterial.Button onClick={handleModalClose} autoFocus>
+            </Mui.DialogContent>
+            <Mui.DialogActions>
+              <Mui.Button onClick={handleModalClose}>Stop</Mui.Button>
+              <Mui.Button onClick={handleModalClose} autoFocus>
                 Start
-              </MuiMaterial.Button>
-            </MuiMaterial.DialogActions>
+              </Mui.Button>
+            </Mui.DialogActions>
           </Box>
-        </MuiMaterial.Dialog>
+        </Mui.Dialog>
       </Fragment>
     </Box>
   )
