@@ -11,8 +11,9 @@ import Chip from '@mui/material/Chip'
 import List from '@mui/material/List'
 import Pagination from '@mui/material/Pagination'
 import Typography from '@mui/material/Typography'
-import { ReactNode, useState } from 'react'
+import { memo, useCallback, useState } from 'react'
 import { ICON_MARGIN_RIGHT_IN_REM } from '../../../../style'
+import FolderItem from './FolderItem'
 
 const AccordionSummary = styled(
   MuiAccordionSummary,
@@ -28,61 +29,83 @@ const AccordionSummary = styled(
   }
 }))
 
-type BookmarkFolderProps = {
+type FolderProps = {
   folderName: string
-  index: number
+  id: number
   pageSize: number
-  children: ReactNode[]
+  items: TreeNode[]
+  selectedItem: number | null
+  onSelectItem: (id: number) => void
+  onDeletionModalOpen: () => void
 }
 
-function BookmarkFolder({ folderName, index, pageSize, children }: BookmarkFolderProps) {
+function Folder({
+  folderName,
+  id,
+  pageSize,
+  items,
+  selectedItem,
+  onSelectItem,
+  onDeletionModalOpen
+}: FolderProps) {
   const [expanded, setExpanded] = useState<string | false>(false)
+
+  const maxPages = Math.ceil(items.length / pageSize)
+
+  const defaultPage = 1 as number
+
+  const [currentPage, setCurrentPage] = useState<number>(defaultPage)
 
   const handleChange = (panel: string) => (_: React.SyntheticEvent, isExpanded: boolean) => {
     setExpanded(isExpanded ? panel : false)
   }
 
-  const maxPages = Math.ceil(children.length / pageSize)
-  const defaultPage = 1 as number
-  const [currentPage, setCurrentPage] = useState<number>(defaultPage)
   const handlePaginationChange = (_: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value)
   }
-  const currentPageItems = children.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize + (pageSize - 1)
+
+  const handleSelectFolderItem = useCallback(
+    (id: number) => {
+      onSelectItem(id)
+    },
+    [onSelectItem]
   )
 
+  const handleOnDeletionModalOpen = useCallback(() => {
+    onDeletionModalOpen()
+  }, [onDeletionModalOpen])
+
   return (
-    <Accordion expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
+    <Accordion expanded={expanded === `panel${id}`} onChange={handleChange(`panel${id}`)}>
       <AccordionSummary
-        aria-controls={`panel${index}bh-content`}
-        id={`panel${index}bh-header`}
+        aria-controls={`panel${id}bh-content`}
+        id={`panel${id}bh-header`}
         onMouseDown={(event) => event.preventDefault()} // Prevents focus
       >
         <FolderOpen sx={{ marginRight: `${ICON_MARGIN_RIGHT_IN_REM}rem`, height: 'auto' }} />
         <Typography component="span" sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
           {folderName}
         </Typography>
-        <Chip
-          label="🔴 45"
-          sx={{ marginRight: '1rem', fontWeight: 'bold' }}
-          variant="outlined"
-        />
-        <Chip
-          label="🟡 70"
-          sx={{ marginRight: '1rem', fontWeight: 'bold' }}
-          variant="outlined"
-        />
-        <Chip
-          label="🟢 80"
-          sx={{ marginRight: '1rem', fontWeight: 'bold' }}
-          variant="outlined"
-        />
+        <Chip label="🔴 45" sx={{ marginRight: '1rem', fontWeight: 'bold' }} variant="outlined" />
+        <Chip label="🟡 70" sx={{ marginRight: '1rem', fontWeight: 'bold' }} variant="outlined" />
+        <Chip label="🟢 80" sx={{ marginRight: '1rem', fontWeight: 'bold' }} variant="outlined" />
       </AccordionSummary>
       <AccordionDetails>
         <List component="nav" aria-labelledby="nested-list-subheader">
-          {currentPageItems}
+          {items
+            .slice((currentPage - 1) * pageSize, currentPage * pageSize + (pageSize - 1))
+            .map((item, index) => (
+              <FolderItem
+                text={item.name}
+                id={item.id}
+                icon={item.isFolder ? 'folder' : 'link'}
+                color="action"
+                key={index}
+                selected={item.id == selectedItem}
+                onSelect={handleSelectFolderItem}
+                onDeletionModalOpen={handleOnDeletionModalOpen}
+              />
+            ))}
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Pagination
               count={maxPages}
@@ -97,4 +120,4 @@ function BookmarkFolder({ folderName, index, pageSize, children }: BookmarkFolde
   )
 }
 
-export default BookmarkFolder
+export default memo(Folder)

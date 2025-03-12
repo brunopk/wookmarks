@@ -1,74 +1,68 @@
-import { Theme } from '@emotion/react'
-import { FolderOpen, Link, MoreVert } from '@mui/icons-material'
-import { SxProps } from '@mui/material'
-import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
+import { FolderOpen, Link } from '@mui/icons-material'
+import * as Mui from '@mui/material'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
-import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import { MouseEvent, useCallback, useState } from 'react'
-import DeletionModal from '../../../modal/ConfirmationModal'
+import FolderItemMenu from './FolderItemMenu'
+
+const Box = Mui.styled(
+  Mui.Box,
+  {}
+)<Mui.BoxProps & { selected: boolean }>(({ theme }) => ({
+  display: 'flex',
+  padding: '0.25rem 1em',
+  transition: theme.transitions.create('background-color'),
+  cursor: 'pointer',
+  '&:hover': {
+    backgroundColor: theme.palette.action.hover
+  },
+  variants: [
+    {
+      props: ({ selected }) => selected,
+      style: {
+        background: theme.palette.action.selected
+      }
+    }
+  ]
+}))
+
+const ListItemText = Mui.styled(
+  Mui.ListItemText,
+  {}
+)<Mui.ListItemTextProps>(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  flexGrow: 1,
+  transition: 'none'
+}))
 
 type FolderItemProps = {
   text: string
+  id: number
   icon: 'link' | 'folder'
-  typographySx?: SxProps<Theme>
+  typographySx?: Mui.SxProps<Mui.Theme>
   color?: 'error' | 'action'
+  selected: boolean
+  onSelect: (id: number) => void
+  onDeletionModalOpen: () => void
 }
 
-function FolderItem({ icon, color = 'action', typographySx = {}, text }: FolderItemProps) {
-  const theme = useTheme()
+function FolderItem({
+  text,
+  id,
+  icon,
+  color = 'action',
+  typographySx = {},
+  selected,
+  onSelect,
+  onDeletionModalOpen
+}: FolderItemProps) {
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const open = Boolean(anchorEl)
-  const handleMoreVertClick = (event: MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation() // Do not propagate event to the whole list item
-    setAnchorEl(event.currentTarget)
-  }
-  const handleCloseMenu = (event: MouseEvent<HTMLElement>) => {
-    event.stopPropagation() // Do not propagate event to the whole list item
-    setAnchorEl(null)
-  }
-
-  const [deletionModalOpen, setDeletionModalOpen] = useState(false)
-
-  const handleDeleteMenuItemClick = () => {
-    setAnchorEl(null)
-    setDeletionModalOpen(true)
-  }
-
-  const handleBookmarkDeletion = useCallback(() => {
-    setDeletionModalOpen(false)
-    alert('Bookmark deleted!')
-  }, [])
-
-  const handleBookmarkDeletionAbort = useCallback(() => {
-    setDeletionModalOpen(false)
-  }, [])
-
-  const handleClick = () => {}
-
-  const boxSx: SxProps = {
-    display: 'flex',
-    padding: '0.25rem 1em',
-    transition: theme.transitions.create('background-color'),
-    '&:hover': {
-      backgroundColor: theme.palette.action.hover
-    }
-  }
-
-  const listItemTextSx: SxProps = {
-    display: 'flex',
-    alignItems: 'center',
-    flexGrow: 1,
-    transition: 'none'
+  const handleClick = () => {
+    onSelect(id)
   }
 
   return (
-    <Box onClick={handleClick} sx={boxSx}>
+    <Box onClick={handleClick} selected={selected}>
       <ListItemIcon sx={{ alignItems: 'center' }}>
         {(() => {
           switch (icon) {
@@ -87,35 +81,9 @@ function FolderItem({ icon, color = 'action', typographySx = {}, text }: FolderI
             {text}
           </Typography>
         }
-        sx={listItemTextSx}
         color={color}
       />
-      <IconButton
-        id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleMoreVertClick}
-      >
-        <MoreVert />
-      </IconButton>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleCloseMenu}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button'
-        }}
-      >
-        <MenuItem onClick={handleDeleteMenuItemClick}>Delete</MenuItem>
-      </Menu>
-      <DeletionModal
-        open={deletionModalOpen}
-        text="Are you sure you want to delete 'Link 1'"
-        onAccept={handleBookmarkDeletion}
-        onCancel={handleBookmarkDeletionAbort}
-      />
+     <FolderItemMenu onDeletionModalOpen={onDeletionModalOpen} />
     </Box>
   )
 }

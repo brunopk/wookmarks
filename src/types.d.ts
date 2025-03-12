@@ -2,5 +2,6 @@
 type TreeNode = {
   name: string
   id: number
-  children: TreeNode[]
+  isFolder: boolean,
+  children?: TreeNode[]
 }

@@ -51,6 +51,9 @@ function FolderTree({
   const [isOpen, setIsOpen] = useState(isVisible)
   const totalIndentationInRem = level * MENU_FOLDER_TREE_INDENT_IN_REM
 
+  if (node.name == "Folder 2")
+    console.log(node.children)
+  
   const handleIconButtonClick = () => {
     if (node.children.length > 0) setIsOpen(!isOpen)
   }
@@ -74,6 +77,7 @@ function FolderTree({
 
   return (
     <>
+      {typeof node.children !== 'undefined' ? (
       <ListItem onClick={handleListItemClick} sx={listItemSx}>
         <Mui.Box sx={{ width: `${totalIndentationInRem}rem` }} />
         {isOpen && node.children.length > 0 ? (
@@ -94,7 +98,8 @@ function FolderTree({
         <FolderOpen sx={{ marginRight: `${ICON_MARGIN_RIGHT_IN_REM}rem` }} />
         <Typography>{node.name}</Typography>
       </ListItem>
-      {node.children.map((childNode) => (
+      ): <></>}
+      {typeof node.children !== 'undefined' && node.children.map((childNode) => (
         <FolderTree
           level={level + 1}
           node={childNode}

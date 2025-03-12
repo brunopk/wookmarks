@@ -1,65 +1,105 @@
+import { useCallback, useState } from 'react'
 import { MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style'
+import DeletionModal from '../../modal/ConfirmationModal'
 import Page from '../../Page'
 import Folder from './main/Folder'
-import Link from './main/FolderItemLink'
-import SubFolder from './main/FolderItemSubFolder'
 import Menu from './menu/Menu'
 
-
 function Main() {
-  const folderPageSize = 8
+  const pageSize = 8
   const maxLevel = 3
   const lastLevelMaxLengthItem = 14
   const menuWidthInRem = maxLevel * MENU_FOLDER_TREE_INDENT_IN_REM + lastLevelMaxLengthItem
-  const nodes = [{
-    name: 'Folder 1',
-    id: 11,
-    children: [
-      {
-        name: 'Folder 1 A',
-        id: 5,
-        children: [
-          {
-            name: 'Folder 1 A I',
-            id: 2,
-            children: [{ name: 'Folder 1 A I 1', id: 1, children: [] }]
-          },
-          { name: 'Folder 1 A II', id: 3, children: [] },
-          { name: 'Folder 1 A III', id: 4, children: [] }
-        ]
-      },
-      {
-        name: 'Folder 1 B',
-        id: 10,
-        children: [
-          {
-            name: 'Folder 1 B I',
-            id: 9,
-            children: [{ name: 'Folder 1 B I 1', id: 6, children: [] }]
-          },
-          { name: 'Folder 1 B II', id: 7, children: [] },
-          { name: 'Folder 1 B III', id: 8, children: [] }
-        ]
-      }
-    ]
-  }, {
-    name: 'Folder 2',
-    id: 12,
-    children: []
-  }]
+  const items: TreeNode[] = [
+    {
+      name: 'Folder 1',
+      id: 11,
+      isFolder: true,
+      children: [
+        {
+          name: 'Folder 1 A',
+          id: 5,
+          isFolder: true,
+          children: [
+            {
+              name: 'Folder 1 A I',
+              id: 2,
+              isFolder: true,
+              children: [{ name: 'Link 1 A I 1', id: 1, isFolder: false }]
+            },
+            { name: 'Folder 1 A II', id: 3, isFolder: true, children: [] },
+            { name: 'Folder 1 A III', id: 4, isFolder: true, children: [] }
+          ]
+        },
+        {
+          name: 'Folder 1 B',
+          id: 10,
+          isFolder: true,
+          children: [
+            {
+              name: 'Folder 1 B I',
+              id: 9,
+              isFolder: true,
+              children: [{ name: 'Link 1 B I 1', id: 6, isFolder: false }]
+            },
+            { name: 'Link 1 B II', id: 7, isFolder: false },
+            { name: 'Link 1 B III', id: 8, isFolder: false }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'Folder 2',
+      id: 12,
+      isFolder: true,
+    }
+  ]
 
-  // TODO: Deletion modal should be here
-  
+  const [deletionModalOpen, setDeletionModalOpen] = useState(false)
+
+  const [selectedFolderItem, setSelectedFolderItem] = useState<number | null>(null)
+
+  const handleSelectFolderItem = useCallback((id: number) => {
+    setSelectedFolderItem(id)
+  }, [])
+
+  const handleBookmarkDeletion = useCallback(() => {
+    setDeletionModalOpen(false)
+    alert('Bookmark deleted!')
+  }, [])
+
+  const handleBookmarkDeletionAbort = useCallback(() => {
+    setDeletionModalOpen(false)
+  }, [])
+
+
+  const handleDeletionModalOpen = useCallback(() => {
+    setDeletionModalOpen(true)
+  }, [])
+
   return (
-    <Page SideBarMenu={<Menu nodes={nodes} widthInRem={menuWidthInRem}/>} menuWidthInRem={menuWidthInRem}>
-      <Folder folderName="Folder 1" pageSize={folderPageSize} index={0}>
-        <SubFolder text="Folder A" />
-        <Link isLinkOff={false} text="Link A" />
-      </Folder>
-      <Folder folderName="Folder 2" pageSize={folderPageSize} index={1}>
-        <Link isLinkOff={false} text="Link C" />
-        <Link isLinkOff={true} text="Link D" />
-      </Folder>
+    <Page
+      SideBarMenu={<Menu nodes={items} widthInRem={menuWidthInRem} />}
+      menuWidthInRem={menuWidthInRem}
+    >
+      {items.map((item, index) => (
+        <Folder
+          folderName={item.name}
+          id={item.id}
+          key={index}
+          items={item.children!}
+          pageSize={pageSize}
+          selectedItem={selectedFolderItem}
+          onSelectItem={handleSelectFolderItem}
+          onDeletionModalOpen={handleDeletionModalOpen}
+        />
+      ))}
+      <DeletionModal
+        open={deletionModalOpen}
+        text="Are you sure you want to delete 'Link 1'"
+        onAccept={handleBookmarkDeletion}
+        onCancel={handleBookmarkDeletionAbort}
+      />
     </Page>
   )
 }
