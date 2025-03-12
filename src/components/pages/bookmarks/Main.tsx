@@ -48,6 +48,8 @@ function Main() {
     children: []
   }]
 
+  // TODO: Deletion modal should be here
+  
   return (
     <Page Menu={<Menu nodes={nodes} widthInRem={menuWidthInRem}/>} menuWidthInRem={menuWidthInRem}>
       <Folder folderName="Folder 1" pageSize={folderPageSize} index={0}>

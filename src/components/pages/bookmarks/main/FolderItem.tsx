@@ -1,16 +1,16 @@
 import { Theme } from '@emotion/react'
 import { FolderOpen, Link, MoreVert } from '@mui/icons-material'
 import { SxProps } from '@mui/material'
+import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import { MouseEvent, useState } from 'react'
-import Box from '@mui/material/Box'
-import { useTheme } from '@mui/material/styles';
-
+import { MouseEvent, useCallback, useState } from 'react'
+import DeletionModal from '../../../modal/ConfirmationModal'
 
 type FolderItemProps = {
   text: string
@@ -19,31 +19,45 @@ type FolderItemProps = {
   color?: 'error' | 'action'
 }
 
-
 function FolderItem({ icon, color = 'action', typographySx = {}, text }: FolderItemProps) {
   const theme = useTheme()
-  
-  
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const handleMoreVertClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation() // Do not propagate event to the whole list item
     setAnchorEl(event.currentTarget)
   }
-  const handleClose = (event: MouseEvent<HTMLElement>) => {
+  const handleCloseMenu = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation() // Do not propagate event to the whole list item
     setAnchorEl(null)
   }
 
+  const [deletionModalOpen, setDeletionModalOpen] = useState(false)
+
+  const handleDeleteMenuItemClick = () => {
+    setAnchorEl(null)
+    setDeletionModalOpen(true)
+  }
+
+  const handleBookmarkDeletion = useCallback(() => {
+    setDeletionModalOpen(false)
+    alert("Bookmark deleted!")
+  }, [])
+
+  const handleBookmarkDeletionAbort = useCallback(() => {
+    setDeletionModalOpen(false)
+  }, [])
+
   const handleClick = () => {}
 
   const boxSx: SxProps = {
-    display: 'flex', 
+    display: 'flex',
     padding: '0.25rem 1em',
-    transition: theme.transitions.create('background-color'), 
+    transition: theme.transitions.create('background-color'),
     '&:hover': {
       backgroundColor: theme.palette.action.hover
-    },
+    }
   }
 
   const listItemTextSx: SxProps = {
@@ -55,7 +69,7 @@ function FolderItem({ icon, color = 'action', typographySx = {}, text }: FolderI
 
   return (
     <Box onClick={handleClick} sx={boxSx}>
-      <ListItemIcon sx={{alignItems: 'center' }}>
+      <ListItemIcon sx={{ alignItems: 'center' }}>
         {(() => {
           switch (icon) {
             case 'folder':
@@ -89,15 +103,14 @@ function FolderItem({ icon, color = 'action', typographySx = {}, text }: FolderI
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={handleCloseMenu}
         MenuListProps={{
           'aria-labelledby': 'basic-button'
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleDeleteMenuItemClick}>Delete</MenuItem>
       </Menu>
+      <DeletionModal open={deletionModalOpen}  text="Are you sure you want to delete 'Link 1'" onAccept={handleBookmarkDeletion} onCancel={handleBookmarkDeletionAbort}/>
     </Box>
   )
 }
