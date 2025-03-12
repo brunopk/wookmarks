@@ -51,7 +51,7 @@ function Main() {
   // TODO: Deletion modal should be here
   
   return (
-    <Page Menu={<Menu nodes={nodes} widthInRem={menuWidthInRem}/>} menuWidthInRem={menuWidthInRem}>
+    <Page SideBarMenu={<Menu nodes={nodes} widthInRem={menuWidthInRem}/>} menuWidthInRem={menuWidthInRem}>
       <Folder folderName="Folder 1" pageSize={folderPageSize} index={0}>
         <SubFolder text="Folder A" />
         <Link isLinkOff={false} text="Link A" />

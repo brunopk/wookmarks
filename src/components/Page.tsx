@@ -27,12 +27,12 @@ const DashboardTitle = styled(Mui.Typography)<Mui.TypographyProps>(() => ({
 }))
 
 type PageProps = {
-  Menu?: ReactNode
+  SideBarMenu?: ReactNode
   children: ReactNode
   menuWidthInRem?: number
 }
 
-function Page({ children, menuWidthInRem, Menu }: PageProps) {
+function Page({ children, menuWidthInRem, SideBarMenu }: PageProps) {
   const location = useLocation()
   const {
     page: { title: dashboardTitle }
@@ -62,7 +62,7 @@ function Page({ children, menuWidthInRem, Menu }: PageProps) {
           </Mui.IconButton>
         </Toolbar>
       </AppBar>
-      <BaseMenu widthInRem={menuWidthInRem} Menu={Menu} open={drawerOpen} setOpen={setDrawerOpen} />
+      <BaseMenu widthInRem={menuWidthInRem} Menu={SideBarMenu} open={drawerOpen} setOpen={setDrawerOpen} />
       <Main>
         <DrawerHeader />
         {children}
