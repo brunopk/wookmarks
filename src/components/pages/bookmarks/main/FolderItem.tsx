@@ -42,7 +42,7 @@ function FolderItem({ icon, color = 'action', typographySx = {}, text }: FolderI
 
   const handleBookmarkDeletion = useCallback(() => {
     setDeletionModalOpen(false)
-    alert("Bookmark deleted!")
+    alert('Bookmark deleted!')
   }, [])
 
   const handleBookmarkDeletionAbort = useCallback(() => {
@@ -110,7 +110,12 @@ function FolderItem({ icon, color = 'action', typographySx = {}, text }: FolderI
       >
         <MenuItem onClick={handleDeleteMenuItemClick}>Delete</MenuItem>
       </Menu>
-      <DeletionModal open={deletionModalOpen}  text="Are you sure you want to delete 'Link 1'" onAccept={handleBookmarkDeletion} onCancel={handleBookmarkDeletionAbort}/>
+      <DeletionModal
+        open={deletionModalOpen}
+        text="Are you sure you want to delete 'Link 1'"
+        onAccept={handleBookmarkDeletion}
+        onCancel={handleBookmarkDeletionAbort}
+      />
     </Box>
   )
 }
