@@ -1,15 +1,40 @@
-import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
-import Box from '@mui/material/Box'
+import * as Mui from '@mui/material'
+import { Box, Dialog } from '@mui/material'
 import { Fragment, memo, ReactNode } from 'react'
+import { MODAL_PADDING_IN_REM } from '../../style'
 
 const MODAL_WIDTH = 500
+
+const DialogTitle = Mui.styled(
+  Mui.DialogTitle,
+  {}
+)<Mui.DialogTitleProps>(() => ({
+  padding: `${MODAL_PADDING_IN_REM * 4}rem ${MODAL_PADDING_IN_REM * 6}rem ${MODAL_PADDING_IN_REM * 6}rem ${MODAL_PADDING_IN_REM * 6}rem`
+}))
+
+const DialogContent = Mui.styled(
+  Mui.DialogContent,
+  {}
+)<Mui.DialogContentProps>(() => ({
+  padding: `inherit ${MODAL_PADDING_IN_REM * 6}rem`
+}))
+
+const DialogActions = Mui.styled(
+  Mui.DialogActions,
+  {}
+)<Mui.DialogActionsProps>(() => ({
+  display: 'flex',
+  flexGrow: 1,
+  justifyContent: 'space-between',
+  padding: `${MODAL_PADDING_IN_REM * 4}rem ${MODAL_PADDING_IN_REM * 6}rem`
+}))
 
 type ModalBaseProps = {
   children: ReactNode
   title: string
   open: boolean
-  primaryActionComponent: ReactNode
-  secondaryActionComponent: ReactNode
+  PrimaryActionButton: ReactNode
+  SecondaryActionButton: ReactNode
   onClose: () => void
 }
 
@@ -17,11 +42,10 @@ function ModalBase({
   children,
   open,
   title,
-  primaryActionComponent,
-  secondaryActionComponent,
+  PrimaryActionButton,
+  SecondaryActionButton,
   onClose
 }: ModalBaseProps) {
-
   const handleModalClose = () => {
     onClose()
   }
@@ -40,8 +64,8 @@ function ModalBase({
           </DialogTitle>
           <DialogContent>{children}</DialogContent>
           <DialogActions>
-            {primaryActionComponent}
-            {secondaryActionComponent}
+            {PrimaryActionButton}
+            {SecondaryActionButton}
           </DialogActions>
         </Box>
       </Dialog>

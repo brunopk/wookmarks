@@ -3,8 +3,8 @@ import { memo } from 'react'
 import ModalBase from './ModalBase'
 
 type ConfirmationModalProps = {
-  open: boolean,
-  text: string,
+  open: boolean
+  text: string
   onAccept: () => void
   onCancel: () => void
 }
@@ -22,8 +22,8 @@ function ModalYesNo({ open, text, onAccept, onCancel }: ConfirmationModalProps) 
     <ModalBase
       title="Bookmark deletion"
       open={open}
-      primaryActionComponent={PrimaryActionButton}
-      secondaryActionComponent={SecondaryActionButton}
+      PrimaryActionButton={PrimaryActionButton}
+      SecondaryActionButton={SecondaryActionButton}
       onClose={() => null}
     >
       <Typography>{text}</Typography>
