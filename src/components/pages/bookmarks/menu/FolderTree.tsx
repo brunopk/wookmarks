@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { ICON_MARGIN_RIGHT_IN_REM, MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../../style'
 
+// TODO: Use styled components
+
 const IconButtonWithoutHover = Mui.styled(
   Mui.IconButton,
   {}

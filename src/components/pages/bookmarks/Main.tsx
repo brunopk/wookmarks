@@ -5,6 +5,8 @@ import Page from '../../Page'
 import Folder from './main/Folder'
 import SideBarMenu from './menu/Main'
 
+// TODO: Implement selection of folders in side menu
+
 function Main() {
   const pageSize = 8
   const maxLevel = 3
