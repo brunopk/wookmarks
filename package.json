@@ -6,6 +6,9 @@
   "author": "Bruno Piaggio <brunopiaggiok@gmail.com>",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "22.13.1"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
