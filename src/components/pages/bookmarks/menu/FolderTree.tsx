@@ -31,7 +31,6 @@ const NoIcon = Mui.styled(
   fill: 'none'
 }))
 
-
 type FolderTreeProps = {
   node: TreeNode
   level: number
@@ -54,7 +53,7 @@ function FolderTree({
   const [isOpen, setIsOpen] = useState(parentIsOpen)
 
   const totalIndentationInRem = level * MENU_FOLDER_TREE_INDENT_IN_REM
-  
+
   const handleIconButtonClick = () => {
     setIsOpen(!isOpen)
   }
@@ -80,15 +79,15 @@ function FolderTree({
     <>
       <ListItem onClick={handleListItemClick} sx={listItemSx}>
         <Mui.Box sx={{ width: `${totalIndentationInRem}rem` }} />
-        {isOpen && typeof node.children !== 'undefined' && node.children.length > 0 ? (
+        {isOpen && node.isAnySubFolder ? (
           <Mui.IconButton onClick={handleIconButtonClick}>
             <ArrowDropDown />
           </Mui.IconButton>
-        ) : !isOpen && typeof node.children !== 'undefined' && node.children.length !== 0 ? (
+        ) : !isOpen && node.isAnySubFolder ? (
           <IconButtonWithoutHover onClick={handleIconButtonClick}>
             <ArrowRightIcon />
           </IconButtonWithoutHover>
-        ) : typeof node.children === 'undefined' || node.children.length == 0 ? (
+        ) : !node.isAnySubFolder ? (
           <IconButtonWithoutHover onClick={handleIconButtonClick}>
             <NoIcon />
           </IconButtonWithoutHover>
@@ -98,17 +97,21 @@ function FolderTree({
         <FolderOpen sx={{ marginRight: `${ICON_MARGIN_RIGHT_IN_REM}rem` }} />
         <Typography>{node.name}</Typography>
       </ListItem>
-      {typeof node.children !== 'undefined' && node.children.map((childNode) => (
-        <FolderTree
-          level={level + 1}
-          node={childNode}
-          widthInRem={widthInRem}
-          parentIsOpen={isOpen}
-          selectedId={selectedId}
-          setSelectedId={setSelectedId}
-          key={childNode.id}
-        />
-      ))}
+      {typeof node.children !== 'undefined' &&
+        node.children.map(
+          (childNode) =>
+            childNode.isFolder && (
+              <FolderTree
+                level={level + 1}
+                node={childNode}
+                widthInRem={widthInRem}
+                parentIsOpen={isOpen}
+                selectedId={selectedId}
+                setSelectedId={setSelectedId}
+                key={childNode.id}
+              />
+            )
+        )}
     </>
   )
 }
