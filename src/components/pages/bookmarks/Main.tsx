@@ -5,7 +5,7 @@ import Page from '../../Page'
 import Folder from './main/Folder'
 import SideBarMenu from './menu/Main'
 
-// TODO: Implement selection of folders in side menu
+// TODO: Update page content changes whenever a folder on the left menu is clicked (folders which not contains subfolders cant't be rendered )
 
 function Main() {
   const pageSize = 8
