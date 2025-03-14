@@ -5,13 +5,13 @@ import MenuItem from '@mui/material/MenuItem'
 import { memo, MouseEvent, useState } from 'react'
 
 
-type FolderItemProps = {
+type FolderItemMenuProps = {
   onDeletionModalOpen: () => void
 }
 
 function FolderItemMenu({
-  onDeletionModalOpen
-}: FolderItemProps) {
+  onDeletionModalOpen,
+}: FolderItemMenuProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const open = Boolean(anchorEl)
@@ -20,6 +20,7 @@ function FolderItemMenu({
     event.stopPropagation() // Do not propagate event to the whole list item
     setAnchorEl(event.currentTarget)
   }
+
   const handleCloseMenu = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation() // Do not propagate event to the whole list item
     setAnchorEl(null)
