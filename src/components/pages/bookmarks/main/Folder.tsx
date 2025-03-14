@@ -50,9 +50,9 @@ function Folder({
 }: FolderProps) {
   const [expanded, setExpanded] = useState<string | false>(false)
 
-  const maxPages = Math.ceil(items.length / pageSize)
+  const defaultPage = 1
 
-  const defaultPage = 1 as number
+  const maxPages = typeof items !== 'undefined' ? Math.ceil(items.length / pageSize) : undefined
 
   const [currentPage, setCurrentPage] = useState<number>(defaultPage)
 
@@ -91,30 +91,34 @@ function Folder({
         <Chip label="🟢 80" sx={{ marginRight: '1rem', fontWeight: 'bold' }} variant="outlined" />
       </AccordionSummary>
       <AccordionDetails>
-        <List component="nav" aria-labelledby="nested-list-subheader">
-          {items
-            .slice((currentPage - 1) * pageSize, currentPage * pageSize + (pageSize - 1))
-            .map((item, index) => (
-              <FolderItem
-                text={item.name}
-                id={item.id}
-                icon={item.isFolder ? 'folder' : 'link'}
-                color="action"
-                key={index}
-                selected={item.id == selectedItem}
-                onSelect={handleSelectFolderItem}
-                onDeletionModalOpen={handleOnDeletionModalOpen}
+        {typeof items === 'undefined' || items.length === 0 ? (
+          <Typography>Empty folder</Typography>
+        ) : (
+          <List component="nav" aria-labelledby="nested-list-subheader">
+            {items
+              .slice((currentPage - 1) * pageSize, currentPage * pageSize + (pageSize - 1))
+              .map((item, index) => (
+                <FolderItem
+                  text={item.name}
+                  id={item.id}
+                  icon={item.isFolder ? 'folder' : 'link'}
+                  color="action"
+                  key={index}
+                  selected={item.id == selectedItem}
+                  onSelect={handleSelectFolderItem}
+                  onDeletionModalOpen={handleOnDeletionModalOpen}
+                />
+              ))}
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Pagination
+                count={maxPages}
+                page={currentPage}
+                defaultPage={defaultPage}
+                onChange={handlePaginationChange}
               />
-            ))}
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Pagination
-              count={maxPages}
-              page={currentPage}
-              defaultPage={defaultPage}
-              onChange={handlePaginationChange}
-            />
-          </Box>
-        </List>
+            </Box>
+          </List>
+        )}
       </AccordionDetails>
     </Accordion>
   )
