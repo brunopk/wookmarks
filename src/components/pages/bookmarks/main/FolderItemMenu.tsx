@@ -17,7 +17,6 @@ function FolderItemMenu({
   const open = Boolean(anchorEl)
 
   const handleMoreVertClick = (event: MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation() // Do not propagate event to the whole list item
     setAnchorEl(event.currentTarget)
   }
 
