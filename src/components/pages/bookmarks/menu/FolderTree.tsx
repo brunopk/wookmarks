@@ -34,7 +34,7 @@ type FolderTreeProps = {
   node: TreeNode
   level: number
   widthInRem: number
-  isVisible: boolean
+  parentIsOpen: boolean
   selectedId: number
   setSelectedId: Dispatch<SetStateAction<number>>
 }
@@ -43,19 +43,18 @@ function FolderTree({
   level,
   node,
   widthInRem,
-  isVisible,
+  parentIsOpen,
   selectedId,
   setSelectedId
 }: FolderTreeProps) {
   const theme = Mui.useTheme()
-  const [isOpen, setIsOpen] = useState(isVisible)
-  const totalIndentationInRem = level * MENU_FOLDER_TREE_INDENT_IN_REM
 
-  if (node.name == "Folder 2")
-    console.log(node.children)
+  const [isOpen, setIsOpen] = useState(parentIsOpen)
+
+  const totalIndentationInRem = level * MENU_FOLDER_TREE_INDENT_IN_REM
   
   const handleIconButtonClick = () => {
-    if (node.children.length > 0) setIsOpen(!isOpen)
+    setIsOpen(!isOpen)
   }
 
   const handleListItemClick = () => {
@@ -64,7 +63,7 @@ function FolderTree({
 
   const listItemSx: Mui.SxProps = {
     width: `${widthInRem}rem`,
-    display: `${isVisible ? 'flex' : 'none'}`,
+    display: `${parentIsOpen ? 'flex' : 'none'}`,
     backgroundColor: `${node.id === selectedId ? theme.palette.action.selected : 'inherit'}`,
     '&:hover': {
       backgroundColor: `${node.id !== selectedId ? theme.palette.action.hover : theme.palette.action.selected}`
@@ -72,23 +71,22 @@ function FolderTree({
   }
 
   useEffect(() => {
-    if (!isVisible) setIsOpen(false)
-  }, [isVisible])
+    if (!parentIsOpen) setIsOpen(false)
+  }, [parentIsOpen])
 
   return (
     <>
-      {typeof node.children !== 'undefined' ? (
       <ListItem onClick={handleListItemClick} sx={listItemSx}>
         <Mui.Box sx={{ width: `${totalIndentationInRem}rem` }} />
-        {isOpen && node.children.length > 0 ? (
+        {isOpen && typeof node.children !== 'undefined' && node.children.length > 0 ? (
           <Mui.IconButton onClick={handleIconButtonClick}>
             <ArrowDropDown />
           </Mui.IconButton>
-        ) : !isOpen && node.children.length != 0 ? (
+        ) : !isOpen && typeof node.children !== 'undefined' && node.children.length !== 0 ? (
           <IconButtonWithoutHover onClick={handleIconButtonClick}>
             <ArrowRightIcon />
           </IconButtonWithoutHover>
-        ) : node.children.length == 0 ? (
+        ) : typeof node.children === 'undefined' || node.children.length == 0 ? (
           <IconButtonWithoutHover onClick={handleIconButtonClick}>
             <NoIcon />
           </IconButtonWithoutHover>
@@ -98,13 +96,12 @@ function FolderTree({
         <FolderOpen sx={{ marginRight: `${ICON_MARGIN_RIGHT_IN_REM}rem` }} />
         <Typography>{node.name}</Typography>
       </ListItem>
-      ): <></>}
       {typeof node.children !== 'undefined' && node.children.map((childNode) => (
         <FolderTree
           level={level + 1}
           node={childNode}
           widthInRem={widthInRem}
-          isVisible={isOpen}
+          parentIsOpen={isOpen}
           selectedId={selectedId}
           setSelectedId={setSelectedId}
           key={childNode.id}

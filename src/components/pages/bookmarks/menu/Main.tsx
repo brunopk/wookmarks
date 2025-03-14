@@ -6,9 +6,9 @@ type MenuProps = {
   widthInRem: number
 }
 
-function Menu({nodes, widthInRem}: MenuProps) {
+function Main({nodes, widthInRem}: MenuProps) {
   const [selectedId, setSelectedId] = useState<number>(nodes[0].id)
-  
+    
   return (
     <>
       {nodes.map((node) => (
@@ -19,11 +19,11 @@ function Menu({nodes, widthInRem}: MenuProps) {
           selectedId={selectedId}
           setSelectedId={setSelectedId}
           key={node.id}
-          isVisible
+          parentIsOpen
         />
       ))}
     </>
   )
 }
 
-export default Menu
+export default Main

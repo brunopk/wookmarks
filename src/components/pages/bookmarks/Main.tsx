@@ -3,7 +3,7 @@ import { MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style'
 import DeletionModal from '../../modal/ConfirmationModal'
 import Page from '../../Page'
 import Folder from './main/Folder'
-import Menu from './menu/Menu'
+import SideBarMenu from './menu/Main'
 
 function Main() {
   const pageSize = 8
@@ -79,7 +79,7 @@ function Main() {
 
   return (
     <Page
-      SideBarMenu={<Menu nodes={items} widthInRem={menuWidthInRem} />}
+      SideBarMenu={<SideBarMenu nodes={items} widthInRem={menuWidthInRem} />}
       menuWidthInRem={menuWidthInRem}
     >
       {items.map((item, index) => (
