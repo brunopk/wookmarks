@@ -4,6 +4,8 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import Typography from '@mui/material/Typography'
 import FolderItemMenu from './FolderItemMenu'
 
+// TODO: use styled components 
+
 const Box = Mui.styled(
   Mui.Box,
   {}
