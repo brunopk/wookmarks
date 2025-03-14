@@ -27,12 +27,14 @@ const DashboardTitle = styled(Mui.Typography)<Mui.TypographyProps>(() => ({
 }))
 
 type PageProps = {
-  SideBarMenu?: ReactNode
+  sideBarMenu?: ReactNode
   children: ReactNode
   menuWidthInRem?: number
 }
 
-function Page({ children, menuWidthInRem, SideBarMenu }: PageProps) {
+// TODO: check if folders are rendered multiple times whenever a snackbar changes
+
+function Page({ children, menuWidthInRem, sideBarMenu}: PageProps) {
   const location = useLocation()
   const {
     page: { title: dashboardTitle }
@@ -62,7 +64,7 @@ function Page({ children, menuWidthInRem, SideBarMenu }: PageProps) {
           </Mui.IconButton>
         </Toolbar>
       </AppBar>
-      <BaseMenu widthInRem={menuWidthInRem} Menu={SideBarMenu} open={drawerOpen} setOpen={setDrawerOpen} />
+      <BaseMenu widthInRem={menuWidthInRem} content={sideBarMenu} open={drawerOpen} setOpen={setDrawerOpen} />
       <Main>
         <DrawerHeader />
         {children}

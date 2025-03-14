@@ -21,13 +21,13 @@ import DrawerHeader from './DrawerHeader'
 const DEFAULT_MENU_WIDTH_IN_REM = 15
 
 type BaseMenuProps = {
-  Menu?: ReactNode
+  content?: ReactNode
   open: boolean
   widthInRem?: number
   setOpen: Dispatch<boolean>
 }
 
-function BaseMenu({ Menu, open, widthInRem, setOpen }: BaseMenuProps) {
+function BaseMenu({ content, open, widthInRem, setOpen }: BaseMenuProps) {
   widthInRem = typeof widthInRem === 'undefined' ? DEFAULT_MENU_WIDTH_IN_REM : widthInRem
 
   const theme = useTheme()
@@ -58,9 +58,9 @@ function BaseMenu({ Menu, open, widthInRem, setOpen }: BaseMenuProps) {
           </IconButton>
         </DrawerHeader>
         <Divider sx={{ width: `${widthInRem}rem` }} />
-        {typeof Menu !== 'undefined' ? (
+        {typeof content !== 'undefined' ? (
           <>
-            <List>{Menu}</List>
+            <List>{content}</List>
             <Divider sx={{ width: `${widthInRem}rem` }} />
           </>
         ) : (

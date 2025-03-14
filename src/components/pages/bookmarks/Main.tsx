@@ -53,11 +53,11 @@ function Main() {
     {
       name: 'Folder 2',
       id: 12,
-      isFolder: true,
+      isFolder: true
     }
   ]
 
-  const [deletionModalOpen, setDeletionModalOpen] = useState(false)
+  const [isDeletionModalOpen, setIsDeletionModalOpen] = useState(false)
 
   const [selectedFolderItem, setSelectedFolderItem] = useState<number | null>(null)
 
@@ -66,22 +66,20 @@ function Main() {
   }, [])
 
   const handleBookmarkDeletion = useCallback(() => {
-    setDeletionModalOpen(false)
-    alert('Bookmark deleted!')
+    setIsDeletionModalOpen(false)
   }, [])
 
   const handleBookmarkDeletionAbort = useCallback(() => {
-    setDeletionModalOpen(false)
+    setIsDeletionModalOpen(false)
   }, [])
 
-
   const handleDeletionModalOpen = useCallback(() => {
-    setDeletionModalOpen(true)
+    setIsDeletionModalOpen(true)
   }, [])
 
   return (
     <Page
-      SideBarMenu={<SideBarMenu nodes={items} widthInRem={menuWidthInRem} />}
+      sideBarMenu={<SideBarMenu nodes={items} widthInRem={menuWidthInRem} />}
       menuWidthInRem={menuWidthInRem}
     >
       {items.map((item, index) => (
@@ -97,7 +95,7 @@ function Main() {
         />
       ))}
       <DeletionModal
-        open={deletionModalOpen}
+        open={isDeletionModalOpen}
         text="Are you sure you want to delete 'Link 1'"
         onAccept={handleBookmarkDeletion}
         onCancel={handleBookmarkDeletionAbort}
