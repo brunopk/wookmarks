@@ -12,7 +12,7 @@ import List from '@mui/material/List'
 import Pagination from '@mui/material/Pagination'
 import Typography from '@mui/material/Typography'
 import { memo, useCallback, useState } from 'react'
-import { ICON_MARGIN_RIGHT_IN_REM } from '../../../../style'
+import { ICON_MARGIN_RIGHT_IN_REM } from '../../../style'
 import FolderItem from './FolderItem'
 
 // TODO: Refactoring : pass components to styled components

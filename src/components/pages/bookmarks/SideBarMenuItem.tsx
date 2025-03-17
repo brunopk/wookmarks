@@ -4,7 +4,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import * as Mui from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { ICON_MARGIN_RIGHT_IN_REM, MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../../style'
+import { ICON_MARGIN_RIGHT_IN_REM, MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style'
 
 // TODO: Use styled components
 
@@ -40,7 +40,7 @@ type FolderTreeProps = {
   setSelectedId: Dispatch<SetStateAction<number>>
 }
 
-function FolderTree({
+function SideBarMenuItem({
   level,
   node,
   widthInRem,
@@ -101,7 +101,7 @@ function FolderTree({
         node.children.map(
           (childNode) =>
             childNode.isFolder && (
-              <FolderTree
+              <SideBarMenuItem
                 level={level + 1}
                 node={childNode}
                 widthInRem={widthInRem}
@@ -116,4 +116,4 @@ function FolderTree({
   )
 }
 
-export default FolderTree
+export default SideBarMenuItem

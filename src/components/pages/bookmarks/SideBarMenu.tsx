@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import FolderTree from './FolderTree'
+import SideBarMenuItem from './SideBarMenuItem'
 
 type MenuProps = {
   nodes: TreeNode[]
   widthInRem: number
 }
 
-function Main({ nodes, widthInRem }: MenuProps) {
+function SideBarMenu({ nodes, widthInRem }: MenuProps) {
   const [selectedId, setSelectedId] = useState<number>(nodes[0].id)
 
   return (
@@ -14,7 +14,7 @@ function Main({ nodes, widthInRem }: MenuProps) {
       {nodes.map(
         (node) =>
           node.isFolder && (
-            <FolderTree
+            <SideBarMenuItem
               node={node}
               widthInRem={widthInRem}
               level={0}
@@ -29,4 +29,4 @@ function Main({ nodes, widthInRem }: MenuProps) {
   )
 }
 
-export default Main
+export default SideBarMenu

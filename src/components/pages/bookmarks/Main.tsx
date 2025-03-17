@@ -3,8 +3,8 @@ import useSnackBar from '../../../hooks/useSnackBar'
 import { MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style'
 import DeletionModal from '../../modal/ConfirmationModal'
 import Page from '../../Page'
-import Folder from './main/Folder'
-import SideBarMenu from './menu/Main'
+import Folder from './Folder'
+import SideBarMenu from './SideBarMenu'
 
 // TODO: Update page content changes whenever a folder on the left menu is clicked (folders which not contains subfolders cant't be rendered )
 
