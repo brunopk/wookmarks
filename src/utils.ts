@@ -8,5 +8,4 @@
 /*async function scanBookmarkTree(maxNodes: number): Promise<BookmarksTreeScanResult> {
   const tree = await chrome.bookmarks.getTree()
   console.log(tree)
-  // TODO: continue here
 }*/
