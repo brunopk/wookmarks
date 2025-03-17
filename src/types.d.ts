@@ -6,3 +6,7 @@ type TreeNode = {
   isAnySubFolder: boolean,
   children?: TreeNode[]
 }
+
+type SnackBarMessage = {
+  text: string
+}

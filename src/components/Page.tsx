@@ -4,12 +4,13 @@ import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
-import { ReactNode, useCallback, useState } from 'react'
+import { memo, ReactNode, useCallback, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import BaseMenu from './BaseMenu'
 import DrawerButton from './DrawerButton'
 import DrawerHeader from './DrawerHeader'
 import ScanningModal from './modal/ScanningModal'
+import SnackBar from './SnackBar'
 
 const Main = styled('main')(() => ({
   position: 'fixed',
@@ -32,15 +33,17 @@ type PageProps = {
   menuWidthInRem?: number
 }
 
-// TODO: check if folders are rendered multiple times whenever a snackbar changes
-
-function Page({ children, menuWidthInRem, sideBarMenu}: PageProps) {
+function Page({ children, menuWidthInRem, sideBarMenu }: PageProps) {
   const location = useLocation()
+
   const {
     page: { title: dashboardTitle }
   } = location.state || { page: { title: '' } }
 
   const [modalOpen, setModalOpen] = useState<boolean>(false)
+
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false)
+
   const handleRefreshButtonClick = () => {
     setModalOpen(true)
   }
@@ -48,7 +51,6 @@ function Page({ children, menuWidthInRem, sideBarMenu}: PageProps) {
     setModalOpen(false)
   }, [])
 
-  const [drawerOpen, setDrawerOpen] = useState<boolean>(false)
   const handleDrawerOpen = () => setDrawerOpen(true)
 
   return (
@@ -64,12 +66,18 @@ function Page({ children, menuWidthInRem, sideBarMenu}: PageProps) {
           </Mui.IconButton>
         </Toolbar>
       </AppBar>
-      <BaseMenu widthInRem={menuWidthInRem} content={sideBarMenu} open={drawerOpen} setOpen={setDrawerOpen} />
       <Main>
         <DrawerHeader />
         {children}
       </Main>
+      <BaseMenu
+        widthInRem={menuWidthInRem}
+        content={sideBarMenu}
+        open={drawerOpen}
+        setOpen={setDrawerOpen}
+      />
       <ScanningModal open={modalOpen} onClose={handleModalClose} />
+      <SnackBar />
     </Box>
   )
 }

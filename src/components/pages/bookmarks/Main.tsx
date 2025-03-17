@@ -1,4 +1,5 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
+import useSnackBar from '../../../hooks/useSnackBar'
 import { MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style'
 import DeletionModal from '../../modal/ConfirmationModal'
 import Page from '../../Page'
@@ -7,12 +8,14 @@ import SideBarMenu from './menu/Main'
 
 // TODO: Update page content changes whenever a folder on the left menu is clicked (folders which not contains subfolders cant't be rendered )
 
+// TODO: prevent re-renders, for instance when three dots menu is clicked for an item in "Folder 1", "Folder 2" should not be re-rendered
+
 function Main() {
   const pageSize = 8
   const maxLevel = 3
   const lastLevelMaxLengthItem = 14
   const menuWidthInRem = maxLevel * MENU_FOLDER_TREE_INDENT_IN_REM + lastLevelMaxLengthItem
-  const itemsById: { [id: number]: TreeNode } = {
+  const itemsById: { [id: number]: TreeNode } = useMemo(() => ({
     11: { name: 'Folder 1', id: 11, isFolder: true, isAnySubFolder: true },
     5: { name: 'Folder 1 A', id: 5, isFolder: true, isAnySubFolder: true },
     2: { name: 'Folder 1 A I', id: 2, isFolder: true, isAnySubFolder: false },
@@ -26,7 +29,7 @@ function Main() {
     8: { name: 'Link C', id: 8, isFolder: false, isAnySubFolder: false },
     12: { name: 'Folder 2', id: 12, isFolder: true, isAnySubFolder: false },
     13: { name: 'Link D', id: 13, isFolder: false, isAnySubFolder: false }
-  }
+  }), [])
   const items: TreeNode[] = [
     {
       ...itemsById[11],
@@ -63,13 +66,17 @@ function Main() {
 
   const [selectedItem, setSelectedItem] = useState<number | null>(null)
 
+  const { pushSnackBarMessage } = useSnackBar()
+
   const handleSelectItem = useCallback((id: number) => {
     setSelectedItem(id)
   }, [])
 
   const handleBookmarkDeletion = useCallback(() => {
     setIsDeletionModalOpen(false)
-  }, [])
+    if (selectedItem !== null)
+      pushSnackBarMessage({ text: `Bookmark "${itemsById[selectedItem].name}" was deleted` })
+  }, [pushSnackBarMessage, selectedItem, itemsById])
 
   const handleBookmarkDeletionAbort = useCallback(() => {
     setIsDeletionModalOpen(false)
