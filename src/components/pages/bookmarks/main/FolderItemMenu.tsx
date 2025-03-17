@@ -5,6 +5,8 @@ import MenuItem from '@mui/material/MenuItem'
 import { memo, MouseEvent, useState } from 'react'
 
 
+// TODO: Prevent re-rendering all components in pages/bookmarks/Main when delete option is clicked for a folder (handleDeleteMenuItemClick)
+
 type FolderItemMenuProps = {
   onDeletionModalOpen: () => void
 }
