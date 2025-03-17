@@ -16,7 +16,7 @@ function ModalYesNo({ open, text, onAccept, onCancel }: ConfirmationModalProps) 
     </Button>
   )
 
-  const SecondaryActionButton = <Button onClick={onCancel}>Cancel</Button>
+  const SecondaryActionButton = <Button onClick={onCancel} color='secondary'>Cancel</Button>
 
   return (
     <ModalBase

@@ -30,7 +30,7 @@ function ScanningModal({ open, onClose }: ScanningModalProps) {
     </Button>
   )
 
-  const SecondaryActionButton = <Button onClick={handleModalClose}>Stop</Button>
+  const SecondaryActionButton = <Button onClick={handleModalClose} color='secondary'>Stop</Button>
 
   return (
     <ModalBase
