@@ -8,9 +8,6 @@ import SideBarMenu from './SideBarMenu'
 
 // TODO: Update page content changes whenever a folder on the left menu is clicked (folders which not contains subfolders cant't be rendered )
 
-// TODO: wrap  {items.map((item, index) => ( ...} into a FolderList component and use memo for it setting items (list) and selectedItem as dependency
-
-// TODO: create a context to handle selection of folders instead of passing selectedItem and handleSelectItem
 
 function Main() {
   const maxLevel = 3
