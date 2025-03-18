@@ -1,5 +1,4 @@
 import * as Mui from '@mui/material'
-import { Box, Dialog } from '@mui/material'
 import { Fragment, memo, ReactNode } from 'react'
 import { MODAL_PADDING_IN_REM } from '../../style'
 
@@ -15,8 +14,11 @@ const DialogTitle = Mui.styled(
 const DialogContent = Mui.styled(
   Mui.DialogContent,
   {}
-)<Mui.DialogContentProps>(() => ({
-  padding: `inherit ${MODAL_PADDING_IN_REM * 6}rem`
+)<Mui.DialogContentProps>(({theme}) => ({
+  padding: `inherit ${MODAL_PADDING_IN_REM * 6}rem`,
+  [theme.breakpoints.up('sm')]: {
+    width: `${MODAL_WIDTH}px`
+  },
 }))
 
 const DialogActions = Mui.styled(
@@ -50,15 +52,19 @@ function ModalBase({
     onClose()
   }
 
+  const theme = Mui.useTheme()
+
+  const isSmallScreen = Mui.useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Fragment>
-      <Dialog
+      <Mui.Dialog
         open={open}
         onClose={handleModalClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        fullWidth={isSmallScreen}
       >
-        <Box sx={{ width: `${MODAL_WIDTH}px` }}>
           <DialogTitle id="alert-dialog-title" variant="h5">
             {title}
           </DialogTitle>
@@ -67,8 +73,7 @@ function ModalBase({
             {PrimaryActionButton}
             {SecondaryActionButton}
           </DialogActions>
-        </Box>
-      </Dialog>
+      </Mui.Dialog>
     </Fragment>
   )
 }
