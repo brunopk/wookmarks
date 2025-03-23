@@ -1,6 +1,8 @@
-import { Button, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { memo } from 'react'
 import ModalBase from './ModalBase'
+import PrimaryButton from './PrimaryButton'
+import SecondaryButton from './SecondaryButton'
 
 type ConfirmationModalProps = {
   open: boolean
@@ -10,20 +12,16 @@ type ConfirmationModalProps = {
 }
 
 function ModalYesNo({ open, text, onAccept, onCancel }: ConfirmationModalProps) {
-  const PrimaryActionButton = (
-    <Button onClick={onAccept} autoFocus>
-      OK
-    </Button>
-  )
+  const primaryActionButton = <PrimaryButton onClick={onAccept} text="YES" />
 
-  const SecondaryActionButton = <Button onClick={onCancel} color='secondary'>Cancel</Button>
+  const secondaryActionButton = <SecondaryButton onClick={onCancel} text="NO" />
 
   return (
     <ModalBase
       title="Bookmark deletion"
       open={open}
-      PrimaryActionButton={PrimaryActionButton}
-      SecondaryActionButton={SecondaryActionButton}
+      primaryActionButton={primaryActionButton}
+      secondaryActionButton={secondaryActionButton}
       onClose={() => null}
     >
       <Typography>{text}</Typography>

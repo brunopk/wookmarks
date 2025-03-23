@@ -1,9 +1,11 @@
-import { Button, LinearProgress, Typography } from '@mui/material'
+import { LinearProgress, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import { BoxProps, styled } from '@mui/system'
 import { memo } from 'react'
-import ModalBase from './ModalBase'
 import { MODAL_PADDING_IN_REM } from '../../style'
+import ModalBase from './ModalBase'
+import PrimaryButton from './PrimaryButton'
+import SecondaryButton from './SecondaryButton'
 
 const Row = styled(Box)<BoxProps>(() => ({
   padding: `${MODAL_PADDING_IN_REM}rem`,
@@ -24,20 +26,18 @@ function ScanningModal({ open, onClose }: ScanningModalProps) {
     onClose()
   }
 
-  const PrimaryActionButton = (
-    <Button onClick={handleModalClose} autoFocus>
-      Start
-    </Button>
+  const primaryActionButton = (
+    <PrimaryButton onClick={() => alert('Not implemented')} text="START" />
   )
 
-  const SecondaryActionButton = <Button onClick={handleModalClose} color='secondary'>Stop</Button>
+  const secondaryActionButton = <SecondaryButton onClick={handleModalClose} text="STOP" />
 
   return (
     <ModalBase
       title="Bookmark scanning"
       open={open}
-      PrimaryActionButton={PrimaryActionButton}
-      SecondaryActionButton={SecondaryActionButton}
+      primaryActionButton={primaryActionButton}
+      secondaryActionButton={secondaryActionButton}
       onClose={handleModalClose}
     >
       <Row>

@@ -1,23 +1,24 @@
 import * as Mui from '@mui/material'
-import { Fragment, memo, ReactNode } from 'react'
-import { MODAL_PADDING_IN_REM } from '../../style'
+import { Fragment, memo} from 'react'
 
-const MODAL_WIDTH = 500
+const WIDTH = 500
+
+const PADDING_IN_REM = 0.25
 
 const DialogTitle = Mui.styled(
   Mui.DialogTitle,
   {}
 )<Mui.DialogTitleProps>(() => ({
-  padding: `${MODAL_PADDING_IN_REM * 4}rem ${MODAL_PADDING_IN_REM * 6}rem ${MODAL_PADDING_IN_REM * 6}rem ${MODAL_PADDING_IN_REM * 6}rem`
+  padding: `${PADDING_IN_REM * 4}rem ${PADDING_IN_REM * 6}rem ${PADDING_IN_REM * 6}rem ${PADDING_IN_REM * 6}rem`
 }))
 
 const DialogContent = Mui.styled(
   Mui.DialogContent,
   {}
 )<Mui.DialogContentProps>(({theme}) => ({
-  padding: `inherit ${MODAL_PADDING_IN_REM * 6}rem`,
+  padding: `inherit ${PADDING_IN_REM * 6}rem`,
   [theme.breakpoints.up('sm')]: {
-    width: `${MODAL_WIDTH}px`
+    width: `${WIDTH}px`
   },
 }))
 
@@ -27,25 +28,16 @@ const DialogActions = Mui.styled(
 )<Mui.DialogActionsProps>(() => ({
   display: 'flex',
   flexGrow: 1,
-  justifyContent: 'space-between',
-  padding: `${MODAL_PADDING_IN_REM * 4}rem ${MODAL_PADDING_IN_REM * 6}rem`
+  padding: `${PADDING_IN_REM * 4}rem ${PADDING_IN_REM * 6}rem`
 }))
 
-type ModalBaseProps = {
-  children: ReactNode
-  title: string
-  open: boolean
-  PrimaryActionButton: ReactNode
-  SecondaryActionButton: ReactNode
-  onClose: () => void
-}
 
 function ModalBase({
   children,
   open,
   title,
-  PrimaryActionButton,
-  SecondaryActionButton,
+  primaryActionButton,
+  secondaryActionButton,
   onClose
 }: ModalBaseProps) {
   const handleModalClose = () => {
@@ -70,8 +62,8 @@ function ModalBase({
           </DialogTitle>
           <DialogContent>{children}</DialogContent>
           <DialogActions>
-            {PrimaryActionButton}
-            {SecondaryActionButton}
+            {secondaryActionButton}
+            {primaryActionButton}
           </DialogActions>
       </Mui.Dialog>
     </Fragment>
