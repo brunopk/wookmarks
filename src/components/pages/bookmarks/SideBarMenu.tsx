@@ -2,7 +2,7 @@ import { useState } from 'react'
 import SideBarMenuItem from './SideBarMenuItem'
 
 type MenuProps = {
-  nodes: TreeNode[]
+  nodes: Bookmarks.Item[]
   widthInRem: number
 }
 

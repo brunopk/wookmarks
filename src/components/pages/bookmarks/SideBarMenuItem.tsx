@@ -32,7 +32,7 @@ const NoIcon = Mui.styled(
 }))
 
 type FolderTreeProps = {
-  node: TreeNode
+  node: Bookmarks.Item
   level: number
   widthInRem: number
   parentIsOpen: boolean

@@ -13,7 +13,7 @@ function Main() {
   const maxLevel = 3
   const lastLevelMaxLengthItem = 14
   const menuWidthInRem = maxLevel * MENU_FOLDER_TREE_INDENT_IN_REM + lastLevelMaxLengthItem
-  const itemsById: { [id: number]: TreeNode } = useMemo(
+  const itemsById: { [id: number]: Bookmarks.Item } = useMemo(
     () => ({
       11: { name: 'Folder 1', id: 11, isFolder: true, isAnySubFolder: true },
       5: { name: 'Folder 1 A', id: 5, isFolder: true, isAnySubFolder: true },
@@ -31,7 +31,7 @@ function Main() {
     }),
     []
   )
-  const items: TreeNode[] = useMemo(() => ([
+  const items: Bookmarks.Item[] = useMemo(() => ([
     {
       ...itemsById[11],
       children: [

@@ -2,7 +2,7 @@ import { memo } from 'react'
 import Folder from './Folder'
 
 type FolderListProps = {
-  items: TreeNode[]
+  items: Bookmarks.Item[]
   selectedItem: number | null
   onSelectItem: (id: number) => void
   onDeletionModalOpen: () => void
