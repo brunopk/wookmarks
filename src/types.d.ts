@@ -1,5 +1,47 @@
-namespace Bookmarks {
-  type Item = {
+declare namespace BookmarkScanning {
+  type Folder = {
+    id: string
+    name: string
+    online: number
+    timeOut: number
+    offline: number
+  }
+
+  type Link = {
+    statusCode: number
+  }
+
+  type Counters = {
+    bookmarks: number
+    online: number
+    timeOut: number
+    offline: number
+  }
+}
+
+declare namespace LocalStorage {
+  type Folder = {
+    id: string
+    name: string
+    online: number
+    timeOut: number
+    offline: number
+  }
+
+  type Counters = {
+    bookmarks: number
+    online: number
+    timeOut: number
+    offline: number
+  }
+}
+
+declare namespace UI {
+  type SnackBarMessage = {
+    text: string
+  }
+
+  type Bookmark = {
     name: string
     id: number
     isFolder: boolean
@@ -8,25 +50,10 @@ namespace Bookmarks {
   }
 }
 
-namespace LocalStorage {
-  type ItemsMap = {
-    [id: number]: Bookmarks.Item
-  }
 
-  type Counters = {
-    bookmarks: number
-    folders: number
-    online: number
-    timeOut: number
-    offline: number
-  }
-}
-
-type ScanResult = {
-  itemsMap: LocalStorage.ItemsMap
-  counters: LocalStorage.Counters
-}
-
-type SnackBarMessage = {
-  text: string
+type BookmarkScanningResult = {
+  countersReady: boolean
+  folders: { [id: string]: BookmarkScanning.Folder }
+  links: { [id: string]: BookmarkScanning.Link }
+  counters: BookmarkScanning.Counters
 }
