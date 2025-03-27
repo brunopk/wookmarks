@@ -1,10 +1,12 @@
-import { LinearProgress, Typography, TypographyProps } from '@mui/material'
+import { Typography, TypographyProps } from '@mui/material'
 import Box from '@mui/material/Box'
 import { BoxProps, styled } from '@mui/system'
-import { memo } from 'react'
+import { memo, useEffect, useState } from 'react'
+import useBookmarkScanning from '../../hooks/useBookmarkScanning'
 import { MODAL_PADDING_IN_REM } from '../../style'
 import ModalBase from './ModalBase'
 import PrimaryButton from './PrimaryButton'
+import ProgressBar from './ScanningModalProgressBar'
 import SecondaryButton from './SecondaryButton'
 
 const LABEL_PADDING_IN_REM = MODAL_PADDING_IN_REM * 5
@@ -38,56 +40,102 @@ type ScanningModalProps = {
 }
 
 function ScanningModal({ open, onClose }: ScanningModalProps) {
-  const handleModalClose = () => {
+  const { stage, scanningResult, elapsedTime, startScanning } = useBookmarkScanning()
+
+  const [scanStarted, setScanStarted] = useState(false)
+
+  const totalBookmarks =
+    typeof scanningResult?.counters.totalBookmarks !== 'undefined'
+      ? scanningResult?.counters.totalBookmarks
+      : 0
+
+  const online =
+    typeof scanningResult?.counters.online !== 'undefined' ? scanningResult?.counters.online : 0
+
+  const offline =
+    typeof scanningResult?.counters.offline !== 'undefined' ? scanningResult?.counters.offline : 0
+
+  const timeOut =
+    typeof scanningResult?.counters.timeOut !== 'undefined' ? scanningResult?.counters.timeOut : 0
+
+  const handleSecondaryButtonClick = () => {
     onClose()
   }
 
-  const primaryActionButton = (
-    <PrimaryButton onClick={() => alert('Not implemented')} text="START" />
-  )
+  const handlePrimaryButtonClick = () => {
+    setScanStarted(true)
+    startScanning()
+  }
 
-  const secondaryActionButton = <SecondaryButton onClick={handleModalClose} text="STOP" />
+  const handleModalClose = handleSecondaryButtonClick
+
+  const normalizeProgress = () => {
+    if (typeof scanningResult === 'undefined') return 0
+    const value = offline + online + timeOut
+    return (value * 100) / scanningResult.counters.totalBookmarks
+  }
+
+  const formatElapsedTime = (ms: number) => {
+    let seconds = Math.floor(ms / 1000)
+    const minutes = Math.floor(seconds / 60)
+    seconds %= 60
+
+    return (minutes ? `${minutes}m` : '') + (seconds ? `${seconds}s` : '') || '0s'
+  }
+
+  useEffect(() => {
+    if (stage === 'FINISHING') {
+      setScanStarted(false)
+    }
+  }, [stage])
+
+  const primaryActionButton = <PrimaryButton onClick={handlePrimaryButtonClick} text="START" />
+
+  const secondaryActionButton = <SecondaryButton onClick={handleSecondaryButtonClick} text="STOP" />
+
+  const modalBaseAttributes: Omit<ModalBaseProps, 'children'> = {
+    title: 'Bookmark scanning',
+    open,
+    primaryActionButton,
+    secondaryActionButton,
+    onClose: handleModalClose
+  }
+
+  const progressBarAttributes: UI.Scanning.ModalProgressBarProps = {
+    show: scanStarted,
+    showValue: stage === 'PROBING_URLS',
+    value: normalizeProgress()
+  }
 
   return (
-    <ModalBase
-      title="Bookmark scanning"
-      open={open}
-      primaryActionButton={primaryActionButton}
-      secondaryActionButton={secondaryActionButton}
-      onClose={handleModalClose}
-    >
+    <ModalBase {...modalBaseAttributes}>
       <Row>
         <Emoji>🔖</Emoji>
         <Label>Bookmarks</Label>
-        <Counter>12</Counter>
-      </Row>
-      <Row>
-        <Emoji>📁</Emoji>
-        <Label>Folders</Label>
-        <Counter>3</Counter>
+        <Counter>{totalBookmarks}</Counter>
       </Row>
       <Row>
         <Emoji>🟢</Emoji>
         <Label>Online</Label>
-        <Counter>4</Counter>
+        <Counter>{online}</Counter>
       </Row>
       <Row>
         <Emoji>🟡</Emoji>
         <Label>Time out</Label>
-        <Counter>4</Counter>
+        <Counter>{timeOut}</Counter>
       </Row>
       <Row>
         <Emoji>🔴</Emoji>
         <Label>Offline</Label>
-        <Counter>4</Counter>
+        <Counter>{offline}</Counter>
       </Row>
       <Row>
         <Emoji>⏰</Emoji>
         <Label>Elapsed time</Label>
-        <Counter>3s</Counter>
+        <Counter>{formatElapsedTime(elapsedTime)}</Counter>
       </Row>
       <ProgressBarRow>
-        <LinearProgress />
+        <ProgressBar {...progressBarAttributes} />
       </ProgressBarRow>
     </ModalBase>
   )

@@ -1,65 +1,116 @@
-async function scanBookmarkTreeRecursive(
-  partialResult: BookmarkScanningResult,
-  currentNode: chrome.bookmarks.BookmarkTreeNode
+function delay(ms: number) {
+  return new Promise<void>((resolve) => setTimeout(resolve, ms))
+}
+
+function batchProbeLinks(partialResult: BookmarkScanning.Result) {
+  Object.keys(partialResult.links).map(() => {
+    probeLink().then((statusCode) => {
+      if (statusCode < 300) {
+        partialResult.counters.online++
+      } else {
+        partialResult.counters.offline++
+      }
+    })
+  })
+}
+
+async function bookmarkTreeRecursiveScanning(
+  partialResult: BookmarkScanning.Result,
+  node: chrome.bookmarks.BookmarkTreeNode
 ) {
-  if (typeof currentNode.url !== 'undefined') {
-    partialResult.counters.bookmarks++
+  if (typeof node.url !== 'undefined') {
+    partialResult.counters.totalBookmarks++
+    partialResult.links[node.id] = {
+      url: node.url,
+      parentFolderId: node.parentId!
+    }
   } else {
-    partialResult.folders[currentNode.id] = {
-      id: currentNode.id,
-      name: currentNode.title,
+    partialResult.folders[node.id] = {
+      id: node.id,
+      name: node.title,
       online: 0,
       offline: 0,
       timeOut: 0
     }
   }
 
-  currentNode.children?.forEach((childNode) => {
-    scanBookmarkTreeRecursive(partialResult, childNode)
+  node.children?.forEach((childNode) => {
+    bookmarkTreeRecursiveScanning(partialResult, childNode)
   })
 }
 
-/**
- * Probes links 
- * @param link URL that will be probed
- * @return status code 
- */
-async function probeLink(link: string): Promise<number> {
-  // TODO: implement 
-  const t = Math.random() * 1000
-  
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const n = Math.random()
-      if (n <= 0.5) {
-        resolve(200)
-      } else if (n > 0.5) {
-        reject(500)
-      }
-    }, t)
-  })
-
-}
-
-export async function* scanBookmarkTree(): AsyncGenerator<BookmarkScanningResult, void, unknown> {
-  const partialResult: BookmarkScanningResult = {
+async function bookmarkTreeScanning(
+  tree: chrome.bookmarks.BookmarkTreeNode[]
+): Promise<BookmarkScanning.Result> {
+  const partialResult: BookmarkScanning.Result = {
+    isFinished: false,
     countersReady: false,
     folders: {},
     links: {},
     counters: {
-      bookmarks: 0,
+      totalBookmarks: 0,
       online: 0,
       offline: 0,
       timeOut: 0
     }
   }
+  await Promise.all(tree.map((node) => bookmarkTreeRecursiveScanning(partialResult, node)))
+
+  return partialResult
+}
+
+/**
+ * Probes a link
+ * @param url URL that will be probed
+ * @return status code will be set in `link.statusCode`
+ */
+async function probeLink(): Promise<number> {
+  // TODO: implement real function
+  const t = Math.random() * 8000
+
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const n = Math.random()
+      if (n <= 0.5) {
+        resolve(500)
+      } else if (n > 0.5) {
+        resolve(200)
+      }
+    }, t)
+  })
+}
+
+async function* yieldPartialUpdate(
+  partialResult: BookmarkScanning.Result
+): AsyncGenerator<BookmarkScanning.Result, void, unknown> {
+  let processedLinks =
+    partialResult.counters.online + partialResult.counters.offline + partialResult.counters.timeOut
+  do {
+    processedLinks =
+      partialResult.counters.online +
+      partialResult.counters.offline +
+      partialResult.counters.timeOut
+    if (processedLinks < partialResult.counters.totalBookmarks) {
+      await delay(1000)
+      yield structuredClone(partialResult)
+    }
+  } while (processedLinks < partialResult.counters.totalBookmarks)
+}
+
+export async function* scanBookmarkTree(): AsyncGenerator<BookmarkScanning.Result, void, unknown> {
+  let partialResult
 
   const tree = await chrome.bookmarks.getTree()
-  
-  await Promise.all(tree.map(node => scanBookmarkTreeRecursive(partialResult, node)))
+  partialResult = await bookmarkTreeScanning(tree)
+  yield { ...structuredClone(partialResult), countersReady: true }
 
-  yield {...partialResult, countersReady: true}
+  batchProbeLinks(partialResult)
 
-  // TODO: CONTINUE : use probeLink
+  for await (partialResult of yieldPartialUpdate(partialResult)) {
+    yield partialResult
+  }
 
+  yield { ...structuredClone(partialResult), isFinished: true }
+
+  // TODO: update counters for all folders
 }

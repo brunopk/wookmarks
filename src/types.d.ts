@@ -8,14 +8,32 @@ declare namespace BookmarkScanning {
   }
 
   type Link = {
-    statusCode: number
+    url: string
+    statusCode?: number
+    parentFolderId: string
   }
 
-  type Counters = {
-    bookmarks: number
+  type LinksMap = {
+    [id: string]: Link
+  }
+
+  type FoldersMap = {
+    [id: string]: Folder
+  }
+
+  export type Counters = {
+    totalBookmarks: number
     online: number
     timeOut: number
     offline: number
+  }
+
+  type Result = {
+    isFinished: boolean
+    countersReady: boolean
+    folders: BookmarkScanning.FoldersMap
+    links: BookmarkScanning.LinksMap
+    counters: BookmarkScanning.Counters
   }
 }
 
@@ -48,12 +66,33 @@ declare namespace UI {
     isAnySubFolder: boolean
     children?: Item[]
   }
-}
 
+  namespace Scanning {
+    type Stage =
+      | 'AWAITING_TRIGGERING'
+      | 'INITIATING_PROCESS'
+      | 'OBTAINING_COUNTERS'
+      | 'PROBING_URLS'
+      | 'FINISHING'
 
-type BookmarkScanningResult = {
-  countersReady: boolean
-  folders: { [id: string]: BookmarkScanning.Folder }
-  links: { [id: string]: BookmarkScanning.Link }
-  counters: BookmarkScanning.Counters
+    type ScanningResult = {
+      folders: BookmarkScanning.FoldersMap
+      links: BookmarkScanning.LinksMap
+      counters: BookmarkScanning.Counters
+    }
+
+    type State = {
+      stage: Stage
+      startedAt?: Date
+      elapsedTime: number
+      isFinished: boolean
+      scanningResult?: ScanningResult
+    }
+
+    type ModalProgressBarProps = {
+      value: number
+      show: boolean
+      showValue: boolean
+    }
+  }
 }
