@@ -4,16 +4,15 @@ import { MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style'
 import DeletionModal from '../../modal/ConfirmationModal'
 import Page from '../../Page'
 import FolderList from './FolderList'
-import SideBarMenu from './SideBarMenu'
+import MainMenu from './MainMenu'
 
 // TODO: Update page content changes whenever a folder on the left menu is clicked (folders which not contains subfolders cant't be rendered )
-
 
 function Main() {
   const maxLevel = 3
   const lastLevelMaxLengthItem = 14
   const menuWidthInRem = maxLevel * MENU_FOLDER_TREE_INDENT_IN_REM + lastLevelMaxLengthItem
-  const itemsById: { [id: number]: Bookmarks.Item } = useMemo(
+  const itemsById: { [id: number]: UI.Bookmark } = useMemo(
     () => ({
       11: { name: 'Folder 1', id: 11, isFolder: true, isAnySubFolder: true },
       5: { name: 'Folder 1 A', id: 5, isFolder: true, isAnySubFolder: true },
@@ -31,37 +30,40 @@ function Main() {
     }),
     []
   )
-  const items: Bookmarks.Item[] = useMemo(() => ([
-    {
-      ...itemsById[11],
-      children: [
-        {
-          ...itemsById[5],
-          children: [
-            {
-              ...itemsById[2],
-              children: [itemsById[1]]
-            },
-            itemsById[3],
-            itemsById[4]
-          ]
-        },
-        {
-          ...itemsById[10],
-          children: [
-            {
-              ...itemsById[9],
-              children: [itemsById[6]]
-            },
-            itemsById[7],
-            itemsById[8]
-          ]
-        },
-        itemsById[13]
-      ]
-    },
-    itemsById[12]
-  ]), [itemsById])
+  const items: UI.Bookmark[] = useMemo(
+    () => [
+      {
+        ...itemsById[11],
+        children: [
+          {
+            ...itemsById[5],
+            children: [
+              {
+                ...itemsById[2],
+                children: [itemsById[1]]
+              },
+              itemsById[3],
+              itemsById[4]
+            ]
+          },
+          {
+            ...itemsById[10],
+            children: [
+              {
+                ...itemsById[9],
+                children: [itemsById[6]]
+              },
+              itemsById[7],
+              itemsById[8]
+            ]
+          },
+          itemsById[13]
+        ]
+      },
+      itemsById[12]
+    ],
+    [itemsById]
+  )
 
   const [isDeletionModalOpen, setIsDeletionModalOpen] = useState(false)
 
@@ -93,7 +95,7 @@ function Main() {
 
   return (
     <Page
-      sideBarMenu={<SideBarMenu nodes={items} widthInRem={menuWidthInRem} />}
+      menu={<MainMenu nodes={items} widthInRem={menuWidthInRem} />}
       menuWidthInRem={menuWidthInRem}
     >
       <FolderList

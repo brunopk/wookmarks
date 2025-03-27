@@ -1,12 +1,11 @@
 import Typography from '@mui/material/Typography'
-import Layout from './Page'
-import BaseMenu from './BaseMenu'
+import Page from './Page'
 
 function WorkInProgress() {
   return (
-    <Layout Menu={BaseMenu}>
+    <Page>
       <Typography variant="h6">🏗️ Work in progress</Typography>
-    </Layout>
+    </Page>
   )
 }
 

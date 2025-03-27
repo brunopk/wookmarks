@@ -35,7 +35,7 @@ type FolderProps = {
   folderName: string
   id: number
   pageSize: number
-  items: Bookmarks.Item[]
+  items: UI.Bookmark[]
   selectedItem: number | null
   onSelectItem: (id: number) => void
   onDeletionModalOpen: () => void

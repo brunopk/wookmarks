@@ -7,8 +7,8 @@ const SnackBarContext = createContext<SnackBarProviderValue>({
 })
 
 type SnackBarProviderValue = {
-  currentSnackBarMessage?: SnackBarMessage
-  pushSnackBarMessage: (msg: SnackBarMessage) => void
+  currentSnackBarMessage?: UI.SnackBarMessage
+  pushSnackBarMessage: (msg: UI.SnackBarMessage) => void
 }
 
 type SnackBarProviderProps = {
@@ -16,9 +16,9 @@ type SnackBarProviderProps = {
 }
 
 function SnackBarProvider({ children }: SnackBarProviderProps) {
-  const [currentSnackBarMessage, setCurrentSnackBarMessage] = useState<SnackBarMessage>()
+  const [currentSnackBarMessage, setCurrentSnackBarMessage] = useState<UI.SnackBarMessage>()
 
-  const pushSnackBarMessage = useCallback((msg: SnackBarMessage) => {
+  const pushSnackBarMessage = useCallback((msg: UI.SnackBarMessage) => {
     setCurrentSnackBarMessage(msg)
   }, [])
 

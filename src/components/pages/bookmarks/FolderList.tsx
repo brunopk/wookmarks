@@ -2,7 +2,7 @@ import { memo } from 'react'
 import Folder from './Folder'
 
 type FolderListProps = {
-  items: Bookmarks.Item[]
+  items: UI.Bookmark[]
   selectedItem: number | null
   onSelectItem: (id: number) => void
   onDeletionModalOpen: () => void

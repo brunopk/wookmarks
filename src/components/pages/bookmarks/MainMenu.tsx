@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import SideBarMenuItem from './SideBarMenuItem'
+import MainMenuItem from './MainMenuItem'
 
 type MenuProps = {
-  nodes: Bookmarks.Item[]
+  nodes: UI.Bookmark[]
   widthInRem: number
 }
 
-function SideBarMenu({ nodes, widthInRem }: MenuProps) {
+function MainMenu({ nodes, widthInRem }: MenuProps) {
   const [selectedId, setSelectedId] = useState<number>(nodes[0].id)
 
   return (
@@ -14,7 +14,7 @@ function SideBarMenu({ nodes, widthInRem }: MenuProps) {
       {nodes.map(
         (node) =>
           node.isFolder && (
-            <SideBarMenuItem
+            <MainMenuItem
               node={node}
               widthInRem={widthInRem}
               level={0}
@@ -29,4 +29,4 @@ function SideBarMenu({ nodes, widthInRem }: MenuProps) {
   )
 }
 
-export default SideBarMenu
+export default MainMenu

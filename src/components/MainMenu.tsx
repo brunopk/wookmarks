@@ -20,14 +20,14 @@ import DrawerHeader from './DrawerHeader'
 
 const DEFAULT_MENU_WIDTH_IN_REM = 15
 
-type BaseMenuProps = {
+type MainMenuProps = {
   content?: ReactNode
   open: boolean
   widthInRem?: number
   setOpen: Dispatch<boolean>
 }
 
-function BaseMenu({ content, open, widthInRem, setOpen }: BaseMenuProps) {
+function MainMenu({ content, open, widthInRem, setOpen }: MainMenuProps) {
   widthInRem = typeof widthInRem === 'undefined' ? DEFAULT_MENU_WIDTH_IN_REM : widthInRem
 
   const theme = useTheme()
@@ -105,4 +105,4 @@ function BaseMenu({ content, open, widthInRem, setOpen }: BaseMenuProps) {
   )
 }
 
-export default BaseMenu
+export default MainMenu

@@ -32,7 +32,7 @@ const NoIcon = Mui.styled(
 }))
 
 type FolderTreeProps = {
-  node: Bookmarks.Item
+  node: UI.Bookmark
   level: number
   widthInRem: number
   parentIsOpen: boolean
@@ -40,7 +40,7 @@ type FolderTreeProps = {
   setSelectedId: Dispatch<SetStateAction<number>>
 }
 
-function SideBarMenuItem({
+function MainMenuItem({
   level,
   node,
   widthInRem,
@@ -101,7 +101,7 @@ function SideBarMenuItem({
         node.children.map(
           (childNode) =>
             childNode.isFolder && (
-              <SideBarMenuItem
+              <MainMenuItem
                 level={level + 1}
                 node={childNode}
                 widthInRem={widthInRem}
@@ -116,4 +116,4 @@ function SideBarMenuItem({
   )
 }
 
-export default SideBarMenuItem
+export default MainMenuItem
