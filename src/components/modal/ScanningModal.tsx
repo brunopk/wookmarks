@@ -1,4 +1,4 @@
-import { LinearProgress, Typography } from '@mui/material'
+import { LinearProgress, Typography, TypographyProps } from '@mui/material'
 import Box from '@mui/material/Box'
 import { BoxProps, styled } from '@mui/system'
 import { memo } from 'react'
@@ -7,9 +7,25 @@ import ModalBase from './ModalBase'
 import PrimaryButton from './PrimaryButton'
 import SecondaryButton from './SecondaryButton'
 
+const LABEL_PADDING_IN_REM = MODAL_PADDING_IN_REM * 5
+
 const Row = styled(Box)<BoxProps>(() => ({
   padding: `${MODAL_PADDING_IN_REM}rem`,
   display: 'flex'
+}))
+
+const Emoji = styled(Typography)<TypographyProps>(() => ({
+  flex: 0
+}))
+
+const Label = styled(Typography)<TypographyProps>(() => ({
+  paddingLeft: `${LABEL_PADDING_IN_REM}rem`,
+  flex: 1
+}))
+
+const Counter = styled(Typography)<TypographyProps>(() => ({
+  flex: 1,
+  textAlign: 'end'
 }))
 
 const ProgressBarRow = styled(Box)<BoxProps>(() => ({
@@ -41,46 +57,34 @@ function ScanningModal({ open, onClose }: ScanningModalProps) {
       onClose={handleModalClose}
     >
       <Row>
-        <Typography sx={{ flex: 0 }}>🔖</Typography>
-        <Typography sx={{ paddingLeft: `${MODAL_PADDING_IN_REM * 5}rem`, flex: 1 }}>
-          Bookmarks
-        </Typography>
-        <Typography sx={{ flex: 0 }}>12</Typography>
+        <Emoji>🔖</Emoji>
+        <Label>Bookmarks</Label>
+        <Counter>12</Counter>
       </Row>
       <Row>
-        <Typography sx={{ flex: 0 }}>📁</Typography>
-        <Typography sx={{ paddingLeft: `${MODAL_PADDING_IN_REM * 5}rem`, flex: 1 }}>
-          Folders
-        </Typography>
-        <Typography sx={{ flex: 0 }}>3</Typography>
+        <Emoji>📁</Emoji>
+        <Label>Folders</Label>
+        <Counter>3</Counter>
       </Row>
       <Row>
-        <Typography sx={{ flex: 0 }}>🟢</Typography>
-        <Typography sx={{ paddingLeft: `${MODAL_PADDING_IN_REM * 5}rem`, flex: 1 }}>
-          Online
-        </Typography>
-        <Typography sx={{ flex: 0 }}>4</Typography>
+        <Emoji>🟢</Emoji>
+        <Label>Online</Label>
+        <Counter>4</Counter>
       </Row>
       <Row>
-        <Typography sx={{ flex: 0 }}>🟡</Typography>
-        <Typography sx={{ paddingLeft: `${MODAL_PADDING_IN_REM * 5}rem`, flex: 1 }}>
-          Time out
-        </Typography>
-        <Typography sx={{ flex: 0 }}>4</Typography>
+        <Emoji>🟡</Emoji>
+        <Label>Time out</Label>
+        <Counter>4</Counter>
       </Row>
       <Row>
-        <Typography sx={{ flex: 0 }}>🔴</Typography>
-        <Typography sx={{ paddingLeft: `${MODAL_PADDING_IN_REM * 5}rem`, flex: 1 }}>
-          Offline
-        </Typography>
-        <Typography sx={{ flex: 0 }}>4</Typography>
+        <Emoji>🔴</Emoji>
+        <Label>Offline</Label>
+        <Counter>4</Counter>
       </Row>
       <Row>
-        <Typography sx={{ flex: 0 }}>⏰</Typography>
-        <Typography sx={{ paddingLeft: `${MODAL_PADDING_IN_REM * 5}rem`, flex: 1 }}>
-          Elapsed time
-        </Typography>
-        <Typography sx={{ flex: 0 }}>3s</Typography>
+        <Emoji>⏰</Emoji>
+        <Label>Elapsed time</Label>
+        <Counter>3s</Counter>
       </Row>
       <ProgressBarRow>
         <LinearProgress />
