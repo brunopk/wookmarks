@@ -5,18 +5,13 @@ type FolderListProps = {
   items: UI.Bookmark[]
   selectedItem: number | null
   onSelectItem: (id: number) => void
-  onDeletionModalOpen: () => void
 }
 
-function FolderList({ items, selectedItem, onSelectItem, onDeletionModalOpen }: FolderListProps) {
+function FolderList({ items, selectedItem, onSelectItem }: FolderListProps) {
   const pageSize = 8
 
   const handleSelectItem = (id: number) => {
     onSelectItem(id)
-  }
-
-  const handleDeletionModalOpen = () => {
-    onDeletionModalOpen()
   }
 
   return (
@@ -30,7 +25,6 @@ function FolderList({ items, selectedItem, onSelectItem, onDeletionModalOpen }: 
           pageSize={pageSize}
           selectedItem={selectedItem}
           onSelectItem={handleSelectItem}
-          onDeletionModalOpen={handleDeletionModalOpen}
         />
       ))}
     </>

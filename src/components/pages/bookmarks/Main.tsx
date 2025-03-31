@@ -1,7 +1,5 @@
 import { useCallback, useMemo, useState } from 'react'
-import useSnackBar from '../../../hooks/useSnackBar'
 import { MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style'
-import DeletionModal from '../../modal/ConfirmationModal'
 import Page from '../../Page'
 import FolderList from './FolderList'
 import MainMenu from './MainMenu'
@@ -65,53 +63,18 @@ function Main() {
     [itemsById]
   )
 
-  const [isDeletionModalOpen, setIsDeletionModalOpen] = useState(false)
-
   const [selectedItem, setSelectedItem] = useState<number | null>(null)
-
-  const { pushSnackBarMessage } = useSnackBar()
 
   const handleSelectItem = useCallback((id: number) => {
     setSelectedItem(id)
   }, [])
-
-  const handleBookmarkDeletion = useCallback(() => {
-    setIsDeletionModalOpen(false)
-    if (selectedItem !== null)
-      pushSnackBarMessage({ text: `Bookmark "${itemsById[selectedItem].name}" was deleted` })
-  }, [pushSnackBarMessage, selectedItem, itemsById])
-
-  const handleBookmarkDeletionAbort = useCallback(() => {
-    setIsDeletionModalOpen(false)
-  }, [])
-
-  const handleDeletionModalOpen = useCallback(() => {
-    setIsDeletionModalOpen(true)
-  }, [])
-
-  const generateDeletionModalText = (selectedItemId: number) => {
-    return `Are you sure you want to delete "${itemsById[selectedItemId].name}"?`
-  }
 
   return (
     <Page
       menu={<MainMenu nodes={items} widthInRem={menuWidthInRem} />}
       menuWidthInRem={menuWidthInRem}
     >
-      <FolderList
-        items={items}
-        selectedItem={selectedItem}
-        onDeletionModalOpen={handleDeletionModalOpen}
-        onSelectItem={handleSelectItem}
-      />
-      {selectedItem !== null && (
-        <DeletionModal
-          open={isDeletionModalOpen}
-          text={generateDeletionModalText(selectedItem)}
-          onAccept={handleBookmarkDeletion}
-          onCancel={handleBookmarkDeletionAbort}
-        />
-      )}
+      <FolderList items={items} selectedItem={selectedItem} onSelectItem={handleSelectItem} />
     </Page>
   )
 }

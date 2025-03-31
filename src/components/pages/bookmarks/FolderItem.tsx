@@ -2,7 +2,6 @@ import { FolderOpen, Link } from '@mui/icons-material'
 import * as Mui from '@mui/material'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import Typography from '@mui/material/Typography'
-import FolderItemMenu from './FolderItemMenu'
 
 // TODO: use styled components
 
@@ -45,7 +44,6 @@ type FolderItemProps = {
   color?: 'error' | 'action'
   selected: boolean
   onSelect: (id: number) => void
-  onDeletionModalOpen?: () => void
 }
 
 function FolderItem({
@@ -55,8 +53,7 @@ function FolderItem({
   color = 'action',
   typographySx = {},
   selected,
-  onSelect,
-  onDeletionModalOpen
+  onSelect
 }: FolderItemProps) {
   const handleClick = () => {
     onSelect(id)
@@ -84,9 +81,6 @@ function FolderItem({
         }
         color={color}
       />
-      {typeof onDeletionModalOpen !== 'undefined' && (
-        <FolderItemMenu onDeletionModalOpen={onDeletionModalOpen} />
-      )}
     </Box>
   )
 }

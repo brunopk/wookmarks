@@ -38,18 +38,9 @@ type FolderProps = {
   items: UI.Bookmark[]
   selectedItem: number | null
   onSelectItem: (id: number) => void
-  onDeletionModalOpen: () => void
 }
 
-function Folder({
-  folderName,
-  id,
-  pageSize,
-  items,
-  selectedItem,
-  onSelectItem,
-  onDeletionModalOpen
-}: FolderProps) {
+function Folder({ folderName, id, pageSize, items, selectedItem, onSelectItem }: FolderProps) {
   const [expanded, setExpanded] = useState<string | false>(false)
 
   const defaultPage = 1
@@ -72,10 +63,6 @@ function Folder({
     },
     [onSelectItem]
   )
-
-  const handleOnDeletionModalOpen = useCallback(() => {
-    onDeletionModalOpen()
-  }, [onDeletionModalOpen])
 
   return (
     <Accordion expanded={expanded === `panel${id}`} onChange={handleChange(`panel${id}`)}>
@@ -108,7 +95,6 @@ function Folder({
                   key={index}
                   selected={item.id == selectedItem}
                   onSelect={handleSelectFolderItem}
-                  onDeletionModalOpen={handleOnDeletionModalOpen}
                 />
               ))}
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
