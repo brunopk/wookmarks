@@ -7,12 +7,12 @@ import {
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import Box from '@mui/material/Box'
-import Chip from '@mui/material/Chip'
 import List from '@mui/material/List'
 import Pagination from '@mui/material/Pagination'
 import Typography from '@mui/material/Typography'
 import { memo, useCallback, useState } from 'react'
 import { ICON_MARGIN_RIGHT_IN_REM } from '../../../style'
+import FolderChip from './FolderChip'
 import FolderItem from './FolderItem'
 
 // TODO: Refactoring : pass components to styled components
@@ -75,9 +75,9 @@ function Folder({ folderName, id, pageSize, items, selectedItem, onSelectItem }:
         <Typography component="span" sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
           {folderName}
         </Typography>
-        <Chip label="🔴 45" sx={{ marginRight: '1rem', fontWeight: 'bold' }} variant="outlined" />
-        <Chip label="🟡 70" sx={{ marginRight: '1rem', fontWeight: 'bold' }} variant="outlined" />
-        <Chip label="🟢 80" sx={{ marginRight: '1rem', fontWeight: 'bold' }} variant="outlined" />
+        <FolderChip status="error" value={10} key={0} />
+        <FolderChip status="warning" value={11} key={1} />
+        <FolderChip status="success" value={13} key={1} />
       </AccordionSummary>
       <AccordionDetails>
         {typeof items === 'undefined' || items.length === 0 ? (
