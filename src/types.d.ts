@@ -1,3 +1,5 @@
+import { BookmarkStatus } from "./enums"
+
 declare namespace BookmarkScanning {
   type Folder = {
     id: string
@@ -56,22 +58,23 @@ declare namespace LocalStorage {
 
 declare namespace UI {
   type FolderItemProps = {
-    text: string
     id: number
+    text: string
     icon: 'link' | 'folder'
-    typographySx?: Mui.SxProps<Mui.Theme>
-    color?: 'error' | 'action'
     selected: boolean
+    status?: BookmarkStatus
+    typographySx?: Mui.SxProps<Mui.Theme>
     onSelect: (id: number) => void
   }
-  
+
   type SnackBarMessage = {
     text: string
   }
 
   type Bookmark = {
-    name: string
     id: number
+    name: string
+    status?: BookmarkStatus
     isFolder: boolean
     isAnySubFolder: boolean
     children?: Item[]

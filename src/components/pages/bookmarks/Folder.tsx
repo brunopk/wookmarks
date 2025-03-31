@@ -89,14 +89,12 @@ function Folder({ folderName, id, pageSize, items, selectedItem, onSelectItem }:
   }
 
   const folderItemProps: (item: UI.Bookmark, index: number) => UI.FolderItemProps = (
-    item,
-    index
+    item
   ) => ({
-    text: item.name,
     id: item.id,
+    text: item.name,
+    status: item.status,
     icon: item.isFolder ? 'folder' : 'link',
-    color: 'action',
-    key: index,
     selected: item.id == selectedItem,
     onSelect: handleSelectFolderItem
   })
@@ -120,7 +118,7 @@ function Folder({ folderName, id, pageSize, items, selectedItem, onSelectItem }:
         <FolderName component="span">{folderName}</FolderName>
         <FolderChip status="error" value={10} key={0} />
         <FolderChip status="warning" value={11} key={1} />
-        <FolderChip status="success" value={13} key={1} />
+        <FolderChip status="success" value={13} key={2} />
       </AccordionSummary>
       <AccordionDetails>
         {typeof items === 'undefined' || items.length === 0 ? (
@@ -130,7 +128,7 @@ function Folder({ folderName, id, pageSize, items, selectedItem, onSelectItem }:
             {items
               .slice((currentPage - 1) * pageSize, currentPage * pageSize + (pageSize - 1))
               .map((item, index) => (
-                <FolderItem {...folderItemProps(item, index)} />
+                <FolderItem {...folderItemProps(item, index)} key={index}/>
               ))}
             <PaginationBox>
               <Pagination {...paginationProps} />

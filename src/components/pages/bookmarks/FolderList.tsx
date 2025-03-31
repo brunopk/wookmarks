@@ -18,9 +18,9 @@ function FolderList({ items, selectedItem, onSelectItem }: FolderListProps) {
     <>
       {items.map((item, index) => (
         <Folder
-          folderName={item.name}
-          id={item.id}
           key={index}
+          id={item.id}
+          folderName={item.name}
           items={item.children!}
           pageSize={pageSize}
           selectedItem={selectedItem}

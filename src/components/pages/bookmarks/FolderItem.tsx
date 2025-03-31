@@ -1,7 +1,9 @@
-import { FolderOpen, Link } from '@mui/icons-material'
+import { FolderOpen } from '@mui/icons-material'
 import * as Mui from '@mui/material'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import Typography from '@mui/material/Typography'
+import { UI } from '../../../types'
+import LinkIcon from './LinkIcon'
 
 // TODO: use styled components
 
@@ -37,12 +39,12 @@ const ListItemText = Mui.styled(
 }))
 
 function FolderItem({
-  text,
   id,
+  text,
   icon,
-  color = 'action',
-  typographySx = {},
   selected,
+  status,
+  typographySx = {},
   onSelect
 }: UI.FolderItemProps) {
   const handleClick = () => {
@@ -55,22 +57,15 @@ function FolderItem({
         {(() => {
           switch (icon) {
             case 'folder':
-              return <FolderOpen color={color} />
+              return <FolderOpen />
             case 'link':
-              return <Link color={color} />
+              return <LinkIcon status={status} />
             default:
               throw new Error(`Invalid icon ${icon}`)
           }
         })()}
       </ListItemIcon>
-      <ListItemText
-        primary={
-          <Typography color={color} sx={typographySx}>
-            {text}
-          </Typography>
-        }
-        color={color}
-      />
+      <ListItemText primary={<Typography sx={typographySx}>{text}</Typography>} />
     </Box>
   )
 }
