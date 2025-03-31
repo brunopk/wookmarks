@@ -1,12 +1,7 @@
 import { FolderOpen } from '@mui/icons-material'
-import {
-  AccordionSummaryProps,
-  AccordionSummary as MuiAccordionSummary,
-  styled
-} from '@mui/material'
+import * as Mui from '@mui/material'
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
-import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import Pagination from '@mui/material/Pagination'
 import Typography from '@mui/material/Typography'
@@ -15,12 +10,10 @@ import { ICON_MARGIN_RIGHT_IN_REM } from '../../../style'
 import FolderChip from './FolderChip'
 import FolderItem from './FolderItem'
 
-// TODO: Refactoring : pass components to styled components
-
-const AccordionSummary = styled(
-  MuiAccordionSummary,
+const AccordionSummary = Mui.styled(
+  Mui.AccordionSummary,
   {}
-)<AccordionSummaryProps>(({ theme }) => ({
+)<Mui.AccordionSummaryProps>(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -29,6 +22,31 @@ const AccordionSummary = styled(
   '&:hover': {
     backgroundColor: theme.palette.action.hover
   }
+}))
+
+const FolderName = Mui.styled(
+  Mui.Typography,
+  {}
+)<Mui.TypographyProps>(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  flexGrow: 1
+}))
+
+const Icon = Mui.styled(
+  FolderOpen,
+  {}
+)<Mui.IconProps>(() => ({
+  marginRight: `${ICON_MARGIN_RIGHT_IN_REM}rem`,
+  height: 'auto'
+}))
+
+const PaginationBox = Mui.styled(
+  Mui.Box,
+  {}
+)<Mui.BoxProps>(() => ({
+  display: 'flex',
+  justifyContent: 'center'
 }))
 
 type FolderProps = {
@@ -64,17 +82,42 @@ function Folder({ folderName, id, pageSize, items, selectedItem, onSelectItem }:
     [onSelectItem]
   )
 
+  const accordionSummaryProps: Mui.AccordionSummaryProps = {
+    id: `panel${id}bh-header`,
+    'aria-controls': `panel${id}bh-content`,
+    onMouseDown: (event) => event.preventDefault() // Prevents focus
+  }
+
+  const folderItemProps: (item: UI.Bookmark, index: number) => UI.FolderItemProps = (
+    item,
+    index
+  ) => ({
+    text: item.name,
+    id: item.id,
+    icon: item.isFolder ? 'folder' : 'link',
+    color: 'action',
+    key: index,
+    selected: item.id == selectedItem,
+    onSelect: handleSelectFolderItem
+  })
+
+  const paginationProps: Mui.PaginationProps = {
+    count: maxPages,
+    page: currentPage,
+    defaultPage,
+    onChange: handlePaginationChange
+  }
+
+  const listProps: Mui.ListProps = {
+    component: 'nav',
+    'aria-labelledby': 'nested-list-subheader'
+  }
+
   return (
     <Accordion expanded={expanded === `panel${id}`} onChange={handleChange(`panel${id}`)}>
-      <AccordionSummary
-        aria-controls={`panel${id}bh-content`}
-        id={`panel${id}bh-header`}
-        onMouseDown={(event) => event.preventDefault()} // Prevents focus
-      >
-        <FolderOpen sx={{ marginRight: `${ICON_MARGIN_RIGHT_IN_REM}rem`, height: 'auto' }} />
-        <Typography component="span" sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-          {folderName}
-        </Typography>
+      <AccordionSummary {...accordionSummaryProps}>
+        <Icon />
+        <FolderName component="span">{folderName}</FolderName>
         <FolderChip status="error" value={10} key={0} />
         <FolderChip status="warning" value={11} key={1} />
         <FolderChip status="success" value={13} key={1} />
@@ -83,28 +126,15 @@ function Folder({ folderName, id, pageSize, items, selectedItem, onSelectItem }:
         {typeof items === 'undefined' || items.length === 0 ? (
           <Typography>Empty folder</Typography>
         ) : (
-          <List component="nav" aria-labelledby="nested-list-subheader">
+          <List {...listProps}>
             {items
               .slice((currentPage - 1) * pageSize, currentPage * pageSize + (pageSize - 1))
               .map((item, index) => (
-                <FolderItem
-                  text={item.name}
-                  id={item.id}
-                  icon={item.isFolder ? 'folder' : 'link'}
-                  color="action"
-                  key={index}
-                  selected={item.id == selectedItem}
-                  onSelect={handleSelectFolderItem}
-                />
+                <FolderItem {...folderItemProps(item, index)} />
               ))}
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Pagination
-                count={maxPages}
-                page={currentPage}
-                defaultPage={defaultPage}
-                onChange={handlePaginationChange}
-              />
-            </Box>
+            <PaginationBox>
+              <Pagination {...paginationProps} />
+            </PaginationBox>
           </List>
         )}
       </AccordionDetails>

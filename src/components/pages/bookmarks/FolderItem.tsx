@@ -36,16 +36,6 @@ const ListItemText = Mui.styled(
   transition: 'none'
 }))
 
-type FolderItemProps = {
-  text: string
-  id: number
-  icon: 'link' | 'folder'
-  typographySx?: Mui.SxProps<Mui.Theme>
-  color?: 'error' | 'action'
-  selected: boolean
-  onSelect: (id: number) => void
-}
-
 function FolderItem({
   text,
   id,
@@ -54,7 +44,7 @@ function FolderItem({
   typographySx = {},
   selected,
   onSelect
-}: FolderItemProps) {
+}: UI.FolderItemProps) {
   const handleClick = () => {
     onSelect(id)
   }

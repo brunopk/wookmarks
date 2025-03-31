@@ -55,6 +55,16 @@ declare namespace LocalStorage {
 }
 
 declare namespace UI {
+  type FolderItemProps = {
+    text: string
+    id: number
+    icon: 'link' | 'folder'
+    typographySx?: Mui.SxProps<Mui.Theme>
+    color?: 'error' | 'action'
+    selected: boolean
+    onSelect: (id: number) => void
+  }
+  
   type SnackBarMessage = {
     text: string
   }
