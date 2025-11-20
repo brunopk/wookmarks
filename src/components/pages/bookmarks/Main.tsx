@@ -3,8 +3,6 @@ import { MENU_FOLDER_TREE_INDENT_IN_REM } from '../../../style'
 import Page from '../../Page'
 import FolderList from './FolderList'
 import MainMenu from './MainMenu'
-import { BookmarkStatus } from '../../../enums'
-import { UI } from '../../../types'
 
 // TODO: Update page content changes whenever a folder on the left menu is clicked (folders which not contains subfolders cant't be rendered )
 
@@ -26,7 +24,7 @@ function Main() {
       7: { name: 'Link B', id: 7, isFolder: false, isAnySubFolder: false },
       8: { name: 'Link C', id: 8, isFolder: false, isAnySubFolder: false },
       12: { name: 'Folder 2', id: 12, isFolder: true, isAnySubFolder: false },
-      13: { name: 'Link D', id: 13, isFolder: false, isAnySubFolder: false, status: BookmarkStatus.OFFLINE}
+      13: { name: 'Link D', id: 13, isFolder: false, isAnySubFolder: false, status: "OFFLINE"}
     }),
     []
   )

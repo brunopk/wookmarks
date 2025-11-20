@@ -1,19 +1,24 @@
 import { Typography } from '@mui/material'
-import { BookmarkStatus } from '../../../enums'
 
 type LinkIconProps = {
   status?: BookmarkStatus
 }
 
 function LinkIcon({ status }: LinkIconProps) {
-  const emoji =
-    typeof status === 'undefined'
-      ? '🟡'
-      : {
-          [BookmarkStatus.OFFLINE]: '🔴',
-          [BookmarkStatus.TIME_OUT]: '🟡',
-          [BookmarkStatus.ONLINE]: '🟢'
-        }[status]
+  let emoji = '🟡'
+  switch (status) {
+    case 'OFFLINE':
+      emoji = '🔴'
+      break
+    case 'ONLINE':
+      emoji = '🟢'
+      break
+    case 'TIME_OUT':
+      emoji = '🟡'
+      break
+    default:
+      throw new Error(`Unknown bookmark status ${status}`)
+  }
   return <Typography>{emoji}</Typography>
 }
 

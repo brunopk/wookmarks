@@ -1,4 +1,4 @@
-import { BookmarkStatus } from "./enums"
+type BookmarkStatus = "ONLINE" | "TIME_OUT" | "OFFLINE"
 
 declare namespace BookmarkScanning {
   type Folder = {
