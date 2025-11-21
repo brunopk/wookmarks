@@ -4,7 +4,6 @@ import Page from '../../Page'
 import FolderList from './FolderList'
 import MainMenu from './MainMenu'
 
-// TODO: Update page content changes whenever a folder on the left menu is clicked (folders which not contains subfolders cant't be rendered )
 
 function Main() {
   const maxLevel = 3
@@ -28,6 +27,10 @@ function Main() {
     }),
     []
   )
+  // TODO: CONTINUE implement helpers to generate/navigate this tree (and use this navigation to implement what's explained below )
+  // TODO: CONTINUE Update page content changes whenever a folder on the left menu is clicked (folders which not contains subfolders cant't be rendered )
+
+  // Tree structure that can be navigated 
   const items: UI.Bookmark[] = useMemo(
     () => [
       {
@@ -68,6 +71,8 @@ function Main() {
   const handleSelectItem = useCallback((id: number) => {
     setSelectedItem(id)
   }, [])
+
+  // TODO: use HashRouter instead of BrowserRouter 
 
   return (
     <Page

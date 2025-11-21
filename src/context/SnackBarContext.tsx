@@ -1,6 +1,6 @@
 import { createContext, ReactElement, useCallback, useState } from 'react'
 
-// TODO: implement notifications as in https://github.com/brunopk/mis-gastos-web/commit/297aa46b2fb94d70adfa9981afa2e7d1d1ed3346
+// TODO: consider removing this component (and all related context, hooks, etc) if notifications are not needed (future plan: use ErrorBoundary)
 
 const SnackBarContext = createContext<SnackBarProviderValue>({
   pushSnackBarMessage: () => {

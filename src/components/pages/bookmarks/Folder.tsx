@@ -111,6 +111,8 @@ function Folder({ folderName, id, pageSize, items, selectedItem, onSelectItem }:
     'aria-labelledby': 'nested-list-subheader'
   }
 
+  // TODO: not hardcode folder value and key
+   
   return (
     <Accordion expanded={expanded === `panel${id}`} onChange={handleChange(`panel${id}`)}>
       <AccordionSummary {...accordionSummaryProps}>

@@ -100,6 +100,7 @@ async function* yieldPartialUpdate(
 export async function* scanBookmarkTree(): AsyncGenerator<BookmarkScanning.Result, void, unknown> {
   let partialResult
 
+  // TODO: CONTINUE try scanning in the frontend (this will throw error in the browser, not for chrome extension, so try to mock this getTree method for the browser)
   const tree = await chrome.bookmarks.getTree()
   partialResult = await bookmarkTreeScanning(tree)
   yield { ...structuredClone(partialResult), countersReady: true }

@@ -71,6 +71,10 @@ declare namespace UI {
     text: string
   }
 
+  // TODO: avoid using .d.ts files 
+  
+  // TODO: redefine to create tree structure (change Item for other type)
+  
   type Bookmark = {
     id: number
     name: string
