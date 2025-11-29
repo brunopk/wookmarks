@@ -1,5 +1,9 @@
 import * as Mui from '@mui/material'
-import Page from '../../Page'
+import { Page } from '../../Page'
+
+/**************************************************************************************************/
+/*                                         SUB-COMPONENTS                                         */
+/**************************************************************************************************/
 
 const Box = Mui.styled(Mui.Box)<Mui.BoxProps>(() => ({
   display: 'flex',
@@ -13,12 +17,16 @@ const FormControl = Mui.styled(Mui.FormControl)<Mui.FormControlProps>(() => ({
 }))
 
 const TextField = Mui.styled(Mui.TextField)<Mui.TextFieldProps>(() => ({
-  flex: 1,
+  flex: 1
 }))
 
 const RadioButtonFormLabel = Mui.styled(Mui.FormLabel)<Mui.FormLabelProps>(() => ({
   margin: 'auto 1rem auto 0'
 }))
+
+/**************************************************************************************************/
+/*                                       EXPORTED COMPONENT                                       */
+/**************************************************************************************************/
 
 function Main() {
   return (
@@ -44,9 +52,7 @@ function Main() {
             />
           </Box>
           <Box>
-            <RadioButtonFormLabel id="theme-radio-buttons-group-label">
-              Theme
-            </RadioButtonFormLabel>
+            <RadioButtonFormLabel id="theme-radio-buttons-group-label">Theme</RadioButtonFormLabel>
             <Mui.RadioGroup
               row
               aria-labelledby="theme-radio-buttons-group-label"

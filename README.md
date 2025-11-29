@@ -12,10 +12,25 @@ Chrome extension to manage bookmarks. It is implemented as a React application p
 
 2. Install generated content in *dist/* folder through *chrome://extensions*
 
+## Development
+
 ### Development with hot reloading
 
 ```bash
 yarn dev
+```
+
+### Naming conventions
+
+- For files (not React components): kebab-case
+- For React hooks: kebab-case
+
+### Fixing linting errors
+
+Linting errors in a file can be fixed with Prettier:
+
+```bash
+ npx prettier FILE_PATH --write 
 ```
 
 ## Links

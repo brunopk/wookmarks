@@ -1,4 +1,3 @@
-type BookmarkStatus = "ONLINE" | "TIME_OUT" | "OFFLINE"
 
 declare namespace BookmarkScanning {
   type Folder = {
@@ -57,15 +56,6 @@ declare namespace LocalStorage {
 }
 
 declare namespace UI {
-  type FolderItemProps = {
-    id: number
-    text: string
-    icon: 'link' | 'folder'
-    selected: boolean
-    status?: BookmarkStatus
-    typographySx?: Mui.SxProps<Mui.Theme>
-    onSelect: (id: number) => void
-  }
 
   type SnackBarMessage = {
     text: string
@@ -73,16 +63,7 @@ declare namespace UI {
 
   // TODO: avoid using .d.ts files 
   
-  // TODO: redefine to create tree structure (change Item for other type)
-  
-  type Bookmark = {
-    id: number
-    name: string
-    status?: BookmarkStatus
-    isFolder: boolean
-    isAnySubFolder: boolean
-    children?: Item[]
-  }
+  // TODO: use kebab-case for file name
 
   namespace Scanning {
     type Stage =

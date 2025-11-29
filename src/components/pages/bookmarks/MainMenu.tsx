@@ -1,17 +1,26 @@
 import { useState } from 'react'
+import { BookmarksTree } from '../../../utils/tree-utils'
 import MainMenuItem from './MainMenuItem'
 
+/**************************************************************************************************/
+/*                                             TYPES                                              */
+/**************************************************************************************************/
+
 type MenuProps = {
-  nodes: UI.Bookmark[]
+  bookmarksTree: BookmarksTree
   widthInRem: number
 }
 
-function MainMenu({ nodes, widthInRem }: MenuProps) {
-  const [selectedId, setSelectedId] = useState<number>(nodes[0].id)
+/**************************************************************************************************/
+/*                                       EXPORTED COMPONENT                                       */
+/**************************************************************************************************/
+
+function MainMenu({ bookmarksTree, widthInRem }: MenuProps) {
+  const [selectedId, setSelectedId] = useState<number>(bookmarksTree.id)
 
   return (
     <>
-      {nodes.map(
+      {bookmarksTree.children!.map(
         (node) =>
           node.isFolder && (
             <MainMenuItem

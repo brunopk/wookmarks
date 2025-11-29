@@ -2,10 +2,12 @@ import { FolderOpen } from '@mui/icons-material'
 import * as Mui from '@mui/material'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import Typography from '@mui/material/Typography'
-import { UI } from '../../../types'
-import LinkIcon from './LinkIcon'
+import { BookmarksTreeItem } from '../../../utils/tree-utils'
+import StatusIcon from './StatusIcon'
 
-// TODO: use styled components
+/**************************************************************************************************/
+/*                                         SUB-COMPONENTS                                         */
+/**************************************************************************************************/
 
 const Box = Mui.styled(
   Mui.Box,
@@ -38,36 +40,39 @@ const ListItemText = Mui.styled(
   transition: 'none'
 }))
 
-function FolderItem({
-  id,
-  text,
-  icon,
+// TODO: Change typography (if it is a link based) on this typographySx={{ fontWeight: isLinkOff ? 'bold' : 'inherit' }}
+
+/**************************************************************************************************/
+/*                                  EXPORTED COMPONENT AND TYPES                                  */
+/**************************************************************************************************/
+
+export type FolderItemProps = {
+  bookmarksTreeItem: BookmarksTreeItem
+  selected: boolean
+  typographySx?: Mui.SxProps<Mui.Theme>
+  onSelect: (id: number) => void
+}
+
+export function FolderItem({
+  bookmarksTreeItem,
   selected,
-  status,
   typographySx = {},
   onSelect
-}: UI.FolderItemProps) {
+}: FolderItemProps) {
   const handleClick = () => {
-    onSelect(id)
+    onSelect(bookmarksTreeItem.id)
   }
 
   return (
     <Box onClick={handleClick} selected={selected}>
       <ListItemIcon sx={{ alignItems: 'center' }}>
-        {(() => {
-          switch (icon) {
-            case 'folder':
-              return <FolderOpen />
-            case 'link':
-              return <LinkIcon status={status} />
-            default:
-              throw new Error(`Invalid icon ${icon}`)
-          }
-        })()}
+        {bookmarksTreeItem.isFolder ? (
+          <FolderOpen />
+        ) : (
+          <StatusIcon bookmarksTreeItem={bookmarksTreeItem} />
+        )}
       </ListItemIcon>
-      <ListItemText primary={<Typography sx={typographySx}>{text}</Typography>} />
+      <ListItemText primary={<Typography sx={typographySx}>{bookmarksTreeItem.name}</Typography>} />
     </Box>
   )
 }
-
-export default FolderItem

@@ -6,9 +6,9 @@ import { styled } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
 import { ReactNode, useCallback, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import BaseMenu from './MainMenu'
 import DrawerButton from './DrawerButton'
 import DrawerHeader from './DrawerHeader'
+import BaseMenu from './MainMenu'
 import ScanningModal from './modal/ScanningModal'
 import SnackBar from './SnackBar'
 
@@ -27,13 +27,17 @@ const DashboardTitle = styled(Mui.Typography)<Mui.TypographyProps>(() => ({
   flexGrow: 1
 }))
 
-type PageProps = {
+/**************************************************************************************************/
+/*                                  EXPORTED COMPONENT AND TYPES                                  */
+/**************************************************************************************************/
+
+export type PageProps = {
   menu?: ReactNode
   children: ReactNode
   menuWidthInRem?: number
 }
 
-function Page({ children, menuWidthInRem, menu }: PageProps) {
+export function Page({ children, menuWidthInRem, menu }: PageProps) {
   const location = useLocation()
 
   const {
@@ -81,5 +85,3 @@ function Page({ children, menuWidthInRem, menu }: PageProps) {
     </Box>
   )
 }
-
-export default Page

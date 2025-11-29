@@ -1,5 +1,5 @@
 import Typography from '@mui/material/Typography'
-import Page from './Page'
+import { Page } from './Page'
 
 function NotFound() {
   return (
