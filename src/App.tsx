@@ -1,47 +1,64 @@
-import { useState } from 'react'
-import reactLogo from '/react.svg'
-import viteLogo from '/vite.svg'
+import CssBaseline from '@mui/material/CssBaseline'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
+import NotFound from './components/NotFound'
+import Bookmarks from './components/pages/bookmarks/Main'
+import Settings from './components/pages/configuration/Main'
+import Stats from './components/pages/stats/Main'
+import { BOOKMARKS_PATH, SETTINGS_PATH, STATS_PATH } from './config'
+import { SnackBarProvider } from './context/SnackBarContext'
 
-function openNewTab(setIsNewTab: React.Dispatch<React.SetStateAction<boolean>>) {
-  setIsNewTab(true)
-  chrome.tabs.create({
-    url: chrome.runtime.getURL("index.html")
-  })
-}
+// TODO: check if folders are rendered multiple times whenever a snackbar changes
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [isNewTab, setIsNewTab] = useState(false)
+  const theme = createTheme({
+    palette: {
+      mode: 'dark'
+    },
+    components: {
+      MuiPaginationItem: {
+        styleOverrides: {
+          root: {
+            '&:focus-visible': {
+              outline: 'none'
+            },
+            '&:focus': {
+              outline: 'none'
+            }
+          }
+        }
+      },
+      MuiIconButton: {
+        styleOverrides: {
+          root: {
+            '&:focus-visible': {
+              outline: 'none'
+            },
+            '&:focus': {
+              outline: 'none'
+            }
+          }
+        }
+      }
+    }
+  })
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        {!isNewTab ? (
-        <button onClick={() => openNewTab(setIsNewTab)}>
-          Open new tab
-        </button>
-        ): (<></>)}
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <ThemeProvider theme={theme}>
+      <SnackBarProvider>
+        <CssBaseline />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Navigate to="/bookmarks" replace />} />
+            <Route path={STATS_PATH} element={<Stats />} />
+            <Route path={BOOKMARKS_PATH} element={<Bookmarks />} />
+            <Route path={SETTINGS_PATH} element={<Settings />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </SnackBarProvider>
+    </ThemeProvider>
   )
 }
 

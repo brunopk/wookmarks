@@ -9,7 +9,7 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: 'public/manifest.json',
+          src: 'manifest.json',
           dest: '.',
         },
       ],
@@ -20,7 +20,16 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: './index.html',
+        'service-worker': './src/service-worker.ts'
       },
+      output: {
+        // More info about this configuration: https://stackoverflow.com/questions/71355290/prevent-service-worker-js-from-being-bundled-with-vite-rollup
+        entryFileNames: assetInfo => {
+          return assetInfo.name === 'service-worker'
+             ? '[name].js'                  // put service worker in root
+             : 'assets/[name]-[hash].js' // others in `assets/`
+        }
+      }
     },
   },
 });
